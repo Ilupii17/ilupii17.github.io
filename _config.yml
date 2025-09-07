@@ -1,14 +1,14 @@
 # Site Settings
-name: Jekflix
-title: Jekflix | A blog theme for Jekyll
-description: Jekflix is a template for Jekyll inspired by Netflix and made by
+name: Ilupii
+title: Ilupii's Blog
+description: learning by doing
   Thiago Rossener.
 tags:
   - blog
-  - template
-  - jekyll
-  - theme
-  - netlify
+  - Capture the flag
+  - pwn
+  - binary
+  - indonesia
 show_hero: true
 menu:
   - title: Home
@@ -38,7 +38,7 @@ medium_username: medium_username
 
 
 # Posts Settings
-show_time_bar: true
+show_time_bar: false
 show_modal_on_exit: false
 show_modal_on_finish_post: true
 two_columns_layout: true
@@ -46,7 +46,7 @@ two_columns_layout: true
 
 # Advanced Settings
 baseurl: "" # the subpath of your site, e.g. /blog
-url: "" # the base hostname & protocol for your site
+url: "https://ilupii17.github.io" # the base hostname & protocol for your site
 google_analytics: "UA-XXXXXXXX-X"
 language: "en"
 categories_folder: category

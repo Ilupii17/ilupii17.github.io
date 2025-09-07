@@ -1,6 +1,6 @@
 ---
 layout: category
-title: Music
-slug: music
+title: Forensic
+slug: foren
 description: A category for music related posts.
 ---

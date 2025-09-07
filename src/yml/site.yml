@@ -1,13 +1,13 @@
-name: Jekflix
-title: Jekflix | A blog theme for Jekyll
-description: Jekflix is a template for Jekyll inspired by Netflix and made by
+name: Ilupii
+title: Ilupii's Blog
+description: learning by doing
   Thiago Rossener.
 tags:
   - blog
-  - template
-  - jekyll
-  - theme
-  - netlify
+  - Capture the flag
+  - pwn
+  - binary
+  - indonesia
 show_hero: true
 menu:
   - title: Home

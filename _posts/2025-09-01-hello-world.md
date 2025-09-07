@@ -1,15 +1,15 @@
 ---
-date: 2015-09-06 12:00:00
+date: 2025-09-01 12:26:40
 layout: post
-title: Passion is dangerous, go for it!
+title: Hello world
 subtitle: Lorem ipsum dolor sit amet, consectetur adipisicing elit.
 description: Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-image: https://res.cloudinary.com/dm7h7e8xj/image/upload/v1559825288/theme17_nlndhx.jpg
-optimized_image: https://res.cloudinary.com/dm7h7e8xj/image/upload/c_scale,w_380/v1559825288/theme17_nlndhx.jpg
-category: work
+image: https://images6.alphacoders.com/135/1355194.jpeg
+optimized_image: https://images6.alphacoders.com/135/1355194.jpeg
+category: ctf
 tags:
-  - work
-  - career
+  - pwn
+  - bof
 author: mranderson
 ---
 
@@ -57,6 +57,11 @@ adder(2, 6);
 // > 8
 ```
 
+## hello world python
+
+```python
+print('hello world')
+```
 Aenean lacinia bibendum nulla sed consectetur. Etiam porta sem malesuada magna mollis euismod. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa.
 
 ## Lists
@@ -124,3 +129,13 @@ Aenean lacinia bibendum nulla sed consectetur. Lorem ipsum dolor sit amet, conse
 </table>
 
 Nullam id dolor id nibh ultricies vehicula ut id elit. Sed posuere consectetur est at lobortis. Nullam quis risus eget urna mollis ornare vel eu leo.
+
+
+
+
+
+
+
+
+
+

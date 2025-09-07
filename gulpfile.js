@@ -175,25 +175,25 @@ function images() {
  */
 function watch() {
   // Watch YAML files for changes & recompile
-  gulp.watch(['src/yml/*.yml', '!src/yml/theme.yml'], gulp.series(config, jekyll, reload));
+  gulp.watch(['src/yml/*.yml', '!src/yml/theme.yml'], { usePolling: true },gulp.series(config, jekyll, reload));
 
   // Watch theme file for changes, rebuild styles & recompile
-  gulp.watch(['src/yml/theme.yml'], gulp.series(theme, config, jekyll, reload));
+  gulp.watch(['src/yml/theme.yml'], { usePolling: true },gulp.series(theme, config, jekyll, reload));
 
   // Watch SASS files for changes & rebuild styles
-  gulp.watch(['_sass/**/*.scss'], gulp.series(jekyll, reload));
+  gulp.watch(['_sass/**/*.scss'], { usePolling: true },gulp.series(jekyll, reload));
 
   // Watch JS files for changes & recompile
-  gulp.watch('src/js/main/**/*.js', mainJs);
+  gulp.watch('src/js/main/**/*.js', { usePolling: true },mainJs);
 
   // Watch preview JS files for changes, copy files & reload
-  gulp.watch('src/js/preview/**/*.js', gulp.series(previewJs, reload));
+  gulp.watch('src/js/preview/**/*.js', { usePolling: true },gulp.series(previewJs, reload));
 
   // Watch images for changes, optimize & recompile
-  gulp.watch('src/img/**/*', gulp.series(images, config, jekyll, reload));
+  gulp.watch('src/img/**/*', { usePolling: true } ,gulp.series(images, config, jekyll, reload));
 
   // Watch html/md files, rebuild config, run Jekyll & reload BrowserSync
-  gulp.watch(['*.html', '_includes/*.html', '_layouts/*.html', '_posts/*', '_authors/*', 'pages/*', 'category/*'], gulp.series(config, jekyll, reload));
+  gulp.watch(['*.html', '_includes/*.html', '_layouts/*.html', '_posts/*', '_authors/*', 'pages/*', 'category/*'], { usePolling: true } ,gulp.series(config, jekyll, reload));
 }
 
 /**
