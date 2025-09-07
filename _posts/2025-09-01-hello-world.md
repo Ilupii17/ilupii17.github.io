@@ -4,8 +4,8 @@ layout: post
 title: Hello world
 subtitle: Lorem ipsum dolor sit amet, consectetur adipisicing elit.
 description: Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-image: https://images6.alphacoders.com/135/1355194.jpeg
-optimized_image: https://images6.alphacoders.com/135/1355194.jpeg
+image: https://quotefancy.com/media/wallpaper/3840x2160/8151352-Hello-World-Wallpaper.jpg
+optimized_image: https://quotefancy.com/media/wallpaper/3840x2160/8151352-Hello-World-Wallpaper.jpg
 category: ctf
 tags:
   - pwn
