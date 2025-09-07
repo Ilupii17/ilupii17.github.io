@@ -2,7 +2,7 @@
 date: 2025-09-01 18:03:00
 layout: post
 title: Compfest 17 Quals
-subtitle: Have fun Ctf national
+subtitle: Have fun at the national CTF
 description: ikut untuk kedua kalinya di ctf compfest
 image: https://images6.alphacoders.com/135/1355194.jpeg
 optimized_image: https://images6.alphacoders.com/135/1355194.jpeg
@@ -250,3 +250,134 @@ def do_redirect():
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080)
 ```
+
+# Crashout (Forensic) Upsolved
+## Description
+> Evan installed and executed a supposedly safe file. It caused his laptop to hang, several data to become corrupted, and new password-protected files to show up. The password popped up for a while, but I didn't memorize it. Can you get me back my file?
+
+## Initial Analysis
+We are given a dump.ad1 file in this challenge. which contains a strange downloaded file
+i using autospy to open the dump.ad1, and found a strange .zip file containing script.py
+![Gambar 1, File aneh]({{ site.baseurl }}/assets/img/uploads/compfest17quals/1.png)
+
+and I also found an encrypted file
+![Gambar 2,]({{ site.baseurl }}/assets/img/uploads/compfest17quals/2.png)
+
+I suspect that file.enc is the flag because that is our goal, to find the corrupt file. But that strange .zip file has a password, so we need to find out where that password is.
+I almost gave up looking for the password because I'm still a beginner at this. until I realized there was a dump file at /ProgramData/dumps.
+![Gambar 3]({{ site.baseurl }}/assets/img/uploads/compfest17quals/3.png)
+
+After that, I extracted the strange zip file, file.enc and chrome dump, and searched for the password with strings.
+![Gambar 4]({{ site.baseurl }}/assets/img/uploads/compfest17quals/4.png)
+![Gambar 5]({{ site.baseurl }}/assets/img/uploads/compfest17quals/5.png)
+and found the password is **whereourcrashis**
+After that, I tried to open the zip file and read script.py, which contained the following:
+### script.py
+```python
+import sys
+import hashlib
+import getpass
+
+HEADER_SIZE = 16
+def derive_key(password: str, length: int = 32) -> bytes:
+    return hashlib.sha256(password.encode()).digest()[:length]
+
+def transform(byte, key_byte, i):
+    xored = byte ^ key_byte
+    rotation = i % 3
+    return ((xored << rotation) | (xored >> (8 - rotation))) & 0xFF
+
+def encrypt(input_file, output_file, password):
+    key = derive_key(password)
+
+    with open(input_file, 'rb') as f:
+        data = f.read()
+
+    encrypted = bytearray(data[:HEADER_SIZE])
+
+    for i, byte in enumerate(data[HEADER_SIZE:], start=HEADER_SIZE):
+        key_byte = key[i % len(key)] ^ (i & 0x0F)
+        encrypted.append(transform(byte, key_byte, i))
+
+    with open(output_file, 'wb') as f:
+        f.write(encrypted)
+
+    print(f"Encrypted {input_file} -> {output_file}")
+
+if __name__ == "__main__":
+    if len(sys.argv) != 4:
+        print("Usage:")
+        print("python3 script.py encrypt input.jpg output.enc")
+        sys.exit(1)
+
+    mode, input_file, output_file = sys.argv[1:4]
+    password = getpass.getpass("Enter password: ")
+
+    if mode == "encrypt":
+        encrypt(input_file, output_file, password)
+    else:
+        print("Invalid")
+```
+
+Sure enough, this script creates files with the .enc extension, such as file.enc. After that, I created a decryption key from this script to open the .enc file that was found earlier.
+### dec.py
+```python
+└─$ cat dec.py
+import sys
+import hashlib
+import getpass
+
+HEADER_SIZE = 16
+
+def derive_key(password: str, length: int = 32) -> bytes:
+    return hashlib.sha256(password.encode()).digest()[:length]
+
+def reverse_transform(encrypted_byte, key_byte, i):
+    """Membalikkan proses 'transform' dari skrip enkripsi."""
+    rotation = i % 3
+    # Lakukan rotasi ke kanan (kebalikan dari rotasi ke kiri)
+    rotated_byte = ((encrypted_byte >> rotation) | (encrypted_byte << (8 - rotation))) & 0xFF
+    # Lakukan XOR lagi untuk mendapatkan byte asli
+    original_byte = rotated_byte ^ key_byte
+    return original_byte
+
+def decrypt(input_file, output_file, password):
+    """Fungsi utama untuk mendekripsi file."""
+    key = derive_key(password)
+
+    with open(input_file, 'rb') as f:
+        data = f.read()
+
+    # Salin 16 byte pertama (header) apa adanya
+    decrypted = bytearray(data[:HEADER_SIZE])
+
+    # Proses sisa byte dari file, dimulai dari posisi ke-16
+    for i, byte in enumerate(data[HEADER_SIZE:], start=HEADER_SIZE):
+        # Buat key_byte yang sama persis seperti saat enkripsi
+        key_byte = key[i % len(key)] ^ (i & 0x0F)
+        # Panggil fungsi reverse_transform untuk mendapatkan byte asli
+        decrypted.append(reverse_transform(byte, key_byte, i))
+
+    with open(output_file, 'wb') as f:
+        f.write(decrypted)
+
+    print(f"Decrypted {input_file} -> {output_file}")
+
+if __name__ == "__main__":
+    if len(sys.argv) != 4:
+        print("Usage:")
+        print("python3 decrypt.py decrypt input.enc output.jpg")
+        sys.exit(1)
+
+    mode, input_file, output_file = sys.argv[1:4]
+    password = getpass.getpass("Enter password: ")
+
+    if mode == "decrypt":
+        decrypt(input_file, output_file, password)
+    else:
+        print("Invalid mode. Use 'decrypt'.")
+```
+
+Alhamdulillah, the zip password is the same as the password for decrypting this file.enc, until we get a cropped photo, so we need to make a few adjustments and get this photo.
+![Gambar 5]({{ site.baseurl }}/assets/img/uploads/compfest17quals/flag.jpg)
+
