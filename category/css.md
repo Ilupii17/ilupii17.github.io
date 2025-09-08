@@ -1,6 +1,6 @@
 ---
 layout: category
-title: Buffer Overflow
-slug: bof
-description: A category for pwn
+title: HALF-FINISHED
+slug: half-finished
+description: A category for Half finished
 ---

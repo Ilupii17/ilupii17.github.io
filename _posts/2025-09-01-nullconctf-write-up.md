@@ -6,7 +6,7 @@ subtitle: trying Capture The Flag in the middle of the night
 description: The challenge is fun :o
 image: https://images.alphacoders.com/134/1343999.png
 optimized_image: https://images.alphacoders.com/134/1343999.png
-category: ctf
+category: HALF-FINISHED
 tags:
   - pwn
   - bof
@@ -184,3 +184,4 @@ p.interactive()
 ```
 and we got the flag
 ![Gambar 1]({{ site.baseurl }}/assets/img/uploads/nullconctf/2.png)
+

