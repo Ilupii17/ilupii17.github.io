@@ -4,27 +4,27 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>
-    CTF Timeline | ~/ilupii's Cybersecurity Notes
+    All Write-ups | ~/ilupii's Cybersecurity Notes
   </title>
   <meta name="description" content="CTF Write-ups">
 
   <!-- SEO -->
   <!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>CTF Timeline | ~/ilupii’s Cybersecurity Notes</title>
+<title>All Write-ups | ~/ilupii’s Cybersecurity Notes</title>
 <meta name="generator" content="Jekyll v3.10.0" />
-<meta property="og:title" content="CTF Timeline" />
+<meta property="og:title" content="All Write-ups" />
 <meta name="author" content="kentang@wsl2" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="CTF Write-ups" />
 <meta property="og:description" content="CTF Write-ups" />
-<link rel="canonical" href="http://localhost:4000/timeline/" />
-<meta property="og:url" content="http://localhost:4000/timeline/" />
+<link rel="canonical" href="http://localhost:4000/posts/" />
+<meta property="og:url" content="http://localhost:4000/posts/" />
 <meta property="og:site_name" content="~/ilupii’s Cybersecurity Notes" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="CTF Timeline" />
+<meta property="twitter:title" content="All Write-ups" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"kentang@wsl2"},"description":"CTF Write-ups","headline":"CTF Timeline","url":"http://localhost:4000/timeline/"}</script>
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"kentang@wsl2"},"description":"CTF Write-ups","headline":"All Write-ups","url":"http://localhost:4000/posts/"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -88,221 +88,191 @@
 
 
   <div class="page-wrapper">
-    <div class="timeline-page">
+    <div class="allposts-page">
 
-  <!-- Page Heading -->
-  <div class="page-heading" style="margin-top: 20px;">
-    <h1><span>~/</span>ctf-timeline</h1>
-    <p>
-      <span style="color: var(--accent-lime);">kali@wsl2:~$</span>
-      cat _data/timeline.yml | sort -r
-    </p>
-  </div>
+  <div class="container" style="padding-top: 20px;">
+    <a href="/" class="back-link">
+      <i class="fas fa-arrow-left"></i> cd ~/
+    </a>
 
-  <!-- Stats Bar -->
-  
-  <div style="
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    flex-wrap: wrap;
-    margin-bottom: 48px;">
-
-    <div class="status-badge" style="border-color: var(--accent-orange); box-shadow: 0 4px 0 var(--accent-orange); color: var(--accent-orange);">
-      <i class="fas fa-trophy"></i>&nbsp;
-      2 Events
+    <div class="allposts-header">
+      <h1 class="profile-title" style="justify-content:flex-start; margin-bottom: 8px;">
+        <span class="title-tilde">~/</span>writeups
+        <span class="blinking-cursor" aria-hidden="true"></span>
+      </h1>
+      <p style="color:var(--text-muted); font-family:'Fira Code',monospace; font-size:0.88rem;">
+        3 write-ups total
+      </p>
     </div>
 
     
-    
-    
-    
-
-    
-      <div class="status-badge" style="border-color: var(--accent-orange); box-shadow: 0 4px 0 var(--accent-orange); color: var(--accent-orange);">
-        <i class="fas fa-bomb"></i>&nbsp; 1x Pwn
-      </div>
-    
-
-    
-      <div class="status-badge" style="border-color: var(--accent-teal); box-shadow: 0 4px 0 var(--accent-teal); color: var(--accent-teal);">
-        <i class="fas fa-globe"></i>&nbsp; 1x Web
-      </div>
-    
-
-    
-      <div class="status-badge" style="border-color: var(--accent-lime); box-shadow: 0 4px 0 var(--accent-lime); color: var(--accent-lime);">
-        <i class="fas fa-microchip"></i>&nbsp; 1x Rev
-      </div>
-    
-
+    <div class="filter-bar">
+      <button class="filter-btn active" data-filter="all">
+        <i class="fas fa-layer-group"></i> All
+        <span class="filter-count">3</span>
+      </button>
+      
+        
+          
+          <button class="filter-btn filter-web" data-filter="web">
+            Web
+            <span class="filter-count">1</span>
+          </button>
+        
+      
+        
+          
+          <button class="filter-btn filter-pwn" data-filter="pwn">
+            pwn
+            <span class="filter-count">1</span>
+          </button>
+        
+      
+        
+          
+          <button class="filter-btn filter-web" data-filter="web">
+            web
+            <span class="filter-count">1</span>
+          </button>
+        
+      
+    </div>
   </div>
 
-  <!-- =========================================
-       VERTICAL TIMELINE
-       ========================================= -->
-  
-  <div class="timeline" role="list">
-
-    
+  <main class="container" style="padding-top: 16px; padding-bottom: 60px;">
+    <div class="writeup-grid" id="postGrid">
       
-
-      <div class="timeline-item" role="listitem">
-
-        <!-- Timeline Dot -->
-        <div class="timeline-dot dot-pwn" aria-hidden="true"></div>
-
-        <!-- Card -->
-        <div class="timeline-card card-pwn">
-
-          <!-- Tanggal -->
-          <div class="tc-date">
-            <i class="fas fa-calendar-alt"></i>
-            16 May 2025
-          </div>
-
-          <!-- Nama CTF -->
-          <div class="tc-name">DEF CON CTF Quals 2025</div>
-
-          <!-- Rank -->
-          
-            <div class="tc-rank">
-              <i class="fas fa-medal"></i>&nbsp;47th / 1,240 teams
-            </div>
-          
-
-          <!-- Platform -->
-          
-            <div class="tc-platform">
-              <i class="fas fa-server"></i>&nbsp;CTFd
-            </div>
-          
-
-          <!-- Tags Kategori -->
-          
-            <div class="tc-tags">
-              
-                
-                
-                  <span class="tag pwn">Pwn</span>
-                
-              
-                
-                
-                  <span class="tag rev">Rev</span>
-                
-              
-            </div>
-          
-
-          <!-- Highlight / Note -->
-          
-            <div class="tc-highlight">
-              <i class="fas fa-quote-left" style="opacity:0.4; margin-right: 4px;"></i>
-              Berhasil solve tantangan heap feng-shui yang cukup krusial untuk poin tim.
-            </div>
-          
-
-          <div class="tc-actions" style="margin-top: 20px; display: flex; gap: 12px; flex-wrap: wrap;">
+        
+        <a href="/writeups/2026/understanding-one-byte-arbitrary-writes/"
+           class="writeup-card card-pwn"
+           data-category="pwn">
+          <div class="card-tags">
+            
+              <span class="tag pwn">pwn</span>
             
             
-              <a href="/writeups/2025/java-spring-ssti-bypass-google-ctf/" class="tc-link" style="background: var(--accent-teal); color: #ffffff; padding: 6px 14px; border-radius: 6px; font-size: 0.85rem; font-weight: 600; text-decoration: none; transition: opacity 0.2s;">
-                <i class="fas fa-book-open"></i>&nbsp; Baca Write-up
-              </a>
+              <span class="tag misc" style="background:transparent;color:var(--text-muted);border-color:var(--border-color);">one byte</span>
             
-
-            
-              <a href="https://ctftime.org" target="_blank" rel="noopener noreferrer" class="tc-link" style="background: transparent; color: var(--text-main); padding: 6px 14px; border-radius: 6px; border: 1px solid var(--border-color); font-size: 0.85rem; text-decoration: none; transition: background 0.2s;">
-                <i class="fas fa-external-link-alt"></i>&nbsp; CTFtime
-              </a>
-            
+              <span class="tag misc" style="background:transparent;color:var(--text-muted);border-color:var(--border-color);">read</span>
             
           </div>
-
-        </div><!-- end .timeline-card -->
-      </div><!-- end .timeline-item -->
-
-    
+          <h3>Understanding One-Byte Arbitrary Writes</h3>
+          
+            <p>1 byte aja udah cukup buat mengambil alih kontrol program, jika ditulis di lokasi yang tepat.</p>
+          
+          <div class="card-meta">
+            <span class="meta-date">
+              <i class="fas fa-calendar-alt"></i>
+              20 Apr 2026
+            </span>
+            
+              <span class="meta-event">
+                <i class="fas fa-flag"></i>
+                Advent Of Ctf 2025
+              </span>
+            
+            <span class="card-read">READ <i class="fas fa-arrow-right"></i></span>
+          </div>
+        </a>
       
-
-      <div class="timeline-item" role="listitem">
-
-        <!-- Timeline Dot -->
-        <div class="timeline-dot dot-misc" aria-hidden="true"></div>
-
-        <!-- Card -->
-        <div class="timeline-card card-misc">
-
-          <!-- Tanggal -->
-          <div class="tc-date">
-            <i class="fas fa-calendar-alt"></i>
-            09 September 2025
-          </div>
-
-          <!-- Nama CTF -->
-          <div class="tc-name">Compfest 17 Quals</div>
-
-          <!-- Rank -->
-          
-            <div class="tc-rank">
-              <i class="fas fa-medal"></i>&nbsp;20th / 200+ teams
-            </div>
-          
-
-          <!-- Platform -->
-          
-            <div class="tc-platform">
-              <i class="fas fa-server"></i>&nbsp;-
-            </div>
-          
-
-          <!-- Tags Kategori -->
-          
-            <div class="tc-tags">
-              
-                
-                
-                  <span class="tag web">web</span>
-                
-              
-            </div>
-          
-
-          <!-- Highlight / Note -->
-          
-            <div class="tc-highlight">
-              <i class="fas fa-quote-left" style="opacity:0.4; margin-right: 4px;"></i>
-              -
-            </div>
-          
-
-          <div class="tc-actions" style="margin-top: 20px; display: flex; gap: 12px; flex-wrap: wrap;">
+        
+        <a href="/writeups/2026/compfest-17-quals/"
+           class="writeup-card card-web"
+           data-category="web">
+          <div class="card-tags">
+            
+              <span class="tag web">web</span>
             
             
-              <a href="/writeups/2026/compfest-17-quals/" class="tc-link" style="background: var(--accent-teal); color: #ffffff; padding: 6px 14px; border-radius: 6px; font-size: 0.85rem; font-weight: 600; text-decoration: none; transition: opacity 0.2s;">
-                <i class="fas fa-book-open"></i>&nbsp; Baca Write-up
-              </a>
+              <span class="tag misc" style="background:transparent;color:var(--text-muted);border-color:var(--border-color);">Blockchain</span>
             
-
-            
-              <a href="-" target="_blank" rel="noopener noreferrer" class="tc-link" style="background: transparent; color: var(--text-main); padding: 6px 14px; border-radius: 6px; border: 1px solid var(--border-color); font-size: 0.85rem; text-decoration: none; transition: background 0.2s;">
-                <i class="fas fa-external-link-alt"></i>&nbsp; CTFtime
-              </a>
-            
+              <span class="tag misc" style="background:transparent;color:var(--text-muted);border-color:var(--border-color);">PWN</span>
             
           </div>
+          <h3>Compfest 17 Quals</h3>
+          
+            <p>I played for the team lastseenin2026 and finished in 20th place. </p>
+          
+          <div class="card-meta">
+            <span class="meta-date">
+              <i class="fas fa-calendar-alt"></i>
+              20 Apr 2026
+            </span>
+            
+              <span class="meta-event">
+                <i class="fas fa-flag"></i>
+                Compfest 17 Quals
+              </span>
+            
+            <span class="card-read">READ <i class="fas fa-arrow-right"></i></span>
+          </div>
+        </a>
+      
+        
+        <a href="/writeups/2025/java-spring-ssti-bypass-google-ctf/"
+           class="writeup-card card-web"
+           data-category="web">
+          <div class="card-tags">
+            
+              <span class="tag web">Web</span>
+            
+            
+              <span class="tag misc" style="background:transparent;color:var(--text-muted);border-color:var(--border-color);">SSTI</span>
+            
+              <span class="tag misc" style="background:transparent;color:var(--text-muted);border-color:var(--border-color);">RCE</span>
+            
+          </div>
+          <h3>Java Spring SSTI Bypass — Google CTF 2025</h3>
+          
+            <p>RCE melalui Server-Side Template Injection pada Spring Framework dengan bypass filter berbasis regex.</p>
+          
+          <div class="card-meta">
+            <span class="meta-date">
+              <i class="fas fa-calendar-alt"></i>
+              21 Jun 2025
+            </span>
+            
+              <span class="meta-event">
+                <i class="fas fa-flag"></i>
+                Google CTF 2025
+              </span>
+            
+            <span class="card-read">READ <i class="fas fa-arrow-right"></i></span>
+          </div>
+        </a>
+      
+    </div>
 
-        </div><!-- end .timeline-card -->
-      </div><!-- end .timeline-item -->
+    <div class="empty-state" id="emptyFilter" style="display:none;">
+      <div class="empty-icon"><i class="fas fa-filter"></i></div>
+      <p>Tidak ada write-up dengan kategori ini.</p>
+    </div>
+  </main>
 
-    
+</div>
 
-  </div><!-- end .timeline -->
+<script>
+(function () {
+  var btns  = document.querySelectorAll('.filter-btn');
+  var cards = document.querySelectorAll('#postGrid .writeup-card');
+  var empty = document.getElementById('emptyFilter');
 
-  
-
-</div><!-- end .timeline-page -->
-
+  btns.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var filter = btn.getAttribute('data-filter');
+      btns.forEach(function (b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      var visible = 0;
+      cards.forEach(function (card) {
+        var show = filter === 'all' || card.getAttribute('data-category') === filter;
+        card.style.display = show ? '' : 'none';
+        if (show) visible++;
+      });
+      empty.style.display = visible === 0 ? 'block' : 'none';
+    });
+  });
+})();
+</script>
   </div>
 
   <footer class="site-footer">

@@ -2,10 +2,10 @@
 layout: post
 title: "Understanding One-Byte Arbitrary Writes"
 categories: [pwn]
-tags: [one byte]
+tags: [one byte,read,write]
 date: 2026-04-20 13:13:20 +0800
 author: ilupii
-ctf_event: ""
+ctf_event: "Advent Of Ctf 2025"
 difficulty: ""
 excerpt: "1 byte aja udah cukup buat mengambil alih kontrol program, jika ditulis di lokasi yang tepat."
 ---

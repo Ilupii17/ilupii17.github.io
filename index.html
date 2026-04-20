@@ -48,56 +48,60 @@ title: "Home"
 
 </section>
 
-<!-- =========================================
-     WRITE-UPS GRID
-     ========================================= -->
+<!-- WRITE-UPS: 6 terbaru -->
 <main class="container" style="padding-bottom: 60px;">
 
   <h2 class="category-title">
-    <i class="fas fa-flag flag-icon"></i>
+    <i class="fas fa-flag"></i>
     Latest Solves
-    <i class="fas fa-flag flag-icon"></i>
+    <i class="fas fa-flag"></i>
   </h2>
 
   {% if site.posts.size > 0 %}
     <div class="writeup-grid">
-      {% for post in site.posts %}
+      {% for post in site.posts limit: 6 %}
         {% assign cat = post.categories[0] | downcase | default: "misc" %}
-
         <a href="{{ post.url | relative_url }}" class="writeup-card card-{{ cat }}">
-          <!-- Tags -->
-          <div>
+          <div class="card-tags">
             {% for cat_tag in post.categories %}
               <span class="tag {{ cat_tag | downcase }}">{{ cat_tag }}</span>
             {% endfor %}
-            {% if post.tags %}
-              {% for t in post.tags limit: 2 %}
-                <span class="tag misc" style="background: transparent; color: var(--text-muted); border-color: var(--border-color);">{{ t }}</span>
-              {% endfor %}
-            {% endif %}
+            {% for t in post.tags limit: 2 %}
+              <span class="tag misc" style="background:transparent;color:var(--text-muted);border-color:var(--border-color);">{{ t }}</span>
+            {% endfor %}
           </div>
-
           <h3>{{ post.title }}</h3>
-
           {% if post.excerpt %}
-            <p>{{ post.excerpt | strip_html | truncate: 110 }}</p>
+            <p>{{ post.excerpt | strip_html | truncate: 120 }}</p>
+          {% else %}
+            <p style="opacity:0;user-select:none;">—</p>
           {% endif %}
-
-          <!-- Meta: date + event -->
           <div class="card-meta">
             <span class="meta-date">
               <i class="fas fa-calendar-alt"></i>
               {{ post.date | date: "%d %b %Y" }}
             </span>
             {% if post.ctf_event %}
-              <span class="post-meta-sep">·</span>
-              <span><i class="fas fa-flag"></i> {{ post.ctf_event }}</span>
+              <span class="meta-event">
+                <i class="fas fa-flag"></i>
+                {{ post.ctf_event }}
+              </span>
             {% endif %}
+            <span class="card-read">READ <i class="fas fa-arrow-right"></i></span>
           </div>
         </a>
-
       {% endfor %}
     </div>
+
+    {% if site.posts.size > 6 %}
+      <div class="view-all-wrap">
+        <a href="{{ '/posts/' | relative_url }}" class="btn-elevated btn-view-all">
+          <i class="fas fa-folder-open"></i>
+          View All Write-ups
+          <span class="view-all-count">{{ site.posts.size }}</span>
+        </a>
+      </div>
+    {% endif %}
 
   {% else %}
     <div class="empty-state">

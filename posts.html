@@ -1,0 +1,109 @@
+---
+layout: default
+title: "All Write-ups"
+permalink: /posts/
+---
+
+<div class="allposts-page">
+
+  <div class="container" style="padding-top: 20px;">
+    <a href="{{ '/' | relative_url }}" class="back-link">
+      <i class="fas fa-arrow-left"></i> cd ~/
+    </a>
+
+    <div class="allposts-header">
+      <h1 class="profile-title" style="justify-content:flex-start; margin-bottom: 8px;">
+        <span class="title-tilde">~/</span>writeups
+        <span class="blinking-cursor" aria-hidden="true"></span>
+      </h1>
+      <p style="color:var(--text-muted); font-family:'Fira Code',monospace; font-size:0.88rem;">
+        {{ site.posts.size }} write-up{% if site.posts.size != 1 %}s{% endif %} total
+      </p>
+    </div>
+
+    {% assign all_cats = site.posts | map: "categories" | join: "," | split: "," | uniq | sort %}
+    <div class="filter-bar">
+      <button class="filter-btn active" data-filter="all">
+        <i class="fas fa-layer-group"></i> All
+        <span class="filter-count">{{ site.posts.size }}</span>
+      </button>
+      {% for cat in all_cats %}
+        {% if cat != "" %}
+          {% assign count = site.posts | where_exp: "p", "p.categories contains cat" | size %}
+          <button class="filter-btn filter-{{ cat | downcase }}" data-filter="{{ cat | downcase }}">
+            {{ cat }}
+            <span class="filter-count">{{ count }}</span>
+          </button>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+
+  <main class="container" style="padding-top: 16px; padding-bottom: 60px;">
+    <div class="writeup-grid" id="postGrid">
+      {% for post in site.posts %}
+        {% assign cat = post.categories[0] | downcase | default: "misc" %}
+        <a href="{{ post.url | relative_url }}"
+           class="writeup-card card-{{ cat }}"
+           data-category="{{ cat }}">
+          <div class="card-tags">
+            {% for cat_tag in post.categories %}
+              <span class="tag {{ cat_tag | downcase }}">{{ cat_tag }}</span>
+            {% endfor %}
+            {% for t in post.tags limit: 2 %}
+              <span class="tag misc" style="background:transparent;color:var(--text-muted);border-color:var(--border-color);">{{ t }}</span>
+            {% endfor %}
+          </div>
+          <h3>{{ post.title }}</h3>
+          {% if post.excerpt %}
+            <p>{{ post.excerpt | strip_html | truncate: 130 }}</p>
+          {% else %}
+            <p style="opacity:0;user-select:none;">—</p>
+          {% endif %}
+          <div class="card-meta">
+            <span class="meta-date">
+              <i class="fas fa-calendar-alt"></i>
+              {{ post.date | date: "%d %b %Y" }}
+            </span>
+            {% if post.ctf_event %}
+              <span class="meta-event">
+                <i class="fas fa-flag"></i>
+                {{ post.ctf_event }}
+              </span>
+            {% endif %}
+            <span class="card-read">READ <i class="fas fa-arrow-right"></i></span>
+          </div>
+        </a>
+      {% endfor %}
+    </div>
+
+    <div class="empty-state" id="emptyFilter" style="display:none;">
+      <div class="empty-icon"><i class="fas fa-filter"></i></div>
+      <p>Tidak ada write-up dengan kategori ini.</p>
+    </div>
+  </main>
+
+</div>
+
+<script>
+(function () {
+  var btns  = document.querySelectorAll('.filter-btn');
+  var cards = document.querySelectorAll('#postGrid .writeup-card');
+  var empty = document.getElementById('emptyFilter');
+
+  btns.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var filter = btn.getAttribute('data-filter');
+      btns.forEach(function (b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      var visible = 0;
+      cards.forEach(function (card) {
+        var show = filter === 'all' || card.getAttribute('data-category') === filter;
+        card.style.display = show ? '' : 'none';
+        if (show) visible++;
+      });
+      empty.style.display = visible === 0 ? 'block' : 'none';
+    });
+  });
+})();
+</script>
