@@ -1,0 +1,217 @@
+// =========================================
+// _sass/_base.scss
+// Reset, Tipografi, Grid Background, Body
+// =========================================
+
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap');
+
+// --- Reset & Base ---
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  font-family: $font-display;
+  background-color: var(--bg-main);
+  color: var(--text-main);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  position: relative;
+  transition: background-color 0.25s ease, color 0.25s ease;
+  line-height: 1.7;
+}
+
+// --- Animated Grid Background ---
+body::before {
+  content: "";
+  position: fixed;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background-image: radial-gradient(var(--grid-color) 2px, transparent 2px);
+  background-size: 30px 30px;
+  z-index: -1;
+  animation: moveGrid 30s linear infinite;
+  transform: translateZ(0);
+  will-change: transform;
+  pointer-events: none;
+}
+
+@keyframes moveGrid {
+  0%   { transform: translateY(0)    rotate(0deg) translateZ(0); }
+  100% { transform: translateY(30px) rotate(1deg) translateZ(0); }
+}
+
+// --- Typography: Headings ---
+h1, h2, h3, h4, h5, h6 {
+  font-family: $font-display;
+  font-weight: 700;
+  color: var(--text-main);
+  line-height: 1.3;
+}
+
+h1 { font-size: clamp(1.6rem, 4vw, 2.4rem); }
+h2 { font-size: clamp(1.3rem, 3vw, 1.9rem); }
+h3 { font-size: clamp(1.1rem, 2.5vw, 1.5rem); }
+h4 { font-size: 1.1rem; }
+
+p {
+  line-height: 1.75;
+  color: var(--text-main);
+  margin-bottom: $space-md;
+}
+
+a {
+  color: var(--accent-teal);
+  text-decoration: none;
+  transition: color 0.2s;
+
+  &:hover { color: var(--accent-main); }
+}
+
+ul, ol {
+  padding-left: $space-lg;
+  margin-bottom: $space-md;
+
+  li {
+    margin-bottom: $space-xs;
+    line-height: 1.7;
+  }
+}
+
+blockquote {
+  border-left: 4px solid var(--accent-teal);
+  padding: $space-sm $space-md;
+  margin: $space-lg 0;
+  background: var(--toc-bg);
+  border-radius: 0 $radius-sm $radius-sm 0;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+hr {
+  border: none;
+  border-top: 2px solid var(--border-color);
+  margin: $space-xl 0;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  border-radius: $radius-md;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: $space-lg;
+  font-size: 0.9rem;
+
+  th, td {
+    padding: $space-sm $space-md;
+    text-align: left;
+    border-bottom: 2px solid var(--border-color);
+  }
+
+  th {
+    background: var(--toc-bg);
+    font-weight: 700;
+    color: var(--accent-teal);
+  }
+
+  tr:hover td { background: var(--toc-active-bg); }
+}
+
+// --- Layout Wrapper ---
+.page-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 $space-lg;
+}
+
+.container--wide {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 $space-lg;
+}
+
+/* =========================================
+   STYLING GAMBAR & LIGHTBOX MODAL
+   ========================================= */
+.prose img,
+article img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 32px auto;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08);
+  border: 1px solid var(--border-color);
+  
+  /* Tambahan untuk Lightbox */
+  cursor: zoom-in; /* Ubah kursor jadi ikon kaca pembesar */
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Efek saat gambar di-hover */
+.prose img:hover,
+article img:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 15px 30px -5px rgba(0, 0, 0, 0.15);
+}
+
+/* Background Gelap Modal */
+.img-modal {
+  display: none; /* Sembunyikan default */
+  position: fixed;
+  z-index: 9999; /* Pastikan di paling atas */
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(15, 23, 42, 0.85); /* Warna slate gelap transparan */
+  backdrop-filter: blur(5px); /* Efek blur ala macOS */
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  align-items: center;
+  justify-content: center;
+}
+
+.img-modal.show {
+  opacity: 1;
+}
+
+/* Gambar di dalam Modal */
+.img-modal-content {
+  max-width: 90%;
+  max-height: 90vh;
+  border-radius: 8px;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  object-fit: contain;
+  cursor: zoom-out;
+  transform: scale(0.95);
+  transition: transform 0.3s ease;
+}
+
+.img-modal.show .img-modal-content {
+  transform: scale(1);
+}

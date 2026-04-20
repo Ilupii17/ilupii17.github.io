@@ -1,0 +1,33 @@
+# CTF Timeline Data
+# Field yang tersedia:
+#   nama_ctf  : Nama event CTF (wajib)
+#   tanggal   : Tanggal event (format: YYYY-MM-DD)
+#   rank      : Peringkat akhir (opsional, contoh: "12th / 320 teams")
+#   platform  : Platform hosting (CTFd, rCTF, CTFtime, dll)
+#   kategori  : Kategori utama yang dikerjakaan (array)
+#   highlight : Sorotan / writeup favorit dari event (string, opsional)
+#   url       : Link CTFtime atau web resmi event (opsional)
+#   warna     : Warna aksen kartu (pwn | web | rev | misc) — mempengaruhi warna kartu
+#writeup_url: "/2025/06/21/java-spring-ssti-bypass/"
+
+- nama_ctf: "DEF CON CTF Quals 2025"
+  tanggal: "2025-05-16"
+  rank: "47th / 1,240 teams"
+  platform: "CTFd"
+  kategori:
+    - Pwn
+    - Rev
+  highlight: "Berhasil solve tantangan heap feng-shui yang cukup krusial untuk poin tim."
+  url: "https://ctftime.org"
+  warna: pwn
+  writeup_url: "/writeups/2025/java-spring-ssti-bypass-google-ctf/"
+
+- nama_ctf: "Compfest 17 Quals"
+  tanggal: "2025-09-09"
+  rank: "20th / 200+ teams"
+  platform: "-"
+  kategori:
+    - web
+  highlight: "-"
+  url: "-"
+  writeup_url: "writeups/2026/compfest-17-quals/"

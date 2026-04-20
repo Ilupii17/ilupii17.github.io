@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>
+    {% if page.title %}{{ page.title }} | {{ site.title }}{% else %}{{ site.title }}{% endif %}
+  </title>
+  <meta name="description" content="{{ page.excerpt | default: site.description | strip_html | truncate: 160 }}">
+
+  <!-- SEO -->
+  {% seo %}
+
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
+
+  <!-- Theme Init — harus di <head> untuk hindari FOUC -->
+  <script>
+    (function() {
+      var saved = localStorage.getItem('ctf-theme');
+      if (saved === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
+  </script>
+</head>
+<body>
+
+  {% include header.html %}
+
+  <div class="page-wrapper">
+    {{ content }}
+  </div>
+
+  <footer class="site-footer">
+    <p>
+      <span style="color: var(--accent-teal);">ilupii</span>
+      <span style="color: var(--text-muted);">:~$</span>
+      built with
+      <a href="https://jekyllrb.com" target="_blank" rel="noopener noreferrer">Jekyll</a>
+      &amp; deployed on
+      <a href="https://pages.github.com" target="_blank" rel="noopener noreferrer">GitHub Pages</a>
+    </p>
+    <p style="margin-top: 6px; font-size: 0.78rem; opacity: 0.6;">
+      © {{ 'now' | date: "%Y" }} {{ default: "ilupii" }} — All write-ups are for educational purposes.
+    </p>
+  </footer>
+
+  {% include modal.html %}
+
+  <!-- =========================================
+       Vanilla JS — Theme Toggle & Modal
+       ========================================= -->
+  <script>
+    // ---- Theme Toggle ----
+    var html      = document.documentElement;
+    var themeIcon = document.getElementById('themeIcon');
+
+    // Sync icon dengan tema yang sudah di-set di <head>
+    (function() {
+      if (html.getAttribute('data-theme') === 'dark') {
+        themeIcon.classList.replace('fa-sun', 'fa-moon');
+      }
+    })();
+
+    function toggleTheme() {
+      if (html.getAttribute('data-theme') === 'dark') {
+        html.removeAttribute('data-theme');
+        themeIcon.classList.replace('fa-moon', 'fa-sun');
+        localStorage.setItem('ctf-theme', 'light');
+      } else {
+        html.setAttribute('data-theme', 'dark');
+        themeIcon.classList.replace('fa-sun', 'fa-moon');
+        localStorage.setItem('ctf-theme', 'dark');
+      }
+    }
+
+    // ---- Modal Menu ----
+    var modal = document.getElementById('siteModal');
+
+    function toggleMenu() {
+      if (modal.classList.contains('is-open')) {
+        modal.classList.remove('is-open');
+        document.body.style.overflow = '';
+      } else {
+        modal.classList.add('is-open');
+        document.body.style.overflow = 'hidden';
+      }
+    }
+
+    // Tutup modal klik di luar content
+    modal.addEventListener('click', function(e) {
+      if (e.target === modal) toggleMenu();
+    });
+
+    // Tutup modal dengan Escape
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && modal.classList.contains('is-open')) toggleMenu();
+    });
+
+    // ---- Mobile ToC Accordion ----
+    var tocToggle = document.getElementById('tocToggle');
+    if (tocToggle) {
+      tocToggle.addEventListener('click', function() {
+        var body     = document.getElementById('tocBody');
+        var expanded = tocToggle.getAttribute('aria-expanded') === 'true';
+
+        tocToggle.setAttribute('aria-expanded', !expanded);
+        body.classList.toggle('is-open', !expanded);
+      });
+    }
+
+    // ---- Highlight active ToC item on scroll ----
+    (function() {
+      var tocLinks = document.querySelectorAll('.toc-sidebar a, .toc-accordion-body a');
+      if (!tocLinks.length) return;
+
+      var headings = document.querySelectorAll('.prose h2[id], .prose h3[id]');
+      if (!headings.length) return;
+
+      function onScroll() {
+        var scrollY   = window.scrollY + 120;
+        var activeIdx = 0;
+
+        headings.forEach(function(h, i) {
+          if (h.offsetTop <= scrollY) activeIdx = i;
+        });
+
+        tocLinks.forEach(function(link) {
+          link.parentElement.style.borderLeftColor = '';
+          link.style.color = '';
+          link.style.background = '';
+        });
+
+        var activeId   = headings[activeIdx] ? headings[activeIdx].id : null;
+        var activeLink = activeId
+          ? document.querySelector('.toc-sidebar a[href="#' + activeId + '"]')
+          : null;
+
+        if (activeLink) {
+          activeLink.style.color      = 'var(--accent-teal)';
+          activeLink.style.background = 'var(--toc-active-bg)';
+          if (activeLink.parentElement)
+            activeLink.parentElement.style.borderLeftColor = 'var(--accent-teal)';
+        }
+      }
+
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+    })();
+  </script>
+
+</body>
+</html>

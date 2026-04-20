@@ -1,0 +1,121 @@
+// =========================================
+// _sass/_variables.scss
+// Sistem Warna Light/Dark + Design Tokens
+// =========================================
+
+// --- CSS Custom Properties via :root ---
+// Diekspos sebagai CSS variables agar bisa di-toggle oleh JS
+
+// Kita definisikan default (light mode) sebagai SCSS vars juga
+// untuk bisa dipakai dalam SCSS (misalnya di mixin Rouge)
+$accent-main:   #f59e0b;
+$accent-teal:   #14b8a6;
+$accent-orange: #f97316;
+$accent-lime:   #84cc16;
+
+// =========================================
+// CSS Custom Properties (Light & Dark)
+// =========================================
+:root {
+  // --- Latar & Teks ---
+  --bg-main:          #f8fafc;
+  --bg-secondary:     #f8fafc;
+  --text-main:        #334155;
+  --text-muted:       #64748b;
+  --text-code-inline: #0f172a;
+  --card-bg:          #ffffff;
+
+  // --- Border ---
+  --border-color:       #e2e8f0;
+  --btn-timbul-shadow:  #cbd5e1;
+
+  // --- Aksen Warna Utama ---
+  --accent-main:   #{$accent-main};
+  --accent-teal:   #{$accent-teal};
+  --accent-orange: #{$accent-orange};
+  --accent-lime:   #{$accent-lime};
+
+  // --- Grid Background ---
+  --grid-color: rgba(245, 158, 11, 0.08);
+
+  // --- Shadow ---
+  --shadow-pop: rgba(15, 23, 42, 0.1);
+
+  // --- Terminal / Code Block ---
+  --terminal-bg:     #0f172a;
+  --terminal-header: #1e293b;
+  --terminal-text:   #94a3b8;
+
+  // --- ToC ---
+  --toc-bg:         #ffffff;
+  --toc-border:     #e2e8f0;
+  --toc-active-bg:  rgba(20, 184, 166, 0.1);
+
+  // --- Inline Code ---
+  --inline-code-bg:   rgba(20, 184, 166, 0.1);
+  --inline-code-text: #0f766e;
+}
+
+// --- Dark Mode ---
+[data-theme="dark"] {
+  --bg-main:          #0d1117;
+  --bg-secondary:     #111827;
+  --text-main:        #f1f5f9;
+  --text-muted:       #94a3b8;
+  --text-code-inline: #f1f5f9;
+  --card-bg:          #1f2937;
+
+  --border-color:      #374151;
+  --btn-timbul-shadow: #0d1117;
+
+  --accent-main:   #fbbf24;
+  --accent-teal:   #2dd4bf;
+  --accent-orange: #fb923c;
+  --accent-lime:   #a3e635;
+
+  --grid-color: rgba(251, 191, 36, 0.12);
+  --shadow-pop: rgba(0, 0, 0, 0.5);
+
+  --terminal-bg:     #020617;
+  --terminal-header: #0f172a;
+  --terminal-text:   #64748b;
+
+  --toc-bg:         #1f2937;
+  --toc-border:     #374151;
+  --toc-active-bg:  rgba(45, 212, 191, 0.12);
+
+  --inline-code-bg:   rgba(45, 212, 191, 0.1);
+  --inline-code-text: #2dd4bf;
+}
+
+// =========================================
+// Breakpoints
+// =========================================
+$bp-mobile: 640px;
+$bp-tablet: 768px;
+$bp-desktop: 1024px;
+$bp-wide: 1280px;
+
+// =========================================
+// Typography
+// =========================================
+$font-display: 'Quicksand', sans-serif;
+$font-mono:    'Fira Code', 'Courier New', Courier, monospace;
+
+// =========================================
+// Spacing Scale
+// =========================================
+$space-xs:  4px;
+$space-sm:  8px;
+$space-md:  16px;
+$space-lg:  24px;
+$space-xl:  40px;
+$space-2xl: 64px;
+
+// =========================================
+// Border Radius
+// =========================================
+$radius-sm: 8px;
+$radius-md: 16px;
+$radius-lg: 20px;
+$radius-pill: 999px;

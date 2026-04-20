@@ -1,0 +1,109 @@
+---
+layout: default
+title: "Home"
+---
+
+<!-- =========================================
+     PROFILE / HERO SECTION
+     ========================================= -->
+<section class="profile-section">
+
+  <h1 class="profile-title">
+    <span class="title-tilde">~/</span>ilupii
+    <span class="blinking-cursor" aria-hidden="true"></span>
+  </h1>
+
+  <div class="status-badge">CTF Player &amp; Full-Stack Developer</div>
+
+  <!-- Terminal Card -->
+  <div class="terminal-card">
+    <div class="terminal-header">
+      <div class="terminal-dot dot-red"   aria-hidden="true"></div>
+      <div class="terminal-dot dot-yellow" aria-hidden="true"></div>
+      <div class="terminal-dot dot-green"  aria-hidden="true"></div>
+      <div class="terminal-title">bash — kentang@wsl2</div>
+    </div>
+    <div class="terminal-body">
+      <p>
+        <span class="prompt">kentang@wsl2:~$</span>&nbsp;
+        <span class="command">cat about.txt</span>
+      </p>
+      <p class="output">
+        Hi! I'm ilupii, a CTF Player and software developer.
+        I'm currently a student at <strong>Bachharuddin Jusuf Habibie Institute of Technology</strong>, majoring in
+        <strong>information system</strong>.
+        <br><br>
+        In my free time, I actively participate in Capture The Flag (CTF) competitions,
+        where I continuously sharpen my problem-solving skills and deepen my understanding
+        of real-world security challenges.
+        <strong>Laravel, Vue.js, Nuxt, and Tailwind CSS</strong> ecosystem.
+      </p>
+      <br>
+      <p>
+        <span class="prompt">kentang@wsl2:~$</span>&nbsp;
+        <span class="command">ls ./writeups/ | head<span class="blinking-cursor" style="width:8px;height:16px;margin-left:4px;" aria-hidden="true"></span></span>
+      </p>
+    </div>
+  </div>
+
+</section>
+
+<!-- =========================================
+     WRITE-UPS GRID
+     ========================================= -->
+<main class="container" style="padding-bottom: 60px;">
+
+  <h2 class="category-title">
+    <i class="fas fa-flag flag-icon"></i>
+    Latest Solves
+    <i class="fas fa-flag flag-icon"></i>
+  </h2>
+
+  {% if site.posts.size > 0 %}
+    <div class="writeup-grid">
+      {% for post in site.posts %}
+        {% assign cat = post.categories[0] | downcase | default: "misc" %}
+
+        <a href="{{ post.url | relative_url }}" class="writeup-card card-{{ cat }}">
+          <!-- Tags -->
+          <div>
+            {% for cat_tag in post.categories %}
+              <span class="tag {{ cat_tag | downcase }}">{{ cat_tag }}</span>
+            {% endfor %}
+            {% if post.tags %}
+              {% for t in post.tags limit: 2 %}
+                <span class="tag misc" style="background: transparent; color: var(--text-muted); border-color: var(--border-color);">{{ t }}</span>
+              {% endfor %}
+            {% endif %}
+          </div>
+
+          <h3>{{ post.title }}</h3>
+
+          {% if post.excerpt %}
+            <p>{{ post.excerpt | strip_html | truncate: 110 }}</p>
+          {% endif %}
+
+          <!-- Meta: date + event -->
+          <div class="card-meta">
+            <span class="meta-date">
+              <i class="fas fa-calendar-alt"></i>
+              {{ post.date | date: "%d %b %Y" }}
+            </span>
+            {% if post.ctf_event %}
+              <span class="post-meta-sep">·</span>
+              <span><i class="fas fa-flag"></i> {{ post.ctf_event }}</span>
+            {% endif %}
+          </div>
+        </a>
+
+      {% endfor %}
+    </div>
+
+  {% else %}
+    <div class="empty-state">
+      <div class="empty-icon"><i class="fas fa-folder-open"></i></div>
+      <p>Belum ada write-up. Tambahkan file Markdown di folder <code>_posts/</code>.</p>
+    </div>
+  {% endif %}
+
+</main>

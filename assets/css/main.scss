@@ -1,0 +1,17 @@
+---
+# Front matter required for Jekyll to process SCSS
+---
+
+// =========================================
+// assets/css/main.scss
+// Master SCSS Entry Point
+// =========================================
+
+// 1. Variabel & Design Tokens
+@import "variables";
+
+// 2. Base: Reset, Tipografi, Grid Background
+@import "base";
+
+// 3. Komponen UI
+@import "components";

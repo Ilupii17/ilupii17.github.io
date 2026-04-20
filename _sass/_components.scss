@@ -1,0 +1,1205 @@
+// =========================================
+// _sass/_components.scss
+// Komponen UI: Buttons, Terminal, Modal,
+// Cards, Write-up Grid, ToC, Timeline
+// =========================================
+
+// =========================================
+// 1. ELEVATED BUTTON (Timbul Effect)
+// =========================================
+.btn-elevated {
+  background: var(--card-bg);
+  border: 3px solid var(--border-color);
+  border-radius: 18px;
+  box-shadow: 0 6px 0 var(--btn-timbul-shadow);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  color: var(--text-main);
+  font-family: $font-display;
+  font-weight: 700;
+  font-size: 1rem;
+  transition: transform 0.1s ease-in-out,
+              box-shadow 0.1s ease-in-out,
+              border-color 0.1s ease-in-out,
+              color 0.1s ease-in-out;
+
+  &:hover {
+    transform: translateY(-2px);
+    border-color: var(--accent-teal);
+    box-shadow: 0 8px 0 var(--accent-teal);
+    color: var(--accent-teal);
+  }
+
+  &:active {
+    transform: translateY(6px);
+    box-shadow: 0 0 0 var(--accent-teal);
+  }
+
+  // Variant: Icon Only
+  &.btn-icon {
+    width: 50px;
+    height: 50px;
+    font-size: 1.4rem;
+  }
+
+  // Color variants
+  &.btn-teal {
+    border-color: var(--accent-teal);
+    box-shadow: 0 6px 0 var(--accent-teal);
+    color: var(--accent-teal);
+    &:hover { box-shadow: 0 10px 0 var(--accent-teal); }
+    &:active { box-shadow: 0 0 0 var(--accent-teal); }
+  }
+
+  &.btn-orange {
+    border-color: var(--accent-orange);
+    box-shadow: 0 6px 0 var(--accent-orange);
+    color: var(--accent-orange);
+    &:hover { box-shadow: 0 10px 0 var(--accent-orange); }
+    &:active { box-shadow: 0 0 0 var(--accent-orange); }
+  }
+
+  // Close / Danger variant
+  &.btn-close-modal {
+    background-color: var(--accent-orange);
+    color: white;
+    border-color: darken($accent-orange, 15%);
+    box-shadow: 0 6px 0 darken($accent-orange, 15%);
+    &:hover { color: white; box-shadow: 0 10px 0 darken($accent-orange, 15%); }
+    &:active { box-shadow: 0 0 0 darken($accent-orange, 15%); }
+  }
+}
+
+// =========================================
+// 2. STATUS BADGE
+// =========================================
+.status-badge {
+  background-color: var(--card-bg);
+  color: var(--accent-teal);
+  padding: 8px 22px;
+  border-radius: $radius-pill;
+  display: inline-block;
+  font-weight: 700;
+  font-size: 0.9rem;
+  border: 2px solid var(--accent-teal);
+  box-shadow: 0 4px 0 var(--accent-teal);
+  transition: transform 0.2s, box-shadow 0.2s;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 0 var(--accent-teal);
+  }
+}
+
+// =========================================
+// 3. TAGS (Kategori Write-up)
+// =========================================
+.tag {
+  display: inline-block;
+  padding: 5px 12px;
+  border-radius: $radius-sm;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #ffffff;
+  border: 2px solid rgba(255,255,255,0.25);
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+
+  &.pwn  { background-color: var(--accent-orange); }
+  &.web  { background-color: var(--accent-teal);   }
+  &.rev  { background-color: var(--accent-lime); color: #1a1a1a; }
+  &.misc { background-color: var(--accent-main); color: #1a1a1a; }
+  &.crypto { background-color: #8b5cf6; }
+  &.forensics { background-color: #ec4899; }
+}
+
+// =========================================
+// 4. HEADER
+// =========================================
+.site-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: $space-lg $space-lg;
+  position: relative;
+  z-index: 100;
+
+  .header-brand {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-main);
+    text-decoration: none;
+    font-family: $font-mono;
+
+    span { color: var(--accent-main); }
+    &:hover { color: var(--accent-teal); }
+  }
+
+  .header-actions {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+
+  .btn-icon .fa-sun  { color: var(--accent-main); }
+  .btn-icon .fa-moon { color: var(--accent-main); }
+  .btn-icon .fa-bars { color: var(--accent-teal); }
+  .btn-icon .fab.fa-github { color: var(--accent-teal); }
+}
+
+// =========================================
+// 5. TERMINAL CARD (Profile)
+// =========================================
+.terminal-card {
+  background-color: var(--terminal-bg);
+  border: 3px solid var(--border-color);
+  border-radius: $radius-md;
+  width: 100%;
+  max-width: 720px;
+  overflow: hidden;
+  box-shadow: 0 10px 0 var(--btn-timbul-shadow), 0 20px 40px var(--shadow-pop);
+  text-align: left;
+  transition: box-shadow 0.2s, transform 0.2s;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 14px 0 var(--btn-timbul-shadow), 0 24px 48px var(--shadow-pop);
+  }
+
+  .terminal-header {
+    background-color: var(--terminal-header);
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 2px solid rgba(255,255,255,0.05);
+  }
+
+  .terminal-dot {
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+
+    &.dot-red    { background-color: var(--accent-orange); }
+    &.dot-yellow { background-color: var(--accent-main); }
+    &.dot-green  { background-color: var(--accent-lime); }
+  }
+
+  .terminal-title {
+    margin: 0 auto;
+    padding-right: 54px;
+    color: var(--terminal-text);
+    font-size: 0.82rem;
+    font-family: $font-mono;
+  }
+
+  .terminal-body {
+    padding: $space-lg $space-xl;
+    font-family: $font-mono;
+    font-size: 0.92rem;
+    line-height: 1.7;
+    color: #cbd5e1;
+
+    .prompt  { color: $accent-lime; font-weight: 600; }
+    .command { color: $accent-teal; font-weight: 600; }
+    .output  {
+      margin-top: $space-sm;
+      color: #94a3b8;
+      font-family: $font-display;
+      font-size: 0.95rem;
+    }
+    .highlight { color: $accent-main; font-weight: 700; }
+  }
+}
+
+// =========================================
+// 6. PROFILE SECTION
+// =========================================
+.profile-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: $space-lg $space-lg $space-xl;
+  position: relative;
+  z-index: 10;
+  gap: $space-lg;
+
+  .profile-title {
+    font-size: clamp(1.5rem, 4vw, 2.4rem);
+    color: var(--text-main);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: $font-mono;
+    font-weight: 700;
+
+    .title-tilde { color: var(--accent-main); }
+  }
+
+  .blinking-cursor {
+    display: inline-block;
+    width: 12px;
+    height: clamp(22px, 3vw, 30px);
+    background-color: var(--accent-main);
+    animation: blink 1s step-end infinite;
+    vertical-align: middle;
+    border-radius: 2px;
+  }
+}
+
+@keyframes blink { 50% { opacity: 0; } }
+
+// =========================================
+// 7. WRITE-UP GRID CARDS
+// =========================================
+.writeup-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+  gap: $space-lg;
+  margin-top: $space-lg;
+}
+
+.writeup-card {
+  background: var(--card-bg);
+  border: 4px solid;
+  border-radius: $radius-md;
+  padding: $space-lg;
+  text-align: left;
+  text-decoration: none;
+  display: block;
+  color: inherit;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+
+  h3 {
+    margin: $space-sm 0;
+    font-size: 1.1rem;
+    color: var(--text-main);
+    line-height: 1.4;
+  }
+
+  p {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    line-height: 1.6;
+    margin-bottom: 0;
+  }
+
+  .card-meta {
+    display: flex;
+    align-items: center;
+    gap: $space-sm;
+    flex-wrap: wrap;
+    margin-top: $space-md;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    font-family: $font-mono;
+
+    .meta-date { display: flex; align-items: center; gap: 4px; }
+  }
+
+  // Category-specific border & shadow
+  &.card-pwn {
+    border-color: var(--accent-orange);
+    box-shadow: 0 8px 0 var(--accent-orange);
+    &:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 14px 0 var(--accent-orange), 0 4px 24px rgba(249, 115, 22, 0.25);
+    }
+  }
+  &.card-web {
+    border-color: var(--accent-teal);
+    box-shadow: 0 8px 0 var(--accent-teal);
+    &:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 14px 0 var(--accent-teal), 0 4px 24px rgba(20, 184, 166, 0.25);
+    }
+  }
+  &.card-rev {
+    border-color: var(--accent-lime);
+    box-shadow: 0 8px 0 var(--accent-lime);
+    &:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 14px 0 var(--accent-lime), 0 4px 24px rgba(132, 204, 22, 0.2);
+    }
+  }
+  &.card-misc {
+    border-color: var(--accent-main);
+    box-shadow: 0 8px 0 var(--accent-main);
+    &:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 14px 0 var(--accent-main), 0 4px 24px rgba(245, 158, 11, 0.25);
+    }
+  }
+  &.card-crypto {
+    border-color: #8b5cf6;
+    box-shadow: 0 8px 0 #8b5cf6;
+    &:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 14px 0 #8b5cf6, 0 4px 24px rgba(139, 92, 246, 0.25);
+    }
+  }
+}
+
+.category-title {
+  text-align: center;
+  margin-bottom: $space-lg;
+  color: var(--accent-main);
+  font-weight: 700;
+  font-family: $font-mono;
+  font-size: 1.1rem;
+  letter-spacing: 0.05em;
+
+  .fa-flag { margin: 0 8px; }
+}
+
+// =========================================
+// 8. MODAL MENU
+// =========================================
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background-color: rgba(15, 23, 42, 0.85);
+  z-index: 1000;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(4px);
+
+  &.is-open { display: flex; }
+
+  .modal-content {
+    background: var(--bg-main);
+    border: 4px solid var(--accent-teal);
+    border-radius: $radius-lg;
+    width: 92%;
+    max-width: 420px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px var(--shadow-pop);
+    transform: scale(0.9) translateY(20px);
+    opacity: 0;
+    transition: transform 0.25s ease-out, opacity 0.25s ease-out;
+  }
+
+  &.is-open .modal-content {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+  }
+
+  .modal-header {
+    background-color: var(--accent-teal);
+    padding: 18px;
+    text-align: center;
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: white;
+    font-family: $font-mono;
+    letter-spacing: 0.08em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .modal-body {
+    padding: $space-lg;
+    display: flex;
+    flex-direction: column;
+    gap: $space-sm;
+  }
+
+  .menu-item {
+    width: 100%;
+    padding: 14px $space-md;
+    font-size: 1rem;
+    justify-content: flex-start;
+    gap: 14px;
+    border-radius: $radius-md;
+    text-decoration: none;
+    font-family: $font-display;
+
+    i { width: 26px; text-align: center; }
+    &.orange-text i { color: var(--accent-orange); }
+    &.teal-text   i { color: var(--accent-teal); }
+    &.lime-text   i { color: var(--accent-lime); }
+    &.yellow-text i { color: var(--accent-main); }
+  }
+}
+
+// =========================================
+// 9. TABLE OF CONTENTS (ToC)
+// =========================================
+
+// Layout wrapper untuk post dengan ToC
+.post-layout {
+  display: grid;
+  grid-template-columns: 1fr 260px;
+  gap: $space-xl;
+  align-items: start;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 $space-lg;
+
+  @media (max-width: $bp-desktop) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.post-content-col {
+  min-width: 0; // prevents grid blowout
+  order: 1;
+}
+
+// Sidebar ToC (Desktop)
+.toc-sidebar {
+  order: 2;
+  position: sticky;
+  top: $space-lg;
+
+  @media (max-width: $bp-desktop) {
+    display: none; // disembunyikan di mobile, ganti dengan accordion
+    order: 0;
+  }
+
+  .toc-inner {
+    background: var(--toc-bg);
+    border: 3px solid var(--border-color);
+    border-radius: $radius-md;
+    padding: $space-md $space-lg;
+    box-shadow: 0 6px 0 var(--btn-timbul-shadow);
+
+    .toc-heading {
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--accent-teal);
+      margin-bottom: $space-sm;
+      font-family: $font-mono;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      &::before {
+        content: "▸";
+        color: var(--accent-main);
+      }
+    }
+
+    // Override kramdown generated ToC list
+    #markdown-toc,
+    .toc-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+
+      li {
+        margin: 0;
+        border-left: 2px solid var(--border-color);
+        transition: border-color 0.2s;
+
+        &:hover { border-left-color: var(--accent-teal); }
+
+        a {
+          display: block;
+          padding: 6px $space-sm;
+          font-size: 0.85rem;
+          color: var(--text-muted);
+          text-decoration: none;
+          transition: color 0.2s, background 0.2s;
+          border-radius: 0 $radius-sm $radius-sm 0;
+          line-height: 1.4;
+
+          &:hover {
+            color: var(--accent-teal);
+            background: var(--toc-active-bg);
+          }
+        }
+
+        // Level-2 heading links (H3)
+        ul, ol {
+          list-style: none;
+          padding: 0;
+          margin: 0;
+
+          li a {
+            padding-left: $space-lg;
+            font-size: 0.8rem;
+          }
+        }
+      }
+    }
+  }
+}
+
+// Mobile ToC Accordion
+.toc-accordion {
+  display: none;
+  margin-bottom: $space-lg;
+  border: 3px solid var(--accent-teal);
+  border-radius: $radius-md;
+  overflow: hidden;
+  box-shadow: 0 6px 0 var(--accent-teal);
+
+  @media (max-width: $bp-desktop) {
+    display: block;
+  }
+
+  .toc-accordion-toggle {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: $space-sm $space-md;
+    background: var(--toc-bg);
+    border: none;
+    cursor: pointer;
+    font-family: $font-display;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--accent-teal);
+
+    .toc-chevron {
+      transition: transform 0.3s;
+      font-size: 0.8rem;
+    }
+
+    &[aria-expanded="true"] .toc-chevron {
+      transform: rotate(180deg);
+    }
+  }
+
+  .toc-accordion-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s ease;
+    background: var(--toc-bg);
+
+    &.is-open { max-height: 500px; }
+
+    // Reuse same list styling
+    #markdown-toc,
+    .toc-list {
+      list-style: none;
+      padding: $space-sm $space-md $space-md;
+      margin: 0;
+
+      li {
+        margin: 0;
+        a {
+          display: block;
+          padding: 5px 0;
+          font-size: 0.88rem;
+          color: var(--text-muted);
+          text-decoration: none;
+          border-bottom: 1px dashed var(--border-color);
+
+          &:hover { color: var(--accent-teal); }
+        }
+        ul, ol {
+          list-style: none;
+          padding-left: $space-md;
+          margin: 0;
+          li a { font-size: 0.82rem; }
+        }
+      }
+    }
+  }
+}
+
+// =========================================
+// 10. POST / ARTICLE TYPOGRAPHY
+// =========================================
+.post-header {
+  margin-bottom: $space-xl;
+
+  .post-title {
+    font-size: clamp(1.6rem, 4vw, 2.5rem);
+    line-height: 1.25;
+    margin-bottom: $space-md;
+  }
+
+  .post-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: $space-sm;
+    color: var(--text-muted);
+    font-size: 0.88rem;
+    font-family: $font-mono;
+    margin-bottom: $space-md;
+
+    .post-meta-sep { color: var(--border-color); }
+  }
+
+  .post-tags { display: flex; gap: $space-xs; flex-wrap: wrap; }
+}
+
+// Article prose styling
+.prose {
+  h2 {
+    font-size: 1.6rem;
+    margin: $space-xl 0 $space-md;
+    padding-bottom: $space-sm;
+    border-bottom: 3px solid var(--accent-teal);
+    color: var(--text-main);
+  }
+
+  h3 {
+    font-size: 1.25rem;
+    margin: $space-lg 0 $space-sm;
+    color: var(--accent-teal);
+  }
+
+  h4 {
+    font-size: 1.05rem;
+    margin: $space-md 0 $space-xs;
+    color: var(--accent-main);
+  }
+
+  p { margin-bottom: $space-md; }
+
+  // Inline code
+  code:not([class]) {
+    background: var(--inline-code-bg);
+    color: var(--inline-code-text);
+    padding: 2px 7px;
+    border-radius: $radius-sm;
+    font-family: $font-mono;
+    font-size: 0.88em;
+    border: 1px solid rgba(20, 184, 166, 0.2);
+  }
+}
+
+// // =========================================
+// // 11. ROUGE SYNTAX HIGHLIGHTING
+// //     (Terminal Console Theme)
+// // =========================================
+// .highlight,
+// figure.highlight,
+// div.highlight {
+//   background: var(--terminal-bg);
+//   border: 3px solid var(--border-color);
+//   border-radius: $radius-md;
+//   margin: $space-lg 0;
+//   overflow: hidden;
+//   box-shadow: 0 8px 0 var(--btn-timbul-shadow);
+//   position: relative;
+
+//   // Fake terminal header bar
+//   &::before {
+//     content: "⬤  ⬤  ⬤";
+//     display: block;
+//     background: var(--terminal-header);
+//     color: var(--terminal-text);
+//     padding: 10px 16px;
+//     font-size: 0.7rem;
+//     letter-spacing: 4px;
+//     border-bottom: 2px solid rgba(255,255,255,0.05);
+//   }
+
+//   pre {
+//     margin: 0;
+//     padding: $space-md $space-lg;
+//     overflow-x: auto;
+//     background: transparent;
+//     font-family: $font-mono;
+//     font-size: 0.88rem;
+//     line-height: 1.7;
+
+//     // Scrollbar styling
+//     &::-webkit-scrollbar { height: 6px; }
+//     &::-webkit-scrollbar-track { background: transparent; }
+//     &::-webkit-scrollbar-thumb {
+//       background: #334155;
+//       border-radius: 3px;
+//     }
+//   }
+
+
+// =========================================
+// 11. ROUGE SYNTAX HIGHLIGHTING
+//     (macOS Window Theme)
+// =========================================
+
+div.highlighter-rouge,
+figure.highlight {
+  background: var(--terminal-bg);
+  border: 1px solid rgba(255, 255, 255, 0.1); /* Border lebih tipis ala gambar */
+  border-radius: 12px;
+  margin: 24px 0;
+  overflow: hidden;
+  box-shadow: 0 12px 24px rgba(0,0,0,0.3); /* Shadow lebih menyebar dan soft */
+  position: relative;
+  z-index: 1;
+
+  /* Header Container (Dibuat via JS) */
+  .code-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    background: rgba(255, 255, 255, 0.02); /* Sedikit gradasi dari background utama */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+
+    .mac-dots {
+      display: flex;
+      gap: 8px;
+
+      span {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        display: inline-block;
+        &.red { background: #ff5f56; }
+        &.yellow { background: #ffbd2e; }
+        &.green { background: #27c93f; }
+      }
+    }
+
+    .code-lang {
+      font-family: var(--font-sans, sans-serif);
+      font-weight: 600;
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.7);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      flex-grow: 1;
+      text-align: left;
+      margin-left: 16px;
+    }
+
+    .code-actions {
+      display: flex;
+      gap: 12px;
+      color: rgba(255, 255, 255, 0.5);
+
+      button {
+        background: none;
+        border: none;
+        color: inherit;
+        cursor: pointer;
+        padding: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: color 0.2s;
+
+        &:hover { color: rgba(255, 255, 255, 1); }
+
+        svg {
+          width: 18px;
+          height: 18px;
+          fill: currentColor;
+        }
+      }
+    }
+  }
+
+  /* Reset inner container */
+  .highlight {
+    background: transparent !important;
+    border: none !important;
+    margin: 0;
+    padding: 0;
+    box-shadow: none !important;
+  }
+
+  /* Base pre styling */
+  pre {
+    margin: 0;
+    background: transparent;
+    font-family: $font-mono;
+    font-size: 0.88rem;
+    line-height: 1.6;
+    overflow: visible;
+  }
+
+  /* Block tanpa line numbers */
+  > .highlight > pre {
+    padding: 16px;
+    overflow-x: auto;
+    &::-webkit-scrollbar { height: 6px; }
+    &::-webkit-scrollbar-track { background: transparent; }
+    &::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 3px; }
+  }
+
+  /* Block dengan line numbers */
+  table.highlighttable, table.rouge-table {
+    border-collapse: collapse;
+    margin: 0;
+    width: 100%;
+    display: table;
+
+    td {
+      padding: 0;
+      margin: 0;
+      border: none;
+      vertical-align: top;
+    }
+
+    /* Kolom nomor baris */
+    .linenos, .rouge-gutter {
+      color: rgba(255, 255, 255, 0.3); /* Warna lebih redup */
+      background: transparent; /* Hilangkan background khusus agar menyatu */
+      text-align: right;
+      width: 1%;
+      white-space: nowrap;
+      padding-right: 16px; /* Jarak dengan teks kode */
+
+      pre {
+        color: inherit;
+        padding: 16px 0 16px 16px;
+        overflow: visible;
+        user-select: none;
+      }
+    }
+
+    /* Kolom isi kode */
+    .code, .rouge-code {
+      > .highlight > pre, > pre {
+        padding: 16px 16px 16px 0; /* Kiri 0 karena sudah diwakili padding-right nomor baris */
+        overflow-x: auto;
+
+        &::-webkit-scrollbar { height: 6px; }
+        &::-webkit-scrollbar-track { background: transparent; }
+        &::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 3px; }
+      }
+    }
+  }
+
+
+
+
+
+
+  // --- Rouge Token Colors (Terminal-friendly) ---
+  .c,  .c1, .cm, .cs  { color: #64748b; font-style: italic; } // Comments
+  .k,  .kd, .kn, .kr  { color: #c084fc; font-weight: 600; }  // Keywords
+  .n,  .na             { color: #94a3b8; }                     // Names
+  .nb, .bp             { color: $accent-teal; }                // Built-in
+  .nc, .nf             { color: #60a5fa; }                     // Class / Function
+  .s,  .s1, .s2, .sa  { color: $accent-lime; }                // Strings
+  .m,  .mi, .mf        { color: $accent-main; }               // Numbers
+  .o,  .ow             { color: $accent-orange; }              // Operators
+  .p                   { color: #94a3b8; }                     // Punctuation
+  .nv, .vi             { color: #f472b6; }                     // Variables
+  .si                  { color: $accent-teal; }                // String interpolation
+  .gd                  { color: $accent-orange; background: rgba(249,115,22,0.1); } // Diff del
+  .gi                  { color: $accent-lime; background: rgba(132,204,22,0.1); }   // Diff ins
+  .gh, .gu             { color: $accent-main; font-weight: 700; }                   // Generic header
+  .err                 { color: white; background-color: $accent-orange; }          // Error
+
+  // Line numbers
+  .linenos, .gl {
+    color: #334155;
+    padding-right: $space-md;
+    user-select: none;
+    border-right: 1px solid #1e293b;
+  }
+}
+
+// Inline highlight (backtick in prose)
+p > code,
+li > code,
+td > code {
+  background: var(--inline-code-bg);
+  color: var(--inline-code-text);
+  padding: 2px 7px;
+  border-radius: $radius-sm;
+  font-family: $font-mono;
+  font-size: 0.88em;
+  border: 1px solid rgba(20, 184, 166, 0.2);
+}
+
+// =========================================
+// 12. CTF TIMELINE
+// =========================================
+.timeline-page {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 $space-lg $space-2xl;
+
+  .page-heading {
+    text-align: center;
+    margin-bottom: $space-xl;
+
+    h1 {
+      font-family: $font-mono;
+      font-size: clamp(1.6rem, 4vw, 2.4rem);
+      color: var(--text-main);
+
+      span { color: var(--accent-main); }
+    }
+
+    p {
+      color: var(--text-muted);
+      margin-top: $space-sm;
+      font-family: $font-mono;
+      font-size: 0.9rem;
+    }
+  }
+}
+
+.timeline {
+  position: relative;
+  padding: $space-sm 0;
+
+  // Vertical center line
+  &::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: linear-gradient(
+      to bottom,
+      var(--accent-teal),
+      var(--accent-main),
+      var(--accent-orange)
+    );
+    transform: translateX(-50%);
+    border-radius: 3px;
+  }
+
+  @media (max-width: $bp-tablet) {
+    &::before { left: 20px; }
+  }
+}
+
+.timeline-item {
+  display: flex;
+  justify-content: flex-end;
+  padding-right: calc(50% + 30px);
+  margin-bottom: $space-xl;
+  position: relative;
+
+  &:nth-child(even) {
+    justify-content: flex-start;
+    padding-right: 0;
+    padding-left: calc(50% + 30px);
+
+    .timeline-card {
+      text-align: left;
+    }
+
+    .timeline-dot {
+      left: 50%;
+      right: auto;
+    }
+  }
+
+  @media (max-width: $bp-tablet) {
+    justify-content: flex-start;
+    padding-right: 0;
+    padding-left: 52px;
+
+    &:nth-child(even) {
+      padding-left: 52px;
+    }
+
+    .timeline-dot,
+    &:nth-child(even) .timeline-dot {
+      left: 10px;
+      right: auto;
+    }
+  }
+}
+
+.timeline-dot {
+  position: absolute;
+  right: 50%;
+  top: 20px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 3px solid var(--bg-main);
+  transform: translateX(50%);
+  z-index: 2;
+  box-shadow: 0 0 0 3px currentColor;
+  transition: transform 0.2s;
+
+  &.dot-pwn  { background-color: var(--accent-orange); color: var(--accent-orange); }
+  &.dot-web  { background-color: var(--accent-teal);   color: var(--accent-teal); }
+  &.dot-rev  { background-color: var(--accent-lime);   color: var(--accent-lime); }
+  &.dot-misc { background-color: var(--accent-main);   color: var(--accent-main); }
+
+  @media (max-width: $bp-tablet) {
+    transform: translateX(0);
+  }
+}
+
+.timeline-item:hover .timeline-dot {
+  transform: translateX(50%) scale(1.3);
+
+  @media (max-width: $bp-tablet) {
+    transform: translateX(0) scale(1.3);
+  }
+}
+
+.timeline-card {
+  background: var(--card-bg);
+  border: 4px solid;
+  border-radius: $radius-md;
+  padding: $space-lg;
+  max-width: 340px;
+  width: 100%;
+  box-shadow: 0 8px 0;
+  transition: transform 0.2s, box-shadow 0.2s;
+  text-align: right;
+
+  @media (max-width: $bp-tablet) {
+    max-width: 100%;
+    text-align: left;
+  }
+
+  &.card-pwn {
+    border-color: var(--accent-orange);
+    box-shadow: 0 8px 0 var(--accent-orange);
+    &:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 14px 0 var(--accent-orange);
+    }
+  }
+  &.card-web {
+    border-color: var(--accent-teal);
+    box-shadow: 0 8px 0 var(--accent-teal);
+    &:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 14px 0 var(--accent-teal);
+    }
+  }
+  &.card-rev {
+    border-color: var(--accent-lime);
+    box-shadow: 0 8px 0 var(--accent-lime);
+    &:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 14px 0 var(--accent-lime);
+    }
+  }
+  &.card-misc {
+    border-color: var(--accent-main);
+    box-shadow: 0 8px 0 var(--accent-main);
+    &:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 14px 0 var(--accent-main);
+    }
+  }
+
+  .tc-name {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+    color: var(--text-main);
+  }
+
+  .tc-date {
+    font-family: $font-mono;
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    margin-bottom: $space-sm;
+  }
+
+  .tc-rank {
+    font-family: $font-mono;
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--accent-main);
+    margin-bottom: $space-xs;
+  }
+
+  .tc-platform {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-bottom: $space-sm;
+  }
+
+  .tc-highlight {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    border-top: 2px dashed var(--border-color);
+    padding-top: $space-sm;
+    margin-top: $space-sm;
+    font-style: italic;
+    line-height: 1.5;
+  }
+
+  .tc-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-bottom: $space-sm;
+    justify-content: flex-end;
+
+    @media (max-width: $bp-tablet) { justify-content: flex-start; }
+  }
+
+  .tc-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.8rem;
+    font-family: $font-mono;
+    color: var(--accent-teal);
+    text-decoration: none;
+    margin-top: $space-xs;
+
+    &:hover { color: var(--accent-main); }
+  }
+}
+
+// =========================================
+// 13. FOOTER
+// =========================================
+.site-footer {
+  text-align: center;
+  padding: $space-xl $space-lg;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  font-family: $font-mono;
+  border-top: 2px solid var(--border-color);
+  margin-top: auto;
+
+  a { color: var(--accent-teal); }
+}
+
+// =========================================
+// 14. BACK TO TOP & MISC
+// =========================================
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-muted);
+  font-family: $font-mono;
+  font-size: 0.88rem;
+  text-decoration: none;
+  margin-bottom: $space-lg;
+  transition: color 0.2s;
+
+  &:hover { color: var(--accent-teal); }
+}
+
+// Empty state
+.empty-state {
+  text-align: center;
+  padding: $space-2xl $space-lg;
+  color: var(--text-muted);
+  font-family: $font-mono;
+
+  .empty-icon { font-size: 3rem; margin-bottom: $space-md; opacity: 0.5; }
+}
+
+// =========================================
+// 15. RESPONSIVE HELPERS
+// =========================================
+@media (max-width: $bp-mobile) {
+  .site-header { padding: $space-md; }
+  .profile-section { margin: $space-md $space-md $space-lg; }
+  .container { padding: 0 $space-md; }
+  .terminal-card .terminal-body { padding: $space-md; font-size: 0.85rem; }
+  .writeup-grid { grid-template-columns: 1fr; }
+}

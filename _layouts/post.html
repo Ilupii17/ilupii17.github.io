@@ -1,0 +1,256 @@
+---
+layout: default
+---
+
+<article style="padding-top: 20px; padding-bottom: 60px;">
+
+  <!-- Back link -->
+  <div class="container" style="max-width: 1100px;">
+    <a href="{{ '/' | relative_url }}" class="back-link">
+      <i class="fas fa-arrow-left"></i>
+      cd ../writeups
+    </a>
+  </div>
+
+  <!-- Post Header -->
+  <div class="container" style="max-width: 1100px;">
+    <header class="post-header">
+      <h1 class="post-title">{{ page.title }}</h1>
+
+      <div class="post-meta">
+        <span class="meta-date">
+          <i class="fas fa-calendar-alt"></i>
+          {{ page.date | date: "%A, %d %B %Y" }}
+        </span>
+
+        {% if page.author %}
+          <span class="post-meta-sep">·</span>
+          <span><i class="fas fa-user"></i> {{ page.author }}</span>
+        {% endif %}
+
+        {% if page.ctf_event %}
+          <span class="post-meta-sep">·</span>
+          <span><i class="fas fa-flag"></i> {{ page.ctf_event }}</span>
+        {% endif %}
+
+        {% if page.difficulty %}
+          <span class="post-meta-sep">·</span>
+          <span><i class="fas fa-tachometer-alt"></i> {{ page.difficulty }}</span>
+        {% endif %}
+      </div>
+
+      <div class="post-tags">
+        {% for cat in page.categories %}
+          <span class="tag {{ cat | downcase }}">{{ cat }}</span>
+        {% endfor %}
+        {% for t in page.tags %}
+          <span class="tag misc" style="background: transparent; color: var(--text-muted); border-color: var(--border-color);">{{ t }}</span>
+        {% endfor %}
+      </div>
+    </header>
+  </div>
+
+  <!-- =========================================
+       Post Layout: Content + Sidebar ToC
+       ========================================= -->
+  <div class="post-layout">
+
+    <!-- Main Article Content -->
+    <div class="post-content-col">
+
+      <!-- Mobile ToC Accordion (visible on tablet/phone) -->
+      <nav class="toc-accordion" aria-label="Daftar Isi">
+        <button
+          class="toc-accordion-toggle"
+          id="tocToggle"
+          aria-expanded="false"
+          aria-controls="tocBody">
+          <span><i class="fas fa-list"></i>&nbsp; Daftar Isi</span>
+          <i class="fas fa-chevron-down toc-chevron"></i>
+        </button>
+        <div class="toc-accordion-body" id="tocBody" role="region" aria-labelledby="tocToggle">
+          <!-- {{ content | toc_only }} -->
+        </div>
+      </nav>
+
+      <!-- Prose Content -->
+      <div class="prose">
+        {{ content }}
+      </div>
+
+      <!-- Post Navigation -->
+      <nav style="display: flex; gap: 16px; justify-content: space-between; margin-top: 48px; flex-wrap: wrap;">
+        {% if page.previous.url %}
+          <a href="{{ page.previous.url | relative_url }}" class="btn-elevated btn-teal" style="padding: 10px 18px; flex: 1; min-width: 140px; justify-content: flex-start; gap: 8px; font-size: 0.85rem;">
+            <i class="fas fa-arrow-left"></i>
+            {{ page.previous.title | truncate: 30 }}
+          </a>
+        {% else %}
+          <div></div>
+        {% endif %}
+
+        {% if page.next.url %}
+          <a href="{{ page.next.url | relative_url }}" class="btn-elevated btn-teal" style="padding: 10px 18px; flex: 1; min-width: 140px; justify-content: flex-end; gap: 8px; font-size: 0.85rem;">
+            {{ page.next.title | truncate: 30 }}
+            <i class="fas fa-arrow-right"></i>
+          </a>
+        {% endif %}
+      </nav>
+
+    </div><!-- end .post-content-col -->
+
+    <!-- Desktop Sticky Sidebar ToC -->
+    <aside class="toc-sidebar" aria-label="Daftar Isi (Sidebar)">
+      <div class="toc-inner">
+        <div class="toc-heading">Daftar Isi</div>
+        <!-- {{ content | toc_only }} -->
+      </div>
+    </aside>
+
+  </div><!-- end .post-layout -->
+
+</article>
+
+{% comment %}
+==============================================
+CATATAN PENTING — TOC di Jekyll:
+
+Kramdown secara default me-render ToC dengan
+tag: {: toc} di dalam Markdown. Karena kita
+butuh TOC TERPISAH dari konten artikel, ada
+dua pendekatan:
+
+OPSI A (REKOMENDASI — pakai plugin):
+  Tambahkan gem 'jekyll-toc' di Gemfile dan
+  _config.yml. Ganti {{ content | toc_only }}
+  dengan {{ content | toc }} dan
+  {{ content | no_toc }}.
+
+OPSI B (No-plugin, GitHub Pages safe):
+  Di setiap file Markdown post, tambahkan
+  di awal artikel:
+
+    * TOC
+    {:toc}
+
+  Lalu di _layouts/post.html ini, hapus
+  filter toc_only dan biarkan kramdown me-
+  render ToC inline. Styling .toc-sidebar
+  akan tersembunyi otomatis karena ToC ada
+  di dalam .prose. Untuk sidebar, gunakan
+  JavaScript untuk memindahkan / clone ToC.
+
+OPSI C (JS clone — zero dependency):
+  Lihat script di bawah — kita clone ul#markdown-toc
+  ke dalam sidebar dan accordion secara otomatis.
+==============================================
+{% endcomment %}
+
+<div id="imgModal" class="img-modal">
+  <img class="img-modal-content" id="imgModalContent" alt="Zoomed Image">
+</div>
+
+<script>
+// =========================================
+// 1. Clone TOC via JS (IIFE)
+// =========================================
+(function () {
+  var inlineToc = document.getElementById('markdown-toc');
+  if (!inlineToc) return;
+
+  inlineToc.style.display = 'none';
+
+  var sidebarInner = document.querySelector('.toc-sidebar .toc-inner');
+  if (sidebarInner) {
+    var cloneSidebar = inlineToc.cloneNode(true);
+    cloneSidebar.removeAttribute('id');
+    cloneSidebar.classList.add('toc-list');
+    cloneSidebar.style.display = '';
+    sidebarInner.appendChild(cloneSidebar);
+  }
+
+  var accordionBody = document.getElementById('tocBody');
+  if (accordionBody) {
+    var cloneMobile = inlineToc.cloneNode(true);
+    cloneMobile.removeAttribute('id');
+    cloneMobile.classList.add('toc-list');
+    cloneMobile.style.display = '';
+    accordionBody.appendChild(cloneMobile);
+  }
+})();
+
+// =========================================
+// 2. Eksekusi Setelah DOM Siap
+// =========================================
+document.addEventListener("DOMContentLoaded", function() {
+
+  // --- A. FITUR MAC-OS TERMINAL & COPY BUTTON ---
+  document.querySelectorAll('div.highlighter-rouge').forEach(function(block) {
+    let lang = "CODE";
+    block.classList.forEach(function(cls) {
+      if (cls.startsWith('language-')) {
+        lang = cls.replace('language-', '').toUpperCase();
+      }
+    });
+
+    let header = document.createElement('div');
+    header.className = 'code-header';
+    header.innerHTML = `
+      <div class="mac-dots">
+        <span class="red"></span><span class="yellow"></span><span class="green"></span>
+      </div>
+      <div class="code-lang">${lang}</div>
+      <div class="code-actions">
+        <button aria-label="Expand code" style="cursor: default;">
+          <svg viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
+        </button>
+        <button class="copy-button" aria-label="Copy to clipboard" title="Copy code">
+          <svg viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+        </button>
+      </div>
+    `;
+    block.insertBefore(header, block.firstChild);
+
+    const copyBtn = header.querySelector('.copy-button');
+    copyBtn.addEventListener('click', function() {
+      const codeEl = block.querySelector('code');
+      navigator.clipboard.writeText(codeEl.innerText).then(() => {
+        const originalSvg = copyBtn.innerHTML;
+        copyBtn.innerHTML = `<svg viewBox="0 0 24 24" style="fill: #27c93f;"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>`;
+        setTimeout(() => { copyBtn.innerHTML = originalSvg; }, 2000);
+      });
+    });
+  });
+
+  // --- B. FITUR IMAGE LIGHTBOX ---
+  const modal = document.getElementById("imgModal");
+  const modalImg = document.getElementById("imgModalContent");
+  const articleImages = document.querySelectorAll('.prose img, article img');
+
+  // Pastikan elemen modal ada sebelum menjalankan script
+  if (modal && modalImg) {
+    articleImages.forEach(img => {
+      img.addEventListener('click', function() {
+        modal.style.display = "flex";
+        setTimeout(() => { modal.classList.add("show"); }, 10);
+        modalImg.src = this.src;
+        document.body.style.overflow = 'hidden'; 
+      });
+    });
+
+    function closeModal() {
+      modal.classList.remove("show");
+      setTimeout(() => { modal.style.display = "none"; }, 300);
+      document.body.style.overflow = 'auto'; 
+    }
+
+    modal.addEventListener('click', function(e) {
+      if (e.target !== modalImg) closeModal();
+    });
+    modalImg.addEventListener('click', closeModal);
+    document.addEventListener('keydown', function(e) {
+      if (e.key === "Escape" && modal.classList.contains("show")) closeModal();
+    });
+  }
+});
+</script>

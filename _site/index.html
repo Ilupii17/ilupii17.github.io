@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>
+    Home | ~/ilupii's Cybersecurity Notes
+  </title>
+  <meta name="description" content="CTF Write-ups">
+
+  <!-- SEO -->
+  <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Home | ~/ilupii’s Cybersecurity Notes</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="Home" />
+<meta name="author" content="kentang@wsl2" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="CTF Write-ups" />
+<meta property="og:description" content="CTF Write-ups" />
+<link rel="canonical" href="http://localhost:4000/" />
+<meta property="og:url" content="http://localhost:4000/" />
+<meta property="og:site_name" content="~/ilupii’s Cybersecurity Notes" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Home" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebSite","author":{"@type":"Person","name":"kentang@wsl2"},"description":"CTF Write-ups","headline":"Home","name":"~/ilupii’s Cybersecurity Notes","url":"http://localhost:4000/"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="/assets/css/main.css">
+
+  <!-- Theme Init — harus di <head> untuk hindari FOUC -->
+  <script>
+    (function() {
+      var saved = localStorage.getItem('ctf-theme');
+      if (saved === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
+  </script>
+</head>
+<body>
+
+  <header class="site-header">
+  <a href="/" class="header-brand">
+    <span>~/</span>~/ilupii's Cybersecurity Notes
+  </a>
+
+  <div class="header-actions">
+    <!-- Theme Toggle -->
+    <button
+      class="btn-elevated btn-icon"
+      onclick="toggleTheme()"
+      aria-label="Toggle Dark/Light Mode"
+      title="Toggle Theme">
+      <i class="fas fa-sun" id="themeIcon"></i>
+    </button>
+
+    <!-- GitHub Link -->
+    <a
+      href="https://github.com/ilupii17"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="btn-elevated btn-icon"
+      aria-label="GitHub Profile">
+      <i class="fab fa-github" style="color: var(--accent-teal);"></i>
+    </a>
+
+    <!-- Hamburger Menu -->
+    <button
+      class="btn-elevated btn-icon"
+      onclick="toggleMenu()"
+      aria-label="Open Menu"
+      aria-expanded="false"
+      aria-controls="siteModal">
+      <i class="fas fa-bars" style="color: var(--accent-teal);"></i>
+    </button>
+  </div>
+</header>
+
+
+  <div class="page-wrapper">
+    <!-- =========================================
+     PROFILE / HERO SECTION
+     ========================================= -->
+<section class="profile-section">
+
+  <h1 class="profile-title">
+    <span class="title-tilde">~/</span>ilupii
+    <span class="blinking-cursor" aria-hidden="true"></span>
+  </h1>
+
+  <div class="status-badge">CTF Player &amp; Full-Stack Developer</div>
+
+  <!-- Terminal Card -->
+  <div class="terminal-card">
+    <div class="terminal-header">
+      <div class="terminal-dot dot-red"   aria-hidden="true"></div>
+      <div class="terminal-dot dot-yellow" aria-hidden="true"></div>
+      <div class="terminal-dot dot-green"  aria-hidden="true"></div>
+      <div class="terminal-title">bash — kentang@wsl2</div>
+    </div>
+    <div class="terminal-body">
+      <p>
+        <span class="prompt">kentang@wsl2:~$</span>&nbsp;
+        <span class="command">cat about.txt</span>
+      </p>
+      <p class="output">
+        Hi! I'm ilupii, a CTF Player and software developer.
+        I'm currently a student at <strong>Bachharuddin Jusuf Habibie Institute of Technology</strong>, majoring in
+        <strong>information system</strong>.
+        <br><br>
+        In my free time, I actively participate in Capture The Flag (CTF) competitions,
+        where I continuously sharpen my problem-solving skills and deepen my understanding
+        of real-world security challenges.
+        <strong>Laravel, Vue.js, Nuxt, and Tailwind CSS</strong> ecosystem.
+      </p>
+      <br>
+      <p>
+        <span class="prompt">kentang@wsl2:~$</span>&nbsp;
+        <span class="command">ls ./writeups/ | head<span class="blinking-cursor" style="width:8px;height:16px;margin-left:4px;" aria-hidden="true"></span></span>
+      </p>
+    </div>
+  </div>
+
+</section>
+
+<!-- =========================================
+     WRITE-UPS GRID
+     ========================================= -->
+<main class="container" style="padding-bottom: 60px;">
+
+  <h2 class="category-title">
+    <i class="fas fa-flag flag-icon"></i>
+    Latest Solves
+    <i class="fas fa-flag flag-icon"></i>
+  </h2>
+
+  
+    <div class="writeup-grid">
+      
+        
+
+        <a href="/writeups/2026/compfest-17-quals/" class="writeup-card card-web">
+          <!-- Tags -->
+          <div>
+            
+              <span class="tag web">web</span>
+            
+            
+              
+                <span class="tag misc" style="background: transparent; color: var(--text-muted); border-color: var(--border-color);">Blockchain</span>
+              
+                <span class="tag misc" style="background: transparent; color: var(--text-muted); border-color: var(--border-color);">PWN</span>
+              
+            
+          </div>
+
+          <h3>Compfest 17 Quals</h3>
+
+          
+            <p>I played for the team lastseenin2026 and finished in 20th place. </p>
+          
+
+          <!-- Meta: date + event -->
+          <div class="card-meta">
+            <span class="meta-date">
+              <i class="fas fa-calendar-alt"></i>
+              20 Apr 2026
+            </span>
+            
+              <span class="post-meta-sep">·</span>
+              <span><i class="fas fa-flag"></i> Compfest 17 Quals</span>
+            
+          </div>
+        </a>
+
+      
+        
+
+        <a href="/writeups/2025/java-spring-ssti-bypass-google-ctf/" class="writeup-card card-web">
+          <!-- Tags -->
+          <div>
+            
+              <span class="tag web">Web</span>
+            
+            
+              
+                <span class="tag misc" style="background: transparent; color: var(--text-muted); border-color: var(--border-color);">SSTI</span>
+              
+                <span class="tag misc" style="background: transparent; color: var(--text-muted); border-color: var(--border-color);">RCE</span>
+              
+            
+          </div>
+
+          <h3>Java Spring SSTI Bypass — Google CTF 2025</h3>
+
+          
+            <p>RCE melalui Server-Side Template Injection pada Spring Framework dengan bypass filter berbasis regex.</p>
+          
+
+          <!-- Meta: date + event -->
+          <div class="card-meta">
+            <span class="meta-date">
+              <i class="fas fa-calendar-alt"></i>
+              21 Jun 2025
+            </span>
+            
+              <span class="post-meta-sep">·</span>
+              <span><i class="fas fa-flag"></i> Google CTF 2025</span>
+            
+          </div>
+        </a>
+
+      
+    </div>
+
+  
+
+</main>
+
+  </div>
+
+  <footer class="site-footer">
+    <p>
+      <span style="color: var(--accent-teal);">ilupii</span>
+      <span style="color: var(--text-muted);">:~$</span>
+      built with
+      <a href="https://jekyllrb.com" target="_blank" rel="noopener noreferrer">Jekyll</a>
+      &amp; deployed on
+      <a href="https://pages.github.com" target="_blank" rel="noopener noreferrer">GitHub Pages</a>
+    </p>
+    <p style="margin-top: 6px; font-size: 0.78rem; opacity: 0.6;">
+      © 2026  — All write-ups are for educational purposes.
+    </p>
+  </footer>
+
+  <!-- =========================================
+     Modal Menu — _includes/modal.html
+     ========================================= -->
+<div class="modal-overlay" id="siteModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal-content">
+
+    <div class="modal-header">
+      <i class="fas fa-angle-double-right"></i>
+      <span id="modalTitle">CONSOLE MENU</span>
+      <i class="fas fa-angle-double-left"></i>
+    </div>
+
+    <div class="modal-body">
+
+      <a href="/" class="btn-elevated menu-item teal-text">
+        <i class="fas fa-home"></i>
+        Home
+      </a>
+
+      <a href="/timeline" class="btn-elevated menu-item yellow-text">
+        <i class="fas fa-stream"></i>
+        CTF Timeline
+      </a>
+
+      <a href="https://github.com/ilupii17" target="_blank" rel="noopener noreferrer"
+         class="btn-elevated menu-item lime-text">
+        <i class="fab fa-github"></i>
+        GitHub
+      </a>
+
+      <a href="-" target="_blank" rel="noopener noreferrer"
+         class="btn-elevated menu-item orange-text">
+        <i class="fas fa-trophy"></i>
+        CTF Platforms
+      </a>
+
+      <button class="btn-elevated menu-item btn-close-modal" onclick="toggleMenu()">
+        <i class="fas fa-times"></i>
+        Close Console
+      </button>
+
+    </div>
+  </div>
+</div>
+
+
+  <!-- =========================================
+       Vanilla JS — Theme Toggle & Modal
+       ========================================= -->
+  <script>
+    // ---- Theme Toggle ----
+    var html      = document.documentElement;
+    var themeIcon = document.getElementById('themeIcon');
+
+    // Sync icon dengan tema yang sudah di-set di <head>
+    (function() {
+      if (html.getAttribute('data-theme') === 'dark') {
+        themeIcon.classList.replace('fa-sun', 'fa-moon');
+      }
+    })();
+
+    function toggleTheme() {
+      if (html.getAttribute('data-theme') === 'dark') {
+        html.removeAttribute('data-theme');
+        themeIcon.classList.replace('fa-moon', 'fa-sun');
+        localStorage.setItem('ctf-theme', 'light');
+      } else {
+        html.setAttribute('data-theme', 'dark');
+        themeIcon.classList.replace('fa-sun', 'fa-moon');
+        localStorage.setItem('ctf-theme', 'dark');
+      }
+    }
+
+    // ---- Modal Menu ----
+    var modal = document.getElementById('siteModal');
+
+    function toggleMenu() {
+      if (modal.classList.contains('is-open')) {
+        modal.classList.remove('is-open');
+        document.body.style.overflow = '';
+      } else {
+        modal.classList.add('is-open');
+        document.body.style.overflow = 'hidden';
+      }
+    }
+
+    // Tutup modal klik di luar content
+    modal.addEventListener('click', function(e) {
+      if (e.target === modal) toggleMenu();
+    });
+
+    // Tutup modal dengan Escape
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && modal.classList.contains('is-open')) toggleMenu();
+    });
+
+    // ---- Mobile ToC Accordion ----
+    var tocToggle = document.getElementById('tocToggle');
+    if (tocToggle) {
+      tocToggle.addEventListener('click', function() {
+        var body     = document.getElementById('tocBody');
+        var expanded = tocToggle.getAttribute('aria-expanded') === 'true';
+
+        tocToggle.setAttribute('aria-expanded', !expanded);
+        body.classList.toggle('is-open', !expanded);
+      });
+    }
+
+    // ---- Highlight active ToC item on scroll ----
+    (function() {
+      var tocLinks = document.querySelectorAll('.toc-sidebar a, .toc-accordion-body a');
+      if (!tocLinks.length) return;
+
+      var headings = document.querySelectorAll('.prose h2[id], .prose h3[id]');
+      if (!headings.length) return;
+
+      function onScroll() {
+        var scrollY   = window.scrollY + 120;
+        var activeIdx = 0;
+
+        headings.forEach(function(h, i) {
+          if (h.offsetTop <= scrollY) activeIdx = i;
+        });
+
+        tocLinks.forEach(function(link) {
+          link.parentElement.style.borderLeftColor = '';
+          link.style.color = '';
+          link.style.background = '';
+        });
+
+        var activeId   = headings[activeIdx] ? headings[activeIdx].id : null;
+        var activeLink = activeId
+          ? document.querySelector('.toc-sidebar a[href="#' + activeId + '"]')
+          : null;
+
+        if (activeLink) {
+          activeLink.style.color      = 'var(--accent-teal)';
+          activeLink.style.background = 'var(--toc-active-bg)';
+          if (activeLink.parentElement)
+            activeLink.parentElement.style.borderLeftColor = 'var(--accent-teal)';
+        }
+      }
+
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+    })();
+  </script>
+
+</body>
+</html>

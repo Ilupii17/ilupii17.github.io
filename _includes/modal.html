@@ -1,0 +1,44 @@
+<!-- =========================================
+     Modal Menu — _includes/modal.html
+     ========================================= -->
+<div class="modal-overlay" id="siteModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal-content">
+
+    <div class="modal-header">
+      <i class="fas fa-angle-double-right"></i>
+      <span id="modalTitle">CONSOLE MENU</span>
+      <i class="fas fa-angle-double-left"></i>
+    </div>
+
+    <div class="modal-body">
+
+      <a href="{{ '/' | relative_url }}" class="btn-elevated menu-item teal-text">
+        <i class="fas fa-home"></i>
+        Home
+      </a>
+
+      <a href="{{ '/timeline' | relative_url }}" class="btn-elevated menu-item yellow-text">
+        <i class="fas fa-stream"></i>
+        CTF Timeline
+      </a>
+
+      <a href="{{ site.author.github | default: '#' }}" target="_blank" rel="noopener noreferrer"
+         class="btn-elevated menu-item lime-text">
+        <i class="fab fa-github"></i>
+        GitHub
+      </a>
+
+      <a href="{{ site.author.ctfd | default: '#' }}" target="_blank" rel="noopener noreferrer"
+         class="btn-elevated menu-item orange-text">
+        <i class="fas fa-trophy"></i>
+        CTF Platforms
+      </a>
+
+      <button class="btn-elevated menu-item btn-close-modal" onclick="toggleMenu()">
+        <i class="fas fa-times"></i>
+        Close Console
+      </button>
+
+    </div>
+  </div>
+</div>

@@ -1,0 +1,36 @@
+<header class="site-header">
+  <a href="{{ '/' | relative_url }}" class="header-brand">
+    <span>~/</span>{{ site.title | default: "ilupii" }}
+  </a>
+
+  <div class="header-actions">
+    <!-- Theme Toggle -->
+    <button
+      class="btn-elevated btn-icon"
+      onclick="toggleTheme()"
+      aria-label="Toggle Dark/Light Mode"
+      title="Toggle Theme">
+      <i class="fas fa-sun" id="themeIcon"></i>
+    </button>
+
+    <!-- GitHub Link -->
+    <a
+      href="{{ site.author.github | default: 'https://github.com/ilupii17' }}"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="btn-elevated btn-icon"
+      aria-label="GitHub Profile">
+      <i class="fab fa-github" style="color: var(--accent-teal);"></i>
+    </a>
+
+    <!-- Hamburger Menu -->
+    <button
+      class="btn-elevated btn-icon"
+      onclick="toggleMenu()"
+      aria-label="Open Menu"
+      aria-expanded="false"
+      aria-controls="siteModal">
+      <i class="fas fa-bars" style="color: var(--accent-teal);"></i>
+    </button>
+  </div>
+</header>

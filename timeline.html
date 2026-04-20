@@ -1,0 +1,164 @@
+---
+layout: default
+title: "CTF Timeline"
+permalink: /timeline/
+---
+
+<div class="timeline-page">
+
+  <!-- Page Heading -->
+  <div class="page-heading" style="margin-top: 20px;">
+    <h1><span>~/</span>ctf-timeline</h1>
+    <p>
+      <span style="color: var(--accent-lime);">kali@wsl2:~$</span>
+      cat _data/timeline.yml | sort -r
+    </p>
+  </div>
+
+  <!-- Stats Bar -->
+  {% assign total_events = site.data.timeline | size %}
+  <div style="
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 48px;">
+
+    <div class="status-badge" style="border-color: var(--accent-orange); box-shadow: 0 4px 0 var(--accent-orange); color: var(--accent-orange);">
+      <i class="fas fa-trophy"></i>&nbsp;
+      {{ total_events }} Events
+    </div>
+
+    {% assign pwn_count = 0 %}
+    {% assign web_count = 0 %}
+    {% assign rev_count = 0 %}
+    {% for item in site.data.timeline %}
+      {% for kat in item.kategori %}
+        {% assign kat_lower = kat | downcase %}
+        {% if kat_lower == "pwn" %}{% assign pwn_count = pwn_count | plus: 1 %}{% endif %}
+        {% if kat_lower == "web" %}{% assign web_count = web_count | plus: 1 %}{% endif %}
+        {% if kat_lower == "rev" or kat_lower == "reverse" %}{% assign rev_count = rev_count | plus: 1 %}{% endif %}
+      {% endfor %}
+    {% endfor %}
+
+    {% if pwn_count > 0 %}
+      <div class="status-badge" style="border-color: var(--accent-orange); box-shadow: 0 4px 0 var(--accent-orange); color: var(--accent-orange);">
+        <i class="fas fa-bomb"></i>&nbsp; {{ pwn_count }}x Pwn
+      </div>
+    {% endif %}
+
+    {% if web_count > 0 %}
+      <div class="status-badge" style="border-color: var(--accent-teal); box-shadow: 0 4px 0 var(--accent-teal); color: var(--accent-teal);">
+        <i class="fas fa-globe"></i>&nbsp; {{ web_count }}x Web
+      </div>
+    {% endif %}
+
+    {% if rev_count > 0 %}
+      <div class="status-badge" style="border-color: var(--accent-lime); box-shadow: 0 4px 0 var(--accent-lime); color: var(--accent-lime);">
+        <i class="fas fa-microchip"></i>&nbsp; {{ rev_count }}x Rev
+      </div>
+    {% endif %}
+
+  </div>
+
+  <!-- =========================================
+       VERTICAL TIMELINE
+       ========================================= -->
+  {% if site.data.timeline %}
+  <div class="timeline" role="list">
+
+    {% for item in site.data.timeline %}
+      {% assign warna = item.warna | default: "misc" %}
+
+      <div class="timeline-item" role="listitem">
+
+        <!-- Timeline Dot -->
+        <div class="timeline-dot dot-{{ warna }}" aria-hidden="true"></div>
+
+        <!-- Card -->
+        <div class="timeline-card card-{{ warna }}">
+
+          <!-- Tanggal -->
+          <div class="tc-date">
+            <i class="fas fa-calendar-alt"></i>
+            {{ item.tanggal | date: "%d %B %Y" }}
+          </div>
+
+          <!-- Nama CTF -->
+          <div class="tc-name">{{ item.nama_ctf }}</div>
+
+          <!-- Rank -->
+          {% if item.rank %}
+            <div class="tc-rank">
+              <i class="fas fa-medal"></i>&nbsp;{{ item.rank }}
+            </div>
+          {% endif %}
+
+          <!-- Platform -->
+          {% if item.platform %}
+            <div class="tc-platform">
+              <i class="fas fa-server"></i>&nbsp;{{ item.platform }}
+            </div>
+          {% endif %}
+
+          <!-- Tags Kategori -->
+          {% if item.kategori %}
+            <div class="tc-tags">
+              {% for kat in item.kategori %}
+                {% assign kat_lower = kat | downcase %}
+                {% if kat_lower == "pwn" %}
+                  <span class="tag pwn">{{ kat }}</span>
+                {% elsif kat_lower == "web" %}
+                  <span class="tag web">{{ kat }}</span>
+                {% elsif kat_lower == "rev" or kat_lower == "reverse" %}
+                  <span class="tag rev">{{ kat }}</span>
+                {% elsif kat_lower == "crypto" %}
+                  <span class="tag crypto">{{ kat }}</span>
+                {% elsif kat_lower == "forensics" %}
+                  <span class="tag forensics">{{ kat }}</span>
+                {% else %}
+                  <span class="tag misc">{{ kat }}</span>
+                {% endif %}
+              {% endfor %}
+            </div>
+          {% endif %}
+
+          <!-- Highlight / Note -->
+          {% if item.highlight %}
+            <div class="tc-highlight">
+              <i class="fas fa-quote-left" style="opacity:0.4; margin-right: 4px;"></i>
+              {{ item.highlight }}
+            </div>
+          {% endif %}
+
+          <div class="tc-actions" style="margin-top: 20px; display: flex; gap: 12px; flex-wrap: wrap;">
+            
+            {% if item.writeup_url %}
+              <a href="{{ item.writeup_url | relative_url }}" class="tc-link" style="background: var(--accent-teal); color: #ffffff; padding: 6px 14px; border-radius: 6px; font-size: 0.85rem; font-weight: 600; text-decoration: none; transition: opacity 0.2s;">
+                <i class="fas fa-book-open"></i>&nbsp; Baca Write-up
+              </a>
+            {% endif %}
+
+            {% if item.url %}
+              <a href="{{ item.url }}" target="_blank" rel="noopener noreferrer" class="tc-link" style="background: transparent; color: var(--text-main); padding: 6px 14px; border-radius: 6px; border: 1px solid var(--border-color); font-size: 0.85rem; text-decoration: none; transition: background 0.2s;">
+                <i class="fas fa-external-link-alt"></i>&nbsp; CTFtime
+              </a>
+            {% endif %}
+            
+          </div>
+
+        </div><!-- end .timeline-card -->
+      </div><!-- end .timeline-item -->
+
+    {% endfor %}
+
+  </div><!-- end .timeline -->
+
+  {% else %}
+  <div class="empty-state">
+    <div class="empty-icon"><i class="fas fa-clock"></i></div>
+    <p>Belum ada data timeline. Isi file <code>_data/timeline.yml</code> dulu!</p>
+  </div>
+  {% endif %}
+
+</div><!-- end .timeline-page -->

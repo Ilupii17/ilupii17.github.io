@@ -1,0 +1,59 @@
+title: "~/ilupii's Cybersecurity Notes"
+description: "CTF Write-ups"
+author:
+  name: "kentang@wsl2"
+  bio: "CTF Player"
+  github: "https://github.com/ilupii17"
+  ctfd: "-"
+  hackthebox: "-"
+
+baseurl: ""
+url: ""
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+
+kramdown:
+  input: GFM
+  auto_ids: true
+  toc_levels: [2, 3]
+  syntax_highlighter: rouge
+  syntax_highlighter_opts:
+    block:
+      line_numbers: true
+
+# Permalink format
+permalink: /writeups/:year/:slug/
+
+# Pagination (optional, requires jekyll-paginate gem)
+paginate: 9
+paginate_path: "/page:num/"
+
+# Collections
+collections:
+  posts:
+    output: true
+
+# Default front matter
+defaults:
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
+      author: "kali@wsl2"
+
+# Plugins
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+
+# Exclude from build
+exclude:
+  - README.md
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor/bundle
+  - .sass-cache
