@@ -1,8 +1,8 @@
 @charset "UTF-8";
 @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap");
-:root { --bg-main: #f8fafc; --bg-secondary: #f8fafc; --text-main: #334155; --text-muted: #64748b; --text-code-inline: #0f172a; --card-bg: #ffffff; --border-color: #e2e8f0; --btn-timbul-shadow: #cbd5e1; --accent-main: #f59e0b; --accent-teal: #14b8a6; --accent-orange: #f97316; --accent-lime: #84cc16; --grid-color: rgba(245, 158, 11, 0.08); --shadow-pop: rgba(15, 23, 42, 0.1); --terminal-bg: #0f172a; --terminal-header: #1e293b; --terminal-text: #94a3b8; --toc-bg: #ffffff; --toc-border: #e2e8f0; --toc-active-bg: rgba(20, 184, 166, 0.1); --inline-code-bg: rgba(20, 184, 166, 0.1); --inline-code-text: #0f766e; }
+:root { --bg-main: #f8fafc; --bg-secondary: #f8fafc; --text-main: #334155; --text-muted: #64748b; --text-code-inline: #0f172a; --card-bg: #ffffff; --border-color: #e2e8f0; --btn-timbul-shadow: #cbd5e1; --accent-main: #f59e0b; --accent-teal: #14b8a6; --accent-orange: #f97316; --accent-lime: #84cc16; --accent-combined: #d71212; --grid-color: rgba(245, 158, 11, 0.08); --shadow-pop: rgba(15, 23, 42, 0.1); --terminal-bg: #0f172a; --terminal-header: #1e293b; --terminal-text: #94a3b8; --toc-bg: #ffffff; --toc-border: #e2e8f0; --toc-active-bg: rgba(20, 184, 166, 0.1); --inline-code-bg: rgba(20, 184, 166, 0.1); --inline-code-text: #0f766e; }
 
-[data-theme="dark"] { --bg-main: #0d1117; --bg-secondary: #111827; --text-main: #f1f5f9; --text-muted: #94a3b8; --text-code-inline: #f1f5f9; --card-bg: #1f2937; --border-color: #374151; --btn-timbul-shadow: #0d1117; --accent-main: #fbbf24; --accent-teal: #2dd4bf; --accent-orange: #fb923c; --accent-lime: #a3e635; --grid-color: rgba(251, 191, 36, 0.12); --shadow-pop: rgba(0, 0, 0, 0.5); --terminal-bg: #020617; --terminal-header: #0f172a; --terminal-text: #64748b; --toc-bg: #1f2937; --toc-border: #374151; --toc-active-bg: rgba(45, 212, 191, 0.12); --inline-code-bg: rgba(45, 212, 191, 0.1); --inline-code-text: #2dd4bf; }
+[data-theme="dark"] { --bg-main: #0d1117; --bg-secondary: #111827; --text-main: #f1f5f9; --text-muted: #94a3b8; --text-code-inline: #f1f5f9; --card-bg: #1f2937; --border-color: #374151; --btn-timbul-shadow: #0d1117; --accent-main: #fbbf24; --accent-teal: #2dd4bf; --accent-orange: #fb923c; --accent-lime: #a3e635; --accent-combined: #d71212; --grid-color: rgba(251, 191, 36, 0.12); --shadow-pop: rgba(0, 0, 0, 0.5); --terminal-bg: #020617; --terminal-header: #0f172a; --terminal-text: #64748b; --toc-bg: #1f2937; --toc-border: #374151; --toc-active-bg: rgba(45, 212, 191, 0.12); --inline-code-bg: rgba(45, 212, 191, 0.1); --inline-code-text: #2dd4bf; }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -89,6 +89,7 @@ table tr:hover td { background: var(--toc-active-bg); }
 .tag.misc { background-color: var(--accent-main); color: #1a1a1a; }
 .tag.crypto { background-color: #8b5cf6; }
 .tag.forensics { background-color: #ec4899; }
+.tag.combined { background-color: var(--accent-combined); }
 
 .site-header { display: flex; justify-content: space-between; align-items: center; padding: 24px 24px; position: relative; z-index: 100; }
 .site-header .header-brand { font-size: 1.1rem; font-weight: 700; color: var(--text-main); text-decoration: none; font-family: "Fira Code", "Courier New", Courier, monospace; }
@@ -137,6 +138,11 @@ table tr:hover td { background: var(--toc-active-bg); }
 .writeup-card.card-misc:hover { transform: translateY(-8px); box-shadow: 0 14px 0 var(--accent-main), 0 4px 24px rgba(245, 158, 11, 0.25); }
 .writeup-card.card-crypto { border-color: #8b5cf6; box-shadow: 0 8px 0 #8b5cf6; }
 .writeup-card.card-crypto:hover { transform: translateY(-8px); box-shadow: 0 14px 0 #8b5cf6, 0 4px 24px rgba(139, 92, 246, 0.25); }
+.writeup-card.card-combined { border-color: var(--accent-combined); box-shadow: 0 8px 0 var(--accent-combined); }
+.writeup-card.card-combined:hover { transform: translateY(-8px); box-shadow: 0 14px 0 var(--accent-combined), 0 4px 24px rgba(219, 26, 26, 0.25); }
+.writeup-card.card-combined .card-meta .card-read { color: var(--accent-combined); }
+@media (max-width: 768px) { .writeup-card.card-combined { box-shadow: 0 6px 0 var(--accent-combined); }
+  .writeup-card.card-combined:hover { box-shadow: 0 10px 0 var(--accent-combined); } }
 
 .category-title { text-align: center; margin-bottom: 24px; color: var(--accent-main); font-weight: 700; font-family: "Fira Code", "Courier New", Courier, monospace; font-size: 1.1rem; letter-spacing: 0.05em; }
 .category-title .fa-flag { margin: 0 8px; }
@@ -266,6 +272,7 @@ p > code, li > code, td > code { background: var(--inline-code-bg); color: var(-
 .timeline-dot.dot-web { background-color: var(--accent-teal); color: var(--accent-teal); }
 .timeline-dot.dot-rev { background-color: var(--accent-lime); color: var(--accent-lime); }
 .timeline-dot.dot-misc { background-color: var(--accent-main); color: var(--accent-main); }
+.timeline-dot.dot-combined { background-color: var(--accent-combined); color: var(--accent-combined); }
 @media (max-width: 768px) { .timeline-dot { transform: translateX(0); } }
 
 .timeline-item:hover .timeline-dot { transform: translateX(50%) scale(1.3); }
@@ -281,6 +288,8 @@ p > code, li > code, td > code { background: var(--inline-code-bg); color: var(-
 .timeline-card.card-rev:hover { transform: translateY(-6px); box-shadow: 0 14px 0 var(--accent-lime); }
 .timeline-card.card-misc { border-color: var(--accent-main); box-shadow: 0 8px 0 var(--accent-main); }
 .timeline-card.card-misc:hover { transform: translateY(-6px); box-shadow: 0 14px 0 var(--accent-main); }
+.timeline-card.card-combined { border-color: var(--accent-combined); box-shadow: 0 8px 0 var(--accent-combined); }
+.timeline-card.card-combined:hover { transform: translateY(-6px); box-shadow: 0 14px 0 var(--accent-combined); }
 .timeline-card .tc-name { font-size: 1.1rem; font-weight: 700; margin-bottom: 6px; color: var(--text-main); }
 .timeline-card .tc-date { font-family: "Fira Code", "Courier New", Courier, monospace; font-size: 0.78rem; color: var(--text-muted); margin-bottom: 8px; }
 .timeline-card .tc-rank { font-family: "Fira Code", "Courier New", Courier, monospace; font-size: 0.88rem; font-weight: 700; color: var(--accent-main); margin-bottom: 4px; }
@@ -336,3 +345,5 @@ p > code, li > code, td > code { background: var(--inline-code-bg); color: var(-
 .filter-btn.filter-crypto.active .filter-count { background: #8b5cf6; color: #fff; }
 .filter-btn.filter-forensics.active { border-color: #ec4899; color: #ec4899; box-shadow: 0 4px 0 #ec4899; }
 .filter-btn.filter-forensics.active .filter-count { background: #ec4899; color: #fff; }
+.filter-btn.filter-combined.active { border-color: var(--accent-combined); color: var(--accent-combined); box-shadow: 0 4px 0 var(--accent-combined); }
+.filter-btn.filter-combined.active .filter-count { background: var(--accent-combined); color: #fff; }

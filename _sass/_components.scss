@@ -114,6 +114,7 @@
   &.misc { background-color: var(--accent-main); color: #1a1a1a; }
   &.crypto { background-color: #8b5cf6; }
   &.forensics { background-color: #ec4899; }
+  &.combined { background-color: var(--accent-combined); }
 }
 
 // =========================================
@@ -339,6 +340,20 @@
     &:hover {
       transform: translateY(-8px);
       box-shadow: 0 14px 0 #8b5cf6, 0 4px 24px rgba(139, 92, 246, 0.25);
+    }
+  }
+  &.card-combined {
+    border-color: var(--accent-combined);
+    box-shadow: 0 8px 0 var(--accent-combined);
+    &:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 14px 0 var(--accent-combined), 0 4px 24px rgba(219, 26, 26, 0.25);
+    }
+    .card-meta .card-read { color: var(--accent-combined); }
+
+    @media (max-width: $bp-tablet) {
+      box-shadow: 0 6px 0 var(--accent-combined);
+      &:hover { box-shadow: 0 10px 0 var(--accent-combined); }
     }
   }
 }
@@ -1026,6 +1041,7 @@ td > code {
   &.dot-web  { background-color: var(--accent-teal);   color: var(--accent-teal); }
   &.dot-rev  { background-color: var(--accent-lime);   color: var(--accent-lime); }
   &.dot-misc { background-color: var(--accent-main);   color: var(--accent-main); }
+  &.dot-combined { background-color: var(--accent-combined); color: var(--accent-combined); }
 
   @media (max-width: $bp-tablet) {
     transform: translateX(0);
@@ -1086,6 +1102,14 @@ td > code {
     &:hover {
       transform: translateY(-6px);
       box-shadow: 0 14px 0 var(--accent-main);
+    }
+  }
+  &.card-combined {
+    border-color: var(--accent-combined);
+    box-shadow: 0 8px 0 var(--accent-combined);
+    &:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 14px 0 var(--accent-combined);
     }
   }
 
@@ -1325,5 +1349,10 @@ td > code {
     border-color: #ec4899; color: #ec4899;
     box-shadow: 0 4px 0 #ec4899;
     .filter-count { background: #ec4899; color: #fff; }
+  }
+  &.filter-combined.active {
+    border-color: var(--accent-combined); color: var(--accent-combined);
+    box-shadow: 0 4px 0 var(--accent-combined);
+    .filter-count { background: var(--accent-combined); color: #fff; }
   }
 }

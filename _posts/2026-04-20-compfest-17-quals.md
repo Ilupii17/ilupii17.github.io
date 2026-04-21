@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Compfest 17 Quals"
-categories: [web]
+categories: [combined]
 tags: [Blockchain,PWN,Forensic,Web Exploitation]
 date: 2026-04-20 12:04:46 +0800
 author: ilupii
