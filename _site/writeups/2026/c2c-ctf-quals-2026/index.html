@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>
+    C2C CTF Quals 2026 | ~/ilupii's Cybersecurity Notes
+  </title>
+  <meta name="description" content="striving to be among the top 100">
+
+  <!-- SEO -->
+  <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>C2C CTF Quals 2026 | ~/ilupii’s Cybersecurity Notes</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="C2C CTF Quals 2026" />
+<meta name="author" content="kali@wsl2" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="striving to be among the top 100" />
+<meta property="og:description" content="striving to be among the top 100" />
+<link rel="canonical" href="http://localhost:4000/writeups/2026/c2c-ctf-quals-2026/" />
+<meta property="og:url" content="http://localhost:4000/writeups/2026/c2c-ctf-quals-2026/" />
+<meta property="og:site_name" content="~/ilupii’s Cybersecurity Notes" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2026-04-21T13:10:11+08:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="C2C CTF Quals 2026" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"kali@wsl2"},"dateModified":"2026-04-21T13:10:11+08:00","datePublished":"2026-04-21T13:10:11+08:00","description":"striving to be among the top 100","headline":"C2C CTF Quals 2026","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/writeups/2026/c2c-ctf-quals-2026/"},"url":"http://localhost:4000/writeups/2026/c2c-ctf-quals-2026/"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="/assets/css/main.css">
+
+  <!-- Theme Init — harus di <head> untuk hindari FOUC -->
+  <script>
+    (function() {
+      var saved = localStorage.getItem('ctf-theme');
+      if (saved === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
+  </script>
+</head>
+<body>
+
+  <header class="site-header">
+  <a href="/" class="header-brand">
+    <span>~/</span>~/ilupii's Cybersecurity Notes
+  </a>
+
+  <div class="header-actions">
+    <!-- Theme Toggle -->
+    <button
+      class="btn-elevated btn-icon"
+      onclick="toggleTheme()"
+      aria-label="Toggle Dark/Light Mode"
+      title="Toggle Theme">
+      <i class="fas fa-sun" id="themeIcon"></i>
+    </button>
+
+    <!-- GitHub Link -->
+    <a
+      href="https://github.com/ilupii17"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="btn-elevated btn-icon"
+      aria-label="GitHub Profile">
+      <i class="fab fa-github" style="color: var(--accent-teal);"></i>
+    </a>
+
+    <!-- Hamburger Menu -->
+    <button
+      class="btn-elevated btn-icon"
+      onclick="toggleMenu()"
+      aria-label="Open Menu"
+      aria-expanded="false"
+      aria-controls="siteModal">
+      <i class="fas fa-bars" style="color: var(--accent-teal);"></i>
+    </button>
+  </div>
+</header>
+
+
+  <div class="page-wrapper">
+    <article style="padding-top: 20px; padding-bottom: 60px;">
+
+  <!-- Back link -->
+  <div class="container" style="max-width: 1100px;">
+    <a href="/" class="back-link">
+      <i class="fas fa-arrow-left"></i>
+      cd ../writeups
+    </a>
+  </div>
+
+  <!-- Post Header -->
+  <div class="container" style="max-width: 1100px;">
+    <header class="post-header">
+      <h1 class="post-title">C2C CTF Quals 2026</h1>
+
+      <div class="post-meta">
+        <span class="meta-date">
+          <i class="fas fa-calendar-alt"></i>
+          Tuesday, 21 April 2026
+        </span>
+
+        
+          <span class="post-meta-sep">·</span>
+          <span><i class="fas fa-user"></i> kali@wsl2</span>
+        
+
+        
+          <span class="post-meta-sep">·</span>
+          <span><i class="fas fa-flag"></i> Country To Country CTF 2026</span>
+        
+
+        
+          <span class="post-meta-sep">·</span>
+          <span><i class="fas fa-tachometer-alt"></i> </span>
+        
+      </div>
+
+      <div class="post-tags">
+        
+          <span class="tag combined">combined</span>
+        
+        
+          <span class="tag misc" style="background: transparent; color: var(--text-muted); border-color: var(--border-color);">web</span>
+        
+          <span class="tag misc" style="background: transparent; color: var(--text-muted); border-color: var(--border-color);">forensic</span>
+        
+          <span class="tag misc" style="background: transparent; color: var(--text-muted); border-color: var(--border-color);">pwn</span>
+        
+          <span class="tag misc" style="background: transparent; color: var(--text-muted); border-color: var(--border-color);">misc</span>
+        
+      </div>
+    </header>
+  </div>
+
+  <!-- =========================================
+       Post Layout: Content + Sidebar ToC
+       ========================================= -->
+  <div class="post-layout">
+
+    <!-- Main Article Content -->
+    <div class="post-content-col">
+
+      <!-- Mobile ToC Accordion (visible on tablet/phone) -->
+      <nav class="toc-accordion" aria-label="Daftar Isi">
+        <button
+          class="toc-accordion-toggle"
+          id="tocToggle"
+          aria-expanded="false"
+          aria-controls="tocBody">
+          <span><i class="fas fa-list"></i>&nbsp; Daftar Isi</span>
+          <i class="fas fa-chevron-down toc-chevron"></i>
+        </button>
+        <div class="toc-accordion-body" id="tocBody" role="region" aria-labelledby="tocToggle">
+          <!-- <ul id="markdown-toc">
+  <li><a href="#clicker" id="markdown-toc-clicker">Clicker</a></li>
+</ul>
+
+<h1 id="web-exploitation">Web Exploitation</h1>
+<h2 id="clicker">Clicker</h2>
+
+ -->
+        </div>
+      </nav>
+
+      <!-- Prose Content -->
+      <div class="prose">
+        <ul id="markdown-toc">
+  <li><a href="#clicker" id="markdown-toc-clicker">Clicker</a></li>
+</ul>
+
+<h1 id="web-exploitation">Web Exploitation</h1>
+<h2 id="clicker">Clicker</h2>
+
+
+      </div>
+
+      <!-- Post Navigation -->
+      <nav style="display: flex; gap: 16px; justify-content: space-between; margin-top: 48px; flex-wrap: wrap;">
+        
+          <a href="/writeups/2026/understanding-one-byte-arbitrary-writes/" class="btn-elevated btn-teal" style="padding: 10px 18px; flex: 1; min-width: 140px; justify-content: flex-start; gap: 8px; font-size: 0.85rem;">
+            <i class="fas fa-arrow-left"></i>
+            Understanding One-Byte Arbi...
+          </a>
+        
+
+        
+      </nav>
+
+    </div><!-- end .post-content-col -->
+
+    <!-- Desktop Sticky Sidebar ToC -->
+    <aside class="toc-sidebar" aria-label="Daftar Isi (Sidebar)">
+      <div class="toc-inner">
+        <div class="toc-heading">Daftar Isi</div>
+        <!-- <ul id="markdown-toc">
+  <li><a href="#clicker" id="markdown-toc-clicker">Clicker</a></li>
+</ul>
+
+<h1 id="web-exploitation">Web Exploitation</h1>
+<h2 id="clicker">Clicker</h2>
+
+ -->
+      </div>
+    </aside>
+
+  </div><!-- end .post-layout -->
+
+</article>
+
+
+
+<div id="imgModal" class="img-modal">
+  <img class="img-modal-content" id="imgModalContent" alt="Zoomed Image">
+</div>
+
+<script>
+// =========================================
+// 1. Clone TOC via JS (IIFE)
+// =========================================
+(function () {
+  var inlineToc = document.getElementById('markdown-toc');
+  if (!inlineToc) return;
+
+  inlineToc.style.display = 'none';
+
+  var sidebarInner = document.querySelector('.toc-sidebar .toc-inner');
+  if (sidebarInner) {
+    var cloneSidebar = inlineToc.cloneNode(true);
+    cloneSidebar.removeAttribute('id');
+    cloneSidebar.classList.add('toc-list');
+    cloneSidebar.style.display = '';
+    sidebarInner.appendChild(cloneSidebar);
+  }
+
+  var accordionBody = document.getElementById('tocBody');
+  if (accordionBody) {
+    var cloneMobile = inlineToc.cloneNode(true);
+    cloneMobile.removeAttribute('id');
+    cloneMobile.classList.add('toc-list');
+    cloneMobile.style.display = '';
+    accordionBody.appendChild(cloneMobile);
+  }
+})();
+
+// =========================================
+// 2. Eksekusi Setelah DOM Siap
+// =========================================
+document.addEventListener("DOMContentLoaded", function() {
+
+  // --- A. FITUR MAC-OS TERMINAL & COPY BUTTON ---
+  document.querySelectorAll('div.highlighter-rouge').forEach(function(block) {
+    let lang = "CODE";
+    block.classList.forEach(function(cls) {
+      if (cls.startsWith('language-')) {
+        lang = cls.replace('language-', '').toUpperCase();
+      }
+    });
+
+    let header = document.createElement('div');
+    header.className = 'code-header';
+    header.innerHTML = `
+      <div class="mac-dots">
+        <span class="red"></span><span class="yellow"></span><span class="green"></span>
+      </div>
+      <div class="code-lang">${lang}</div>
+      <div class="code-actions">
+        <button aria-label="Expand code" style="cursor: default;">
+          <svg viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
+        </button>
+        <button class="copy-button" aria-label="Copy to clipboard" title="Copy code">
+          <svg viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+        </button>
+      </div>
+    `;
+    block.insertBefore(header, block.firstChild);
+
+    const copyBtn = header.querySelector('.copy-button');
+    copyBtn.addEventListener('click', function() {
+      const codeEl = block.querySelector('code');
+      navigator.clipboard.writeText(codeEl.innerText).then(() => {
+        const originalSvg = copyBtn.innerHTML;
+        copyBtn.innerHTML = `<svg viewBox="0 0 24 24" style="fill: #27c93f;"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>`;
+        setTimeout(() => { copyBtn.innerHTML = originalSvg; }, 2000);
+      });
+    });
+  });
+
+  // --- B. FITUR IMAGE LIGHTBOX ---
+  const modal = document.getElementById("imgModal");
+  const modalImg = document.getElementById("imgModalContent");
+  const articleImages = document.querySelectorAll('.prose img, article img');
+
+  // Pastikan elemen modal ada sebelum menjalankan script
+  if (modal && modalImg) {
+    articleImages.forEach(img => {
+      img.addEventListener('click', function() {
+        modal.style.display = "flex";
+        setTimeout(() => { modal.classList.add("show"); }, 10);
+        modalImg.src = this.src;
+        document.body.style.overflow = 'hidden'; 
+      });
+    });
+
+    function closeModal() {
+      modal.classList.remove("show");
+      setTimeout(() => { modal.style.display = "none"; }, 300);
+      document.body.style.overflow = 'auto'; 
+    }
+
+    modal.addEventListener('click', function(e) {
+      if (e.target !== modalImg) closeModal();
+    });
+    modalImg.addEventListener('click', closeModal);
+    document.addEventListener('keydown', function(e) {
+      if (e.key === "Escape" && modal.classList.contains("show")) closeModal();
+    });
+  }
+});
+</script>
+  </div>
+
+  <footer class="site-footer">
+    <p>
+      <span style="color: var(--accent-teal);">ilupii</span>
+      <span style="color: var(--text-muted);">:~$</span>
+      built with
+      <a href="https://jekyllrb.com" target="_blank" rel="noopener noreferrer">Jekyll</a>
+      &amp; deployed on
+      <a href="https://pages.github.com" target="_blank" rel="noopener noreferrer">GitHub Pages</a>
+    </p>
+    <p style="margin-top: 6px; font-size: 0.78rem; opacity: 0.6;">
+      © 2026  — All write-ups are for educational purposes.
+    </p>
+  </footer>
+
+  <!-- =========================================
+     Modal Menu — _includes/modal.html
+     ========================================= -->
+<div class="modal-overlay" id="siteModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal-content">
+
+    <div class="modal-header">
+      <i class="fas fa-angle-double-right"></i>
+      <span id="modalTitle">CONSOLE MENU</span>
+      <i class="fas fa-angle-double-left"></i>
+    </div>
+
+    <div class="modal-body">
+
+      <a href="/" class="btn-elevated menu-item teal-text">
+        <i class="fas fa-home"></i>
+        Home
+      </a>
+
+      <a href="/posts/" class="btn-elevated menu-item orange-text">
+        <i class="fas fa-list"></i>
+        All Write-ups
+      </a>
+
+      <a href="/timeline" class="btn-elevated menu-item yellow-text">
+        <i class="fas fa-stream"></i>
+        CTF Timeline
+      </a>
+
+      <a href="https://github.com/ilupii17" target="_blank" rel="noopener noreferrer"
+         class="btn-elevated menu-item lime-text">
+        <i class="fab fa-github"></i>
+        GitHub
+      </a>
+
+      <a href="-" target="_blank" rel="noopener noreferrer"
+         class="btn-elevated menu-item orange-text">
+        <i class="fas fa-trophy"></i>
+        CTF Platforms
+      </a>
+
+      <button class="btn-elevated menu-item btn-close-modal" onclick="toggleMenu()">
+        <i class="fas fa-times"></i>
+        Close Console
+      </button>
+
+    </div>
+  </div>
+</div>
+
+
+
+
+  <!-- =========================================
+       Vanilla JS — Theme Toggle & Modal
+       ========================================= -->
+  <script>
+    // ---- Theme Toggle ----
+    var html      = document.documentElement;
+    var themeIcon = document.getElementById('themeIcon');
+
+    // Sync icon dengan tema yang sudah di-set di <head>
+    (function() {
+      if (html.getAttribute('data-theme') === 'dark') {
+        themeIcon.classList.replace('fa-sun', 'fa-moon');
+      }
+    })();
+
+    function toggleTheme() {
+      if (html.getAttribute('data-theme') === 'dark') {
+        html.removeAttribute('data-theme');
+        themeIcon.classList.replace('fa-moon', 'fa-sun');
+        localStorage.setItem('ctf-theme', 'light');
+      } else {
+        html.setAttribute('data-theme', 'dark');
+        themeIcon.classList.replace('fa-sun', 'fa-moon');
+        localStorage.setItem('ctf-theme', 'dark');
+      }
+    }
+
+    // ---- Modal Menu ----
+    var modal = document.getElementById('siteModal');
+
+    function toggleMenu() {
+      if (modal.classList.contains('is-open')) {
+        modal.classList.remove('is-open');
+        document.body.style.overflow = '';
+      } else {
+        modal.classList.add('is-open');
+        document.body.style.overflow = 'hidden';
+      }
+    }
+
+    // Tutup modal klik di luar content
+    modal.addEventListener('click', function(e) {
+      if (e.target === modal) toggleMenu();
+    });
+
+    // Tutup modal dengan Escape
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && modal.classList.contains('is-open')) toggleMenu();
+    });
+
+    // ---- Mobile ToC Accordion ----
+    var tocToggle = document.getElementById('tocToggle');
+    if (tocToggle) {
+      tocToggle.addEventListener('click', function() {
+        var body     = document.getElementById('tocBody');
+        var expanded = tocToggle.getAttribute('aria-expanded') === 'true';
+
+        tocToggle.setAttribute('aria-expanded', !expanded);
+        body.classList.toggle('is-open', !expanded);
+      });
+    }
+
+    // ---- Highlight active ToC item on scroll ----
+    (function() {
+      var tocLinks = document.querySelectorAll('.toc-sidebar a, .toc-accordion-body a');
+      if (!tocLinks.length) return;
+
+      var headings = document.querySelectorAll('.prose h2[id], .prose h3[id]');
+      if (!headings.length) return;
+
+      function onScroll() {
+        var scrollY   = window.scrollY + 120;
+        var activeIdx = 0;
+
+        headings.forEach(function(h, i) {
+          if (h.offsetTop <= scrollY) activeIdx = i;
+        });
+
+        tocLinks.forEach(function(link) {
+          link.parentElement.style.borderLeftColor = '';
+          link.style.color = '';
+          link.style.background = '';
+        });
+
+        var activeId   = headings[activeIdx] ? headings[activeIdx].id : null;
+        var activeLink = activeId
+          ? document.querySelector('.toc-sidebar a[href="#' + activeId + '"]')
+          : null;
+
+        if (activeLink) {
+          activeLink.style.color      = 'var(--accent-teal)';
+          activeLink.style.background = 'var(--toc-active-bg)';
+          if (activeLink.parentElement)
+            activeLink.parentElement.style.borderLeftColor = 'var(--accent-teal)';
+        }
+      }
+
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+    })();
+  </script>
+
+</body>
+</html>
