@@ -1,0 +1,61 @@
+# =========================================
+# Jekyll
+# =========================================
+_site/
+.sass-cache/
+.jekyll-cache/
+.jekyll-metadata
+
+# =========================================
+# Ruby / Bundler
+# =========================================
+vendor/
+.bundle/
+Gemfile.lock
+
+# =========================================
+# Node (jika pakai npm/yarn untuk tooling)
+# =========================================
+node_modules/
+npm-debug.log*
+yarn-error.log*
+
+# =========================================
+# OS
+# =========================================
+
+# Linux
+*~
+.fuse_hidden*
+.Trash-*
+.nfs*
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# =========================================
+# Editor / IDE
+# =========================================
+.vscode/
+.idea/
+*.swp
+*.swo
+*.orig
+*.bak
+
+# =========================================
+# Environment / Secrets
+# =========================================
+.env
+.env.*
+!.env.example
