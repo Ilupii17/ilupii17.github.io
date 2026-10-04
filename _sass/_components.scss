@@ -1357,3 +1357,178 @@ td > code {
     .filter-count { background: var(--accent-combined); color: #fff; }
   }
 }
+
+// =========================================
+// HOMEPAGE — Centered Profile Layout
+// =========================================
+
+.home-wrapper {
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 40px 20px 80px;
+  box-sizing: border-box;
+}
+
+// ── Hero / Header ──
+.home-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 56px;
+  gap: 0;
+}
+
+// Profile picture
+.home-avatar {
+  width: 192px;
+  height: 192px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--border-color);
+  box-shadow: 0 6px 0 var(--btn-timbul-shadow);
+  background-color: var(--card-bg);
+  margin-bottom: 22px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 9px 0 var(--accent-teal);
+    border-color: var(--accent-teal);
+  }
+}
+
+// Terminal-style logo
+.home-logo {
+  font-family: $font-mono;
+  font-size: clamp(1.4rem, 4vw, 1.8rem);
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+
+  &__tilde { color: var(--accent-main); }
+
+  // Reuse existing .blinking-cursor but size-match
+  &__cursor {
+    width: 10px;
+    height: 1.1em;
+    margin-left: 3px;
+  }
+}
+
+// Pill subtitle
+.home-subtitle {
+  display: inline-block;
+  color: var(--accent-teal);
+  border: 2px solid var(--accent-teal);
+  border-radius: $radius-pill;
+  padding: 6px 22px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  margin-bottom: 22px;
+  background-color: rgba(20, 184, 166, 0.06);
+  letter-spacing: 0.02em;
+}
+
+// Social links row
+.home-social {
+  display: flex;
+  justify-content: center;
+  gap: 18px;
+
+  a {
+    font-family: $font-mono;
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.2s;
+
+    &:hover { color: var(--accent-teal); }
+  }
+}
+
+// ── Post List ──
+.home-posts {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.home-post-item {
+  border-bottom: 1px dashed var(--border-color);
+  padding: 28px 0;
+  transition: background 0.15s;
+
+  &:first-child { padding-top: 0; }
+  &:last-child  { border-bottom: none; padding-bottom: 0; }
+
+  // Subtle hover highlight
+  &:hover { background: transparent; }
+}
+
+.home-post-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 10px;
+
+  // Override tag size for this list context
+  .tag {
+    font-size: 0.72rem;
+    padding: 3px 10px;
+    border-radius: $radius-pill;
+  }
+}
+
+.home-post-title {
+  display: block;
+  font-size: clamp(1.1rem, 2.5vw, 1.35rem);
+  font-weight: 700;
+  color: var(--text-main);
+  text-decoration: none;
+  margin-bottom: 8px;
+  line-height: 1.35;
+  transition: color 0.2s;
+
+  &:hover { color: var(--accent-teal); }
+}
+
+.home-post-desc {
+  color: var(--text-muted);
+  font-size: 0.92rem;
+  line-height: 1.65;
+  margin: 0 0 12px 0;
+}
+
+.home-post-meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 14px;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  font-family: $font-mono;
+
+  i { margin-right: 4px; }
+}
+
+.home-post-event {
+  color: var(--accent-main);
+  font-weight: 600;
+}
+
+// ── Responsive ──
+@media (max-width: $bp-mobile) {
+  .home-wrapper { padding: 28px 16px 60px; }
+  .home-avatar  { width: 140px; height: 140px; }
+
+  .home-post-meta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+}

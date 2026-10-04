@@ -51,7 +51,7 @@
 
   <header class="site-header">
   <a href="/" class="header-brand">
-    <span>~/</span>~/ilupii's Cybersecurity Notes
+    <span>~/</span>Notes
   </a>
 
   <div class="header-actions">
@@ -89,65 +89,50 @@
 
   <div class="page-wrapper">
     <!-- =========================================
-     PROFILE / HERO SECTION
+     HOMEPAGE — Centered Profile Layout
      ========================================= -->
-<section class="profile-section">
+<div class="home-wrapper">
 
-  <h1 class="profile-title">
-    <span class="title-tilde">~/</span>ilupii
-    <span class="blinking-cursor" aria-hidden="true"></span>
-  </h1>
+  <!-- ── HEADER / HERO ── -->
+  <header class="home-header">
 
-  <div class="status-badge">CTF Player &amp; Full-Stack Developer</div>
+    <!-- Profile Picture -->
+    <img
+      src="https://github.com/ilupii17.png"
+      alt="Profile Picture ilupii"
+      class="home-avatar"
+      onerror="this.src='https://ui-avatars.com/api/?name=ilupii&background=14b8a6&color=fff&size=130'"
+    >
 
-  <!-- Terminal Card -->
-  <div class="terminal-card">
-    <div class="terminal-header">
-      <div class="terminal-dot dot-red"   aria-hidden="true"></div>
-      <div class="terminal-dot dot-yellow" aria-hidden="true"></div>
-      <div class="terminal-dot dot-green"  aria-hidden="true"></div>
-      <div class="terminal-title">bash — kentang@wsl2</div>
+    <!-- Terminal Logo -->
+    <div class="home-logo">
+      <span class="home-logo__tilde">~/</span>ilupii<span class="blinking-cursor home-logo__cursor" aria-hidden="true"></span>
     </div>
-    <div class="terminal-body">
-      <p>
-        <span class="prompt">kentang@wsl2:~$</span>&nbsp;
-        <span class="command">cat about.txt</span>
-      </p>
-      <p class="output">
-        Hi! I'm ilupii, a CTF Player and software developer.
-        I'm currently a student at <strong>Bachharuddin Jusuf Habibie Institute of Technology</strong>, majoring in
-        <strong>information system</strong>.
-        <br><br>
-        In my free time, I actively participate in Capture The Flag (CTF) competitions,
-        where I continuously sharpen my problem-solving skills and deepen my understanding
-        of real-world security challenges.
-        <strong>Laravel, Vue.js, Nuxt, and Tailwind CSS</strong> ecosystem.
-      </p>
-      <br>
-      <p>
-        <span class="prompt">kentang@wsl2:~$</span>&nbsp;
-        <span class="command">ls ./writeups/ | head<span class="blinking-cursor" style="width:8px;height:16px;margin-left:4px;" aria-hidden="true"></span></span>
-      </p>
-    </div>
-  </div>
 
-</section>
+    <!-- Pill Subtitle -->
+    <div class="home-subtitle">CTF Player &amp; Full-Stack Developer</div>
 
-<!-- WRITE-UPS: 6 terbaru -->
-<main class="container" style="padding-bottom: 60px;">
+    <!-- Social Links -->
+    <nav class="home-social" aria-label="Social Media">
+      <a href="https://github.com/ilupii17" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+        [GitHub]
+      </a>
+      <a href="#" aria-label="Twitter">[Twitter]</a>
+      <a href="#" aria-label="Discord">[Discord]</a>
+    </nav>
 
-  <h2 class="category-title">
-    <i class="fas fa-flag"></i>
-    Latest Solves
-    <i class="fas fa-flag"></i>
-  </h2>
+  </header>
 
-  
-    <div class="writeup-grid">
+  <!-- ── POST LIST ── -->
+  <main class="home-posts">
+
+    
       
         
-        <a href="/writeups/2026/c2c-ctf-quals-2026/" class="writeup-card card-combined">
-          <div class="card-tags">
+        <article class="home-post-item">
+
+          <!-- Tags row -->
+          <div class="home-post-tags">
             
               <span class="tag combined">combined</span>
             
@@ -156,29 +141,40 @@
             
               <span class="tag misc" style="background:transparent;color:var(--text-muted);border-color:var(--border-color);">forensic</span>
             
+              <span class="tag misc" style="background:transparent;color:var(--text-muted);border-color:var(--border-color);">pwn</span>
+            
           </div>
-          <h3>C2C CTF Quals 2026</h3>
+
+          <!-- Title -->
+          <a href="/writeups/2026/c2c-ctf-quals-2026/" class="home-post-title">C2C CTF Quals 2026</a>
+
+          <!-- Excerpt -->
           
-            <p>striving to be among the top 100</p>
+            <p class="home-post-desc">striving to be among the top 100</p>
           
-          <div class="card-meta">
-            <span class="meta-date">
+
+          <!-- Meta -->
+          <div class="home-post-meta">
+            <span>
               <i class="fas fa-calendar-alt"></i>
               21 Apr 2026
+              
             </span>
             
-              <span class="meta-event">
+              <span class="home-post-event">
                 <i class="fas fa-flag"></i>
                 Country To Country CTF 2026
               </span>
             
-            <span class="card-read">READ <i class="fas fa-arrow-right"></i></span>
           </div>
-        </a>
+
+        </article>
       
         
-        <a href="/writeups/2026/understanding-one-byte-arbitrary-writes/" class="writeup-card card-pwn">
-          <div class="card-tags">
+        <article class="home-post-item">
+
+          <!-- Tags row -->
+          <div class="home-post-tags">
             
               <span class="tag pwn">pwn</span>
             
@@ -187,29 +183,40 @@
             
               <span class="tag misc" style="background:transparent;color:var(--text-muted);border-color:var(--border-color);">read</span>
             
+              <span class="tag misc" style="background:transparent;color:var(--text-muted);border-color:var(--border-color);">write</span>
+            
           </div>
-          <h3>Understanding One-Byte Arbitrary Writes</h3>
+
+          <!-- Title -->
+          <a href="/writeups/2026/understanding-one-byte-arbitrary-writes/" class="home-post-title">Understanding One-Byte Arbitrary Writes</a>
+
+          <!-- Excerpt -->
           
-            <p>1 byte aja udah cukup buat mengambil alih kontrol program, jika ditulis di lokasi yang tepat.</p>
+            <p class="home-post-desc">1 byte aja udah cukup buat mengambil alih kontrol program, jika ditulis di lokasi yang tepat.</p>
           
-          <div class="card-meta">
-            <span class="meta-date">
+
+          <!-- Meta -->
+          <div class="home-post-meta">
+            <span>
               <i class="fas fa-calendar-alt"></i>
               20 Apr 2026
+              
             </span>
             
-              <span class="meta-event">
+              <span class="home-post-event">
                 <i class="fas fa-flag"></i>
                 Advent Of Ctf 2025
               </span>
             
-            <span class="card-read">READ <i class="fas fa-arrow-right"></i></span>
           </div>
-        </a>
+
+        </article>
       
         
-        <a href="/writeups/2026/compfest-17-quals/" class="writeup-card card-combined">
-          <div class="card-tags">
+        <article class="home-post-item">
+
+          <!-- Tags row -->
+          <div class="home-post-tags">
             
               <span class="tag combined">combined</span>
             
@@ -218,29 +225,40 @@
             
               <span class="tag misc" style="background:transparent;color:var(--text-muted);border-color:var(--border-color);">PWN</span>
             
+              <span class="tag misc" style="background:transparent;color:var(--text-muted);border-color:var(--border-color);">Forensic</span>
+            
           </div>
-          <h3>Compfest 17 Quals</h3>
+
+          <!-- Title -->
+          <a href="/writeups/2026/compfest-17-quals/" class="home-post-title">Compfest 17 Quals</a>
+
+          <!-- Excerpt -->
           
-            <p>I played for the team lastseenin2026 and finished in 20th place. </p>
+            <p class="home-post-desc">I played for the team lastseenin2026 and finished in 20th place. </p>
           
-          <div class="card-meta">
-            <span class="meta-date">
+
+          <!-- Meta -->
+          <div class="home-post-meta">
+            <span>
               <i class="fas fa-calendar-alt"></i>
               20 Apr 2026
+              
             </span>
             
-              <span class="meta-event">
+              <span class="home-post-event">
                 <i class="fas fa-flag"></i>
                 Compfest 17 Quals
               </span>
             
-            <span class="card-read">READ <i class="fas fa-arrow-right"></i></span>
           </div>
-        </a>
+
+        </article>
       
         
-        <a href="/writeups/2025/java-spring-ssti-bypass-google-ctf/" class="writeup-card card-web">
-          <div class="card-tags">
+        <article class="home-post-item">
+
+          <!-- Tags row -->
+          <div class="home-post-tags">
             
               <span class="tag web">Web</span>
             
@@ -249,33 +267,43 @@
             
               <span class="tag misc" style="background:transparent;color:var(--text-muted);border-color:var(--border-color);">RCE</span>
             
+              <span class="tag misc" style="background:transparent;color:var(--text-muted);border-color:var(--border-color);">Spring</span>
+            
           </div>
-          <h3>Java Spring SSTI Bypass — Google CTF 2025</h3>
+
+          <!-- Title -->
+          <a href="/writeups/2025/java-spring-ssti-bypass-google-ctf/" class="home-post-title">Java Spring SSTI Bypass — Google CTF 2025</a>
+
+          <!-- Excerpt -->
           
-            <p>RCE melalui Server-Side Template Injection pada Spring Framework dengan bypass filter berbasis regex.</p>
+            <p class="home-post-desc">RCE melalui Server-Side Template Injection pada Spring Framework dengan bypass filter berbasis regex.</p>
           
-          <div class="card-meta">
-            <span class="meta-date">
+
+          <!-- Meta -->
+          <div class="home-post-meta">
+            <span>
               <i class="fas fa-calendar-alt"></i>
-              21 Jun 2025
+              20 Jun 2025
+              
             </span>
             
-              <span class="meta-event">
+              <span class="home-post-event">
                 <i class="fas fa-flag"></i>
                 Google CTF 2025
               </span>
             
-            <span class="card-read">READ <i class="fas fa-arrow-right"></i></span>
           </div>
-        </a>
+
+        </article>
       
-    </div>
+
+      
 
     
 
-  
+  </main>
 
-</main>
+</div>
 
   </div>
 

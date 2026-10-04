@@ -4,110 +4,101 @@ title: "Home"
 ---
 
 <!-- =========================================
-     PROFILE / HERO SECTION
+     HOMEPAGE — Centered Profile Layout
      ========================================= -->
-<section class="profile-section">
+<div class="home-wrapper">
 
-  <h1 class="profile-title">
-    <span class="title-tilde">~/</span>ilupii
-    <span class="blinking-cursor" aria-hidden="true"></span>
-  </h1>
+  <!-- ── HEADER / HERO ── -->
+  <header class="home-header">
 
-  <div class="status-badge">CTF Player &amp; Full-Stack Developer</div>
+    <!-- Profile Picture -->
+    <img
+      src="{{ site.author.avatar | default: 'https://github.com/ilupii17.png' }}"
+      alt="Profile Picture ilupii"
+      class="home-avatar"
+      onerror="this.src='https://ui-avatars.com/api/?name=ilupii&background=14b8a6&color=fff&size=130'"
+    >
 
-  <!-- Terminal Card -->
-  <div class="terminal-card">
-    <div class="terminal-header">
-      <div class="terminal-dot dot-red"   aria-hidden="true"></div>
-      <div class="terminal-dot dot-yellow" aria-hidden="true"></div>
-      <div class="terminal-dot dot-green"  aria-hidden="true"></div>
-      <div class="terminal-title">bash — kentang@wsl2</div>
+    <!-- Terminal Logo -->
+    <div class="home-logo">
+      <span class="home-logo__tilde">~/</span>ilupii<span class="blinking-cursor home-logo__cursor" aria-hidden="true"></span>
     </div>
-    <div class="terminal-body">
-      <p>
-        <span class="prompt">kentang@wsl2:~$</span>&nbsp;
-        <span class="command">cat about.txt</span>
-      </p>
-      <p class="output">
-        Hi! I'm ilupii, a CTF Player and software developer.
-        I'm currently a student at <strong>Bachharuddin Jusuf Habibie Institute of Technology</strong>, majoring in
-        <strong>information system</strong>.
-        <br><br>
-        In my free time, I actively participate in Capture The Flag (CTF) competitions,
-        where I continuously sharpen my problem-solving skills and deepen my understanding
-        of real-world security challenges.
-        <strong>Laravel, Vue.js, Nuxt, and Tailwind CSS</strong> ecosystem.
-      </p>
-      <br>
-      <p>
-        <span class="prompt">kentang@wsl2:~$</span>&nbsp;
-        <span class="command">ls ./writeups/ | head<span class="blinking-cursor" style="width:8px;height:16px;margin-left:4px;" aria-hidden="true"></span></span>
-      </p>
-    </div>
-  </div>
 
-</section>
+    <!-- Pill Subtitle -->
+    <div class="home-subtitle">CTF Player &amp; Full-Stack Developer</div>
 
-<!-- WRITE-UPS: 6 terbaru -->
-<main class="container" style="padding-bottom: 60px;">
+    <!-- Social Links -->
+    <nav class="home-social" aria-label="Social Media">
+      <a href="{{ site.author.github | default: 'https://github.com/ilupii17' }}" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+        [GitHub]
+      </a>
+      <a href="#" aria-label="Twitter">[Twitter]</a>
+      <a href="#" aria-label="Discord">[Discord]</a>
+    </nav>
 
-  <h2 class="category-title">
-    <i class="fas fa-flag"></i>
-    Latest Solves
-    <i class="fas fa-flag"></i>
-  </h2>
+  </header>
 
-  {% if site.posts.size > 0 %}
-    <div class="writeup-grid">
-      {% for post in site.posts limit: 6 %}
+  <!-- ── POST LIST ── -->
+  <main class="home-posts">
+
+    {% if site.posts.size > 0 %}
+      {% for post in site.posts limit: 10 %}
         {% assign cat = post.categories[0] | downcase | default: "misc" %}
-        <a href="{{ post.url | relative_url }}" class="writeup-card card-{{ cat }}">
-          <div class="card-tags">
+        <article class="home-post-item">
+
+          <!-- Tags row -->
+          <div class="home-post-tags">
             {% for cat_tag in post.categories %}
               <span class="tag {{ cat_tag | downcase }}">{{ cat_tag }}</span>
             {% endfor %}
-            {% for t in post.tags limit: 2 %}
+            {% for t in post.tags limit: 3 %}
               <span class="tag misc" style="background:transparent;color:var(--text-muted);border-color:var(--border-color);">{{ t }}</span>
             {% endfor %}
           </div>
-          <h3>{{ post.title }}</h3>
+
+          <!-- Title -->
+          <a href="{{ post.url | relative_url }}" class="home-post-title">{{ post.title }}</a>
+
+          <!-- Excerpt -->
           {% if post.excerpt %}
-            <p>{{ post.excerpt | strip_html | truncate: 120 }}</p>
-          {% else %}
-            <p style="opacity:0;user-select:none;">—</p>
+            <p class="home-post-desc">{{ post.excerpt | strip_html | truncate: 160 }}</p>
           {% endif %}
-          <div class="card-meta">
-            <span class="meta-date">
+
+          <!-- Meta -->
+          <div class="home-post-meta">
+            <span>
               <i class="fas fa-calendar-alt"></i>
               {{ post.date | date: "%d %b %Y" }}
+              {% if post.read_time %}• {{ post.read_time }} minutes{% endif %}
             </span>
             {% if post.ctf_event %}
-              <span class="meta-event">
+              <span class="home-post-event">
                 <i class="fas fa-flag"></i>
                 {{ post.ctf_event }}
               </span>
             {% endif %}
-            <span class="card-read">READ <i class="fas fa-arrow-right"></i></span>
           </div>
-        </a>
-      {% endfor %}
-    </div>
 
-    {% if site.posts.size > 6 %}
-      <div class="view-all-wrap">
-        <a href="{{ '/posts/' | relative_url }}" class="btn-elevated btn-view-all">
-          <i class="fas fa-folder-open"></i>
-          View All Write-ups
-          <span class="view-all-count">{{ site.posts.size }}</span>
-        </a>
+        </article>
+      {% endfor %}
+
+      {% if site.posts.size > 10 %}
+        <div class="view-all-wrap">
+          <a href="{{ '/posts/' | relative_url }}" class="btn-elevated btn-view-all">
+            <i class="fas fa-folder-open"></i>
+            View All Write-ups
+            <span class="view-all-count">{{ site.posts.size }}</span>
+          </a>
+        </div>
+      {% endif %}
+
+    {% else %}
+      <div class="empty-state">
+        <div class="empty-icon"><i class="fas fa-folder-open"></i></div>
+        <p>Belum ada write-up. Tambahkan file Markdown di folder <code>_posts/</code>.</p>
       </div>
     {% endif %}
 
-  {% else %}
-    <div class="empty-state">
-      <div class="empty-icon"><i class="fas fa-folder-open"></i></div>
-      <p>Belum ada write-up. Tambahkan file Markdown di folder <code>_posts/</code>.</p>
-    </div>
-  {% endif %}
+  </main>
 
-</main>
+</div>
